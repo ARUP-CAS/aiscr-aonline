@@ -1,3 +1,4 @@
 {
-    "name": "alberto"
+    "solrHost": "http://localhost:8983/solr",
+    "solrCore": "arup"
 }

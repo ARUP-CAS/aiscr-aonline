@@ -1,17 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
     <meta charset="utf-8">
     <title>Institute of Archaeology Prague</title>
     <style>
-      body, html { margin:0; padding:0; height:100%;}
+      body, html { margin:0; padding:0; height:100%; font-size: 11pt;}
       h1 { position:absolute; background:white; padding:10px;}
       #map { 
           height:100%; 
           width: calc(100% - 350px);
           float: left;
       }
-      #results { 
+      #actions { 
           position: relative;
           height:100%; 
           width: 350px;
@@ -19,8 +19,12 @@
           overflow-y: auto;
           
       }
-      #results div{
-          margin: 3px;
+      #results{
+          padding: 0;
+          margin: 2px;
+      }
+      #results li{
+          //margin: 3px;
           border-bottom: 1px solid darkblue;
       }
       
@@ -30,7 +34,6 @@
     </style>
     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
     <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
-    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
     <script src="js/underscore-min.js" type="text/javascript" ></script>
     <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
     <script src="js/heatmap.js"></script>
@@ -39,15 +42,21 @@
     
   </head>
   <body>
-   <h1>Institute of Archaeology Prague</h1>
+   <h1 style="z-index: 10;background: transparent;">Institute of Archaeology Prague</h1>
    <div id="map"></div>
-   <div id="results"></div>
+   <div id="actions">
+       <form id="searchForm">
+       </form>
+       <input type="text" id="q" name="q" />
+       <input type="submit" value="->" onClick="arup.MAP.search()" />
+       <ul id="results"></ul>
+   </div>
    
     <script>
-        var arup;
+      
       window.onload = function() {
-        arup = new ARUP();
-        arup.getData();
+        var arupmap = arup.MAP.create();
+        
       };
     </script>
   </body>

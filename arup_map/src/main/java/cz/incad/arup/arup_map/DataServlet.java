@@ -79,19 +79,27 @@ public class DataServlet extends HttpServlet {
                             query.setFields("lat,lng");
                             JSONObject json = new JSONObject(IndexQuery.json(query));
 
-                            JSONArray ret = new JSONArray();
-                            JSONArray docs = json.getJSONObject("response").getJSONArray("docs");
-                            for (int i = 0; i < docs.length(); i++) {
-                                JSONObject j = docs.getJSONObject(i);
-                                long val = Math.round(Math.random() * 8);
-                                val = 1;
-                                j.put("count", val);
-                                j.put("lat", j.getDouble("lat"));
-                                j.put("lng", j.getDouble("lng"));
-                                ret.put(j);
-                            }
+                            out.println(json.toString());
+                        }
+                    }
+                },
+        HEATMAP{
+                    @Override
+                    void doPerform(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+                        resp.setContentType("application/json;charset=UTF-8");
+                        try (PrintWriter out = resp.getWriter()) {
+                            String geom = req.getParameter("geom");
+                            SolrQuery query = new SolrQuery();
 
-                            out.println(ret.toString());
+                            query.setQuery("*:*");
+                            query.setRows(0);
+                            query.setFacet(true);
+                            query.set("facet.heatmap", "loc_rpt");
+                            query.set("facet.heatmap.distErrPct", "0.02");
+                            query.set("facet.heatmap.geom", geom);
+                            JSONObject json = new JSONObject(IndexQuery.json(query));
+
+                            out.println(json.toString());
                         }
                     }
                 },
@@ -104,16 +112,16 @@ public class DataServlet extends HttpServlet {
                             String lat = req.getParameter("lat");
                             String lng = req.getParameter("lng");
                             String dist = req.getParameter("dist");
-                            String fq = String.format("{!geofilt pt=%s,%s sfield=loc d=%s}", lat, lng, dist);
+                            String fq = String.format("{!geofilt pt=%s,%s sfield=loc_rpt d=%s}", lat, lng, dist);
                             SolrQuery query = new SolrQuery();
 
                             query.setQuery("*:*");
                             query.set("fq", fq);
                             query.setRows(2000);
-                            //query.setFields("lat,lng");
+                            //query.setSort("geodist()", SolrQuery.ORDER.asc);
                             JSONObject json = new JSONObject(IndexQuery.json(query));
 
-                            out.println(json.getJSONObject("response").getJSONArray("docs").toString());
+                            out.println(json.toString());
                         }
                     }
                 },
@@ -130,22 +138,9 @@ public class DataServlet extends HttpServlet {
 
                             query.setQuery(q);
                             query.setRows(2000);
-                            query.setFields("lat,lng");
                             JSONObject json = new JSONObject(IndexQuery.json(query));
 
-                            JSONArray ret = new JSONArray();
-                            JSONArray docs = json.getJSONObject("response").getJSONArray("docs");
-                            for (int i = 0; i < docs.length(); i++) {
-                                JSONObject j = docs.getJSONObject(i);
-                                long val = Math.round(Math.random() * 8);
-                                val = 1;
-                                j.put("count", val);
-                                j.put("lat", j.getDouble("lat"));
-                                j.put("lng", j.getDouble("lng"));
-                                ret.put(j);
-                            }
-
-                            out.println(ret.toString());
+                            out.println(json.toString());
                         }
                     }
                 },

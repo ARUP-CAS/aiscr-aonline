@@ -176,10 +176,10 @@ var Store = (function StoreClosure() {
     },
     getData: function() {
       return this._unOrganizeData();
-    }/*,
+    },/*,
 
       TODO: rethink.
-
+*/
     getValueAt: function(point) {
       var value;
       var radius = 100;
@@ -214,7 +214,7 @@ var Store = (function StoreClosure() {
         }
       }
       return false;
-    }*/
+    }
   };
 
 
