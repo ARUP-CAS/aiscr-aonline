@@ -16,20 +16,25 @@ arup.MAP = {
         this.resultsContainer = $('#results');
         $.getJSON("js/obdobi.json", _.bind(function(d){
             this.obdobi = d;
-            this.getData();
+            this.prepareMap();
+            //this.getData();
+            this.getHeatMapData();
         }, this));
         return this;
     },
     search: function(){
-        var url = "data?action=BYQUERY&q=" + $("#q").val();
+        var url = "data?action=BYQUERY&q=" + $("#q").val() +
+                "&od=" + $("#od").val() + "&do=" + $("#do").val() + 
+                "&geom=" + this.getMapsBoundsFilter();
         $.getJSON(url, _.bind(function(d){
             this.results = d;
             this.numFound = d.response.numFound;
             this.renderSearchResults();
             this.data = this.results.response.docs;
+            var mapdata = processHeatMapFacet();
             this.mapData = {
                 max: 2,
-                data: this.data
+                data: mapdata
             };
             this.heatmapLayer.setData(this.mapData);
         }, this));
@@ -37,6 +42,7 @@ arup.MAP = {
     renderSearchResults: function(){
         this.resultsContainer.empty();
         var docs = this.results.response.docs;
+        $("#numFound").html(this.numFound + " docs");
         if(this.numFound === 0){
             return;
         }
@@ -68,6 +74,7 @@ arup.MAP = {
             var url = "data?action=BYPOINT&lat=" + e.latlng.lat + "&lng=" + e.latlng.lng + "&dist=" + this.dist;
             $.getJSON(url, _.bind(function(d){
                 this.results = d;
+                this.numFound = d.response.numFound;
                 this.renderSearchResults();
             }, this));
 //        }
@@ -87,7 +94,7 @@ arup.MAP = {
         console.log(i,j);
         var obdobi = "";
         for(var k=i; k<=j; k++){
-            obdobi += this.obdobi[k-1].nazev;
+            obdobi += this.obdobi[k-1].nazev + " ";
         }
                 
         var c = doc.nazev +  " at " + doc.lat + ", " + doc.lng + "<br/>" +
@@ -98,16 +105,14 @@ arup.MAP = {
                     .setContent(c)
                     .openOn(this.map);
     },
-    getHeatMapData: function(){
+    getMapsBoundsFilter: function(){
         var b = this.map.getBounds();
-        
-        var geom = '["' + b._southWest.lng + ' ' + b._southWest.lat +  '" TO "' + 
-                b._northEast.lng + ' ' + b._northEast.lat +  '"]';
-        //console.log(geom);
-        var url = "data?action=HEATMAP&geom=" + geom;
-        $.getJSON(url, _.bind(function(d){
-            var mapdata = [];
-            var facet = d.facet_counts.facet_heatmaps.loc_rpt;
+        return b._southWest.lng + ';' + b._southWest.lat +  ';' + 
+                b._northEast.lng + ';' + b._northEast.lat;
+    },
+    processHeatMapFacet: function(){
+        var mapdata = [];
+            var facet = this.results.facet_counts.facet_heatmaps.loc_rpt;
             var gridLevel = facet[1];
             var columns = facet[3];
             var rows = facet[5];
@@ -117,27 +122,51 @@ arup.MAP = {
             var maxY = facet[13];
             var distX = (maxX - minX)/columns;
             var distY = (maxY - minY)/rows;
-            console.log(distX, distY);
+            console.log(rows, columns, distX, distY);
             var counts_ints2D = facet[15];
+            var maxVal = 0;
+            var maxValCoords = {};
             for(var i=0; i<counts_ints2D.length; i++){
                 if(counts_ints2D[i] !==null && counts_ints2D[i] !== "null"){
                     var row = counts_ints2D[i];
-                    var lat = minY + i*distY;
+                    var lat = maxY - i*distY;
                     for(var j=0; j<row.length; j++){
                         var count = row[j];
                         if(count>0){
                             var lng = minX + j*distX;
-                            mapdata.push({lat: lat, lng:lng, count: count})
+                            var bounds = new L.latLngBounds([
+                                [lat, lng],
+                                [lat - distY, lng + distX]
+                              ]);
+                            mapdata.push({lat: bounds.getCenter().lat, lng:bounds.getCenter().lng, count: count})
+                            if(count > maxVal){
+                                maxValCoords.lat = bounds.getCenter().lat;
+                                maxValCoords.lng = bounds.getCenter().lng;
+                                maxValCoords.count = count;
+                                maxValCoords.i = i;
+                                maxValCoords.j = j;
+                                maxVal = count;
+                            }
                         }
                     }
                 }
             }
+            //console.log(maxValCoords);
             
 //            this.results = d;
 //            this.numFound = d.response.numFound;
 //            this.renderSearchResults();
-            this.data = mapdata;
-            console.log(mapdata);
+            return mapdata;
+    },
+    getHeatMapData: function(){
+        
+        //console.log(geom);
+        var url = "data?action=HEATMAP&geom=" + this.getMapsBoundsFilter();
+        $.getJSON(url, _.bind(function(d){
+            this.results = d;
+            this.numFound = d.response.numFound;
+            this.data = this.processHeatMapFacet();
+            //console.log(mapdata);
             this.mapData = {
                 data: this.data
             };
@@ -145,17 +174,18 @@ arup.MAP = {
         }, this));
     },
     getData: function () {
-        $.getJSON("data?action=ALL", _.bind(function (d) {
+        var url = "data?action=ALL&geom=" + this.getMapsBoundsFilter();
+        $.getJSON(url, _.bind(function (d) {
             this.results = d;
             this.numFound = d.response.numFound;
             this.data = this.results.response.docs;
             this.mapData = {
                 data: this.data
             };
-            this.render();
+            this.heatmapLayer.setData(this.mapData);
         }, this));
     },
-    render: function () {
+    prepareMap: function () {
         var baseLayer = L.tileLayer(
                 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                     attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
@@ -166,8 +196,8 @@ arup.MAP = {
         var cfg = {
             // radius should be small ONLY if scaleRadius is true (or small radius is intended)
             "radius": .05,
-            "maxOpacity": .8,
-            "minOpacity": .1,
+            "maxOpacity": .5,
+            "minOpacity": .05,
             // scales the radius based on map zoom
             "scaleRadius": true,
             // if set to false the heatmap uses the global maximum for colorization
@@ -185,8 +215,8 @@ arup.MAP = {
 //            opacity: 0.8,
 //            "maxOpacity": .8,
             gradient: {
-                0.45: "rgb(0,0,255)",
-                0.55: "rgb(0,255,255)",
+                0.25: "rgb(0,0,255)",
+                0.45: "rgb(0,255,255)",
                 0.65: "rgb(0,255,0)",
                 0.95: "yellow",
                 1.0: "rgb(255,0,0)"
@@ -202,7 +232,6 @@ arup.MAP = {
             layers: [baseLayer, this.heatmapLayer]
         });
 
-        this.heatmapLayer.setData(this.mapData);
 
         // make accessible for debugging
         layer = this.heatmapLayer;

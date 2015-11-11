@@ -17,7 +17,7 @@ import org.apache.solr.common.SolrDocumentList;
  *
  * @author alberto
  */
-public class IndexQuery {
+public class SolrIndex {
 
     private static final String DEFAULT_HOST = "http://localhost:8983/solr";
     private static final String DEFAULT_CORE = "arup";
@@ -33,7 +33,7 @@ public class IndexQuery {
         // The following settings are provided here for completeness.
         // They will not normally be required, and should only be used 
         // after consulting javadocs to know whether they are truly required.
-        server.setSoTimeout(1000);  // socket read timeout
+        server.setSoTimeout(3000);  // socket read timeout
         server.setDefaultMaxConnectionsPerHost(100);
         server.setMaxTotalConnections(100);
         server.setFollowRedirects(false);  // defaults to false
