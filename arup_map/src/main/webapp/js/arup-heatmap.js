@@ -25,13 +25,14 @@ arup.MAP = {
     search: function(){
         var url = "data?action=BYQUERY&q=" + $("#q").val() +
                 "&od=" + $("#od").val() + "&do=" + $("#do").val() + 
-                "&geom=" + this.getMapsBoundsFilter();
+                "&geom=" + this.getMapsBoundsFilter() +
+                "&center=" + this.map.getCenter();
         $.getJSON(url, _.bind(function(d){
             this.results = d;
             this.numFound = d.response.numFound;
             this.renderSearchResults();
             this.data = this.results.response.docs;
-            var mapdata = processHeatMapFacet();
+            var mapdata = this.processHeatMapFacet();
             this.mapData = {
                 max: 2,
                 data: mapdata
@@ -69,33 +70,16 @@ arup.MAP = {
         this.updatePopup(0);
     },
     onMapClick: function (e) {
-//        var value = this.heatmapLayer._heatmap.getValueAt(e.layerPoint);
-//        if(value>0){
             var url = "data?action=BYPOINT&lat=" + e.latlng.lat + "&lng=" + e.latlng.lng + "&dist=" + this.dist;
             $.getJSON(url, _.bind(function(d){
                 this.results = d;
                 this.numFound = d.response.numFound;
                 this.renderSearchResults();
             }, this));
-//        }
     },
     updatePopup: function (docid) {
         var doc = this.results.response.docs[docid];
-        var od = doc.od;
-        var to = doc.do;
-        var i = 0;
-        while(od >= this.obdobi[i].od && i<this.obdobi.length){
-            i++;
-        }
-        var j = 0;
-        while(to >= this.obdobi[j].do && j<this.obdobi.length){
-            j++;
-        }
-        console.log(i,j);
         var obdobi = "";
-        for(var k=i; k<=j; k++){
-            obdobi += this.obdobi[k-1].nazev + " ";
-        }
                 
         var c = doc.nazev +  " at " + doc.lat + ", " + doc.lng + "<br/>" +
                 obdobi + " (" + doc.od + " - " + doc.do + ")";
@@ -168,6 +152,7 @@ arup.MAP = {
             this.data = this.processHeatMapFacet();
             //console.log(mapdata);
             this.mapData = {
+                max: 10,
                 data: this.data
             };
             this.heatmapLayer.setData(this.mapData);
@@ -240,7 +225,12 @@ arup.MAP = {
         this.popup = L.popup();
 
         this.map.on('click', _.bind(this.onMapClick, this));
+        this.map.on('zoomend', _.bind(this.onZoomEnd, this));
+        this.map.on('moveend', _.bind(this.onZoomEnd, this));
 
+    },
+    onZoomEnd: function(){
+        this.search();
     }
 
 

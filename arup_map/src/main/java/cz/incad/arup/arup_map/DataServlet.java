@@ -6,6 +6,9 @@
 package cz.incad.arup.arup_map;
 
 import au.com.bytecode.opencsv.CSVReader;
+import java.awt.Rectangle;
+import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -114,7 +117,7 @@ public class DataServlet extends HttpServlet {
                                             doc.addField(jmap.getString(headerLine[j]), nextLine[j]);
                                         }
 
-                                        String loc = nextLine[fNames.get(jmap.getString("lng"))] + "," + nextLine[fNames.get(jmap.getString("lat"))];
+                                        String loc = nextLine[fNames.get(jmap.getString("lat"))] + "," + nextLine[fNames.get(jmap.getString("lng"))];
                                         doc.addField("loc", loc);
                                         doc.addField("loc_rpt", loc);
                                         sclient.add(doc);
@@ -221,24 +224,32 @@ public class DataServlet extends HttpServlet {
                                 q = "*:*";
                             }
                             SolrQuery query = new SolrQuery();
-
                             query.setQuery(q);
-                            
                             if (od != null && !"".equals(od)) {
-                                query.set("fq", "od:["+od+" TO *]");
-                            }
-                            if (to != null && !"".equals(to)) {
-                                query.set("fq", "do:[* TO "+to+"]");
+                                query.add("fq", "od:["+od+" TO "+to+"] OR do:["+od+" TO "+to+"]");
+                                
                             }
                             String geom = req.getParameter("geom");
                             if (geom != null && !"".equals(geom)) {
+                                
                                 String[] coords = geom.split(";");
                                 String gf = String.format("[%s,%s TO %s,%s]", 
-                                        coords[0], coords[1], coords[2], coords[3]);
-                                query.set("fq", "loc_rpt:" + gf);
+                                        coords[1], coords[0], coords[3], coords[2]);
+                                
+                                double latCenter = (Double.parseDouble(coords[3]) + Double.parseDouble(coords[1])) * .5;
+                                double lngCenter = (Double.parseDouble(coords[0]) + Double.parseDouble(coords[2])) * .5;
+                                query.add("fq", "loc_rpt:" + gf);
+                                
+                                String sort = String.format("query({!bbox v='' filter=false score=distance pt=%s,%s sfield=loc_rpt d=1000})", latCenter, lngCenter);
+                                query.setSort(sort, SolrQuery.ORDER.asc);
+//                                query.set("d", 1000);
+//                                query.set("pt", latCenter+","+lngCenter);
+//                                query.set("sfield", "loc_rpt");
                                 query.setFacet(true);
                                 query.set("facet.heatmap", "loc_rpt");
-                                query.set("facet.heatmap.distErrPct", "0.02");
+                                //query.set("facet.heatmap.distErrPct", "0.02");
+                                query.set("facet.heatmap.maxCells", 200000);
+                                
                                 query.set("facet.heatmap.geom", String.format("[%s %s TO %s %s]", 
                                     coords[0], coords[1], coords[2], coords[3]));
                             }

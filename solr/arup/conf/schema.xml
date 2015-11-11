@@ -69,22 +69,23 @@
      tokens
    -->   
    
-   <field name="fid" type="string" indexed="true" stored="true" required="true" multiValued="false" />
+   <field name="fid" type="string" indexed="true" stored="true" />
    
-   <field name="id" type="string" indexed="true" stored="true"  /> 
+   <field name="id" type="string" indexed="true" stored="true" required="true" multiValued="false"  /> 
    <field name="nazev" type="text_general_cs" indexed="true" stored="true" />
    
-   <field name="od" type="string" indexed="true" stored="true" />
-   <field name="do" type="string" indexed="true" stored="true"  />
+   <field name="od" type="tint" indexed="true" stored="true" />
+   <field name="do" type="tint" indexed="true" stored="true"  />
    
    <field name="url" type="string" indexed="true" stored="true"  />
    
-   <field name="typ1" type="text_general_cs" indexed="true" stored="true"  />
-   <field name="typ2" type="text_general_cs" indexed="true" stored="true"  />
-   <field name="popis1" type="text_general_cs" indexed="true" stored="true"  />
-   <field name="popis2" type="text_general_cs" indexed="true" stored="true"  />
+   <field name="typ1" type="string" indexed="true" stored="true"  />
+   <field name="typ2" type="string" indexed="true" stored="true"  />
+   <field name="popis1" type="string" indexed="true" stored="true"  />
+   <field name="popis2" type="string" indexed="true" stored="true"  />
    
    <field name="loc" type="location" indexed="true" stored="true" />
+   <field name="loc_rpt" type="location_rpt" indexed="true" stored="true" />
    <field name="lng" type="tfloat" indexed="true" stored="true" />
    <field name="lat" type="tfloat" indexed="true" stored="true" />
    <dynamicField name="*_coordinate"  type="tdouble" indexed="true"  stored="true"/>
@@ -96,11 +97,12 @@
  <!-- Field to use to determine and enforce document uniqueness. 
       Unless this field is marked with required="false", it will be a required field
    -->
- <uniqueKey>fid</uniqueKey>
+ <uniqueKey>id</uniqueKey>
 
   <!-- copyField commands copy one field to another at the time a document
         is added to the index.  It's used either to index the same field differently,
         or to add multiple fields to the same field for easier/faster searching.  -->
+
 
    <copyField source="*" dest="text"/>
   <!--
@@ -181,6 +183,11 @@
 
     <!-- A specialized field for geospatial search. If indexed, this fieldType must not be multivalued. -->
     <fieldType name="location" class="solr.LatLonType" subFieldSuffix="_coordinate"/>
+    <fieldType name="location_rpt"   class="solr.SpatialRecursivePrefixTreeFieldType"
+               geo="true"
+               distErrPct="0.02"
+               maxDistErr="0.001"
+               distanceUnits="kilometers" />
 
     <!-- The format for this date field is of the form 1995-12-31T23:59:59Z, and
          is a more restricted form of the canonical representation of dateTime
