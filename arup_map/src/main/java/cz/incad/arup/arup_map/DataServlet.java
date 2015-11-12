@@ -38,7 +38,7 @@ public class DataServlet extends HttpServlet {
 
     public static final Logger LOGGER = Logger.getLogger(DataServlet.class.getName());
     public static final String ACTION_NAME = "action";
-    public static final int ROWS = 20;
+    public static final int ROWS = 100;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
