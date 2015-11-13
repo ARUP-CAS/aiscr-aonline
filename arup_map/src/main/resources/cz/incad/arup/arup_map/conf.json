@@ -1,4 +1,46 @@
 {
     "solrHost": "http://localhost:8983/solr",
-    "solrCore": "arup"
+    "solrCore": "arup",
+    "solrDefaultRows" : 100,
+    "displayRows" : 100,
+    "markerZoomLevel" : 13,
+    "obdobi":[
+{"nazev" : "nejstarší paleolit", "od":	-2500000, "do":	-750000},
+{"nazev" : "starší paleolit", "od":-750000,"do":-300000},
+{"nazev" : "střední paleolit", "od":-300000,"do":-40000},
+{"nazev" : "mladší paleolit","od":-40000,"do":-12000},
+{"nazev" : "pozdní paleolit","od":-12000,"do":-10000},
+{"nazev" : "mezolit","od":-10000,"do":-5600},
+{"nazev" : "starší neolit","od":-5600,"do":-4900},
+{"nazev" : "mladší neolit","od":-4900,"do":-4200},
+{"nazev" : "časný eneolit","od":-4200,"do":-3800},
+{"nazev" : "starší eneolit","od":-3800,"do":-3400},
+{"nazev" : "střední eneolit","od":-3400,"do":-2800},
+{"nazev" : "mladší eneolit","od":-2800,"do":-2300},
+{"nazev" : "starší d. bronzová","od":-2300,"do":-1600},
+{"nazev" : "střední d. bronzová","od":-1600,"do":-1300},
+{"nazev" : "mladší d. bronzová","od":-1300,"do":-1000},
+{"nazev" : "pozdní d. bronzová","od":-1000,"do":-800},
+{"nazev" : "starší d. halštatská","od":-800,"do":-550},
+{"nazev" : "mladší d. halštatská","od":-550,"do":-450},
+{"nazev" : "časná d. laténská","od":-450,"do":-370},
+{"nazev" : "střední d. laténská","od":-370,"do":-170},
+{"nazev" : "mladší/pozdní d. laténská","od":-170,"do":0},
+{"nazev" : "starší d. římská","od":0,"do":150},
+{"nazev" : "mladší doba římská","od":150,"do":400},
+{"nazev" : "d. stěhování národů","od":400,"do":550},
+{"nazev" : "raný středověk 1","od":550,"do":650},
+{"nazev" : "raný středověk 2","od":650,"do":800},
+{"nazev" : "raný středověk 3","od":800,"do":950},
+{"nazev" : "raný středověk 4","od":950,"do":1200},
+{"nazev" : "vrcholný středověk","od":1200,"do":1300},
+{"nazev" : "pozdní středověk","od":1300,"do":1500},
+{"nazev" : "novověk 1","od":1500,"do":1650},
+{"nazev" : "novověk 2","od":1650,"do":1800},
+{"nazev" : "industrial 1","od":1800,"do":1900},
+{"nazev" : "industrial 2","od":1900,"do":2000}
+]
+    
+
+
 }

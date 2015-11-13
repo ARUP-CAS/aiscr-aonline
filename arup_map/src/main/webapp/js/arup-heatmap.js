@@ -14,10 +14,10 @@ arup.MAP = {
         this.dist = 5;
         this.mapContainer = $('#map');
         this.resultsContainer = $('#results');
-        $.getJSON("js/obdobi.json", _.bind(function (d) {
-            this.obdobi = d;
+        $.getJSON("conf", _.bind(function (d) {
+            this.conf = d;
+            this.markerZoomLevel = d.markerZoomLevel;
             this.prepareMap();
-            //this.getData();
             this.search();
         }, this));
         return this;
@@ -42,8 +42,7 @@ arup.MAP = {
                 "heat": this.heatmapLayer,
                 "markers": this.markers
             };
-            //L.control.layers(this.overlayMaps).addTo(this.map);
-
+            
         }, this));
     },
     renderSearchResults: function () {
@@ -67,7 +66,7 @@ arup.MAP = {
                 li.append(a);
             }
             li.data("docid", i);
-            li.on("click", _.partial(function (ar) {
+            li.on("mouseenter", _.partial(function (ar) {
                 ar.updatePopup($(this).data("docid"));
             }, this));
             this.resultsContainer.append(li);
@@ -76,7 +75,7 @@ arup.MAP = {
 
         }
         
-        this.updatePopup(0);
+        //this.updatePopup(0);
     },
     onMapClick: function (e) {
 //        var url = "data?action=BYPOINT&lat=" + e.latlng.lat + "&lng=" + e.latlng.lng + "&dist=" + this.dist;
@@ -115,7 +114,7 @@ arup.MAP = {
         var maxY = facet[13];
         var distX = (maxX - minX) / columns;
         var distY = (maxY - minY) / rows;
-        console.log(rows, columns, distX, distY);
+        console.log(gridLevel, rows, columns, distX, distY);
         var counts_ints2D = facet[15];
         var maxVal = 0;
         var maxValCoords = {};
@@ -235,11 +234,11 @@ arup.MAP = {
         this.map.addLayer(this.heatmapLayer);
         //this.map.addLayer(this.markers);
 
-        this.overlayMaps = {
-            "heat": this.heatmapLayer,
-            "markers": this.markers
-        };
-        L.control.layers(this.overlayMaps).addTo(this.map);
+//        this.overlayMaps = {
+//            "heat": this.heatmapLayer,
+//            "markers": this.markers
+//        };
+//        L.control.layers(this.overlayMaps).addTo(this.map);
             
         this.popup = L.popup();
 
@@ -249,6 +248,21 @@ arup.MAP = {
 
     },
     onZoomEnd: function () {
+        if(this.map.getZoom()<this.markerZoomLevel){
+            if(this.map.hasLayer(this.markers)){
+                this.map.removeLayer(this.markers);
+            }
+            if(!this.map.hasLayer(this.heatmapLayer)){
+                this.map.addLayer(this.heatmapLayer);
+            }
+        }else{
+            if(!this.map.hasLayer(this.markers)){
+                this.map.addLayer(this.markers);
+            }
+            if(this.map.hasLayer(this.heatmapLayer)){
+                this.map.removeLayer(this.heatmapLayer);
+            }
+        }
         this.search();
     }
 

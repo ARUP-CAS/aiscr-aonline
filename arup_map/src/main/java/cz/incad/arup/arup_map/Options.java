@@ -56,6 +56,10 @@ public class Options {
         }
 
     }
+    
+    public JSONObject getConf(){
+        return conf;
+    }
 
     public String getString(String key, String defVal) {
         return conf.optString(key, defVal);

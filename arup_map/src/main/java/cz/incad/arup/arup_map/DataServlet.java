@@ -38,7 +38,7 @@ public class DataServlet extends HttpServlet {
 
     public static final Logger LOGGER = Logger.getLogger(DataServlet.class.getName());
     public static final String ACTION_NAME = "action";
-    public static final int ROWS = 100;
+    public static int ROWS = 100;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -54,6 +54,7 @@ public class DataServlet extends HttpServlet {
         try {
             String actionNameParam = req.getParameter(ACTION_NAME);
             if (actionNameParam != null) {
+                ROWS = Options.getInstance().getInt("solrDefaultRows", ROWS);
                 Actions actionToDo = DataServlet.Actions.valueOf(actionNameParam);
                 actionToDo.doPerform(req, resp);
             } else {
@@ -238,17 +239,20 @@ public class DataServlet extends HttpServlet {
                                 
                                 double latCenter = (Double.parseDouble(coords[3]) + Double.parseDouble(coords[1])) * .5;
                                 double lngCenter = (Double.parseDouble(coords[0]) + Double.parseDouble(coords[2])) * .5;
+                                double dist = (Double.parseDouble(coords[2]) - Double.parseDouble(coords[0])) * .02;
                                 query.add("fq", "loc_rpt:" + gf);
                                 
-                                String sort = String.format("query({!bbox v='' filter=false score=distance pt=%s,%s sfield=loc_rpt d=1000})", latCenter, lngCenter);
+//                                String sort = String.format("query({!bbox v='' filter=false score=distance })", latCenter, lngCenter, dist);
+                                String sort = "query({!bbox v='' filter=false score=distance })";
                                 query.setSort(sort, SolrQuery.ORDER.asc);
-//                                query.set("d", 1000);
-//                                query.set("pt", latCenter+","+lngCenter);
-//                                query.set("sfield", "loc_rpt");
+                                query.set("d", Double.toString(dist));
+                                query.set("pt", latCenter+","+lngCenter);
+                                query.set("sfield", "loc_rpt");
                                 query.setFacet(true);
                                 query.set("facet.heatmap", "loc_rpt");
-                                //query.set("facet.heatmap.distErrPct", "0.02");
+                                query.set("facet.heatmap.distErrPct", Double.toString(dist));
                                 query.set("facet.heatmap.maxCells", 200000);
+                                query.set("facet.heatmap.maxLevel", 7);
                                 
                                 query.set("facet.heatmap.geom", String.format("[%s %s TO %s %s]", 
                                     coords[0], coords[1], coords[2], coords[3]));
