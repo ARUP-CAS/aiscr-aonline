@@ -14,20 +14,31 @@ arup.MAP = {
         this.dist = 5;
         this.mapContainer = $('#map');
         this.resultsContainer = $('#results');
+        this.facetsContainer = $('#facets');
         $.getJSON("conf", _.bind(function (d) {
             this.conf = d;
             this.markerZoomLevel = d.markerZoomLevel;
+            this.facetMaxChars = d.facetMaxChars;
+            this.markersList = [];
             this.prepareMap();
             this.search();
         }, this));
         return this;
     },
+    removeMarkers: function(){
+        for(var i = 0; i<this.markersList.length; i++){
+            this.markers.removeLayer(this.markersList[i]);
+        }
+    },
     search: function () {
-        var url = "data?action=BYQUERY&q=" + $("#q").val() +
-                "&od=" + $("#od").val() + "&do=" + $("#do").val() +
+        
+        var params = $("#searchForm").serialize();
+        var url = "data?action=BYQUERY&" + params +
                 "&geom=" + this.getMapsBoundsFilter() +
                 "&center=" + this.map.getCenter();
         $.getJSON(url, _.bind(function (d) {
+            this.removeMarkers();
+            this.markersList = [];
             this.results = d;
             this.numFound = d.response.numFound;
             this.renderSearchResults();
@@ -53,11 +64,12 @@ arup.MAP = {
             return;
         }
         
+        this.setView();
         for (var i = 0; i < docs.length; i++) {
             var li = $('<li/>');
-            var latlng = {lat: docs[i].lat, lng: docs[i].lng};
-            li.append('<div>'+docs[i].nazev+'</div>');
-            li.append('<div>'+docs[i].typ1+'</div>');
+            li.append('<div>'+docs[i].title+'</div>');
+            li.append('<div>'+docs[i].database+'</div>');
+            li.append('<div>'+docs[i].Type_area+'</div>');
             if (docs[i].hasOwnProperty("url")) {
                 var a = $("<a/>");
                 a.attr("href", docs[i].url);
@@ -70,12 +82,86 @@ arup.MAP = {
                 ar.updatePopup($(this).data("docid"));
             }, this));
             this.resultsContainer.append(li);
-            
-            L.marker([docs[i].lat, docs[i].lng]).bindPopup(li.html()).addTo(this.markers);
-
+            var marker = L.marker([docs[i].lat, docs[i].lng]);
+            this.markersList.push(marker);
+            marker.bindPopup(li.html()).addTo(this.markers);
+            this.renderFacets();
         }
         
         //this.updatePopup(0);
+    },
+    localize: function(key){
+        return key;
+    },
+    addFilter: function(field, value){
+        if ($("#searchForm>input." + field).length === 0) {
+            var index = $("#searchForm>input[name='fq']").length + 1;
+            var input = $('<input name="fq" type="hidden" class="filter ' + field + '" />');
+            $(input).attr("id", "fq_" + index);
+            input.val(field + ":" + value);
+            $("#searchForm").append(input);
+        } else {
+            $("#searchForm>input." + field).val(field + ":" + value);
+        }
+        this.isHome = false;
+        $("#offset").val(0);
+        this.search();
+    },
+    renderFacets: function(){
+        this.facetsContainer.empty();
+        var facets =  this.conf.facets;
+        $.each(facets, _.bind(function(idx, facet){
+            if(!this.results.facet_counts.facet_fields.hasOwnProperty(facet)){
+                return;
+            }
+                var facetvals = this.results.facet_counts.facet_fields[facet];
+                if (facetvals.length < 3)
+                    return;
+                this.facetsContainer.append("<h3>" + this.localize(facet) + "</h3>");
+                var fdiv = $("<div/>");
+                var ul = $("<ul/>");
+                for (var i = 0; i < facetvals.length; i = i + 2) {
+                    if (facetvals[i] !== "null") {
+                        var li = $("<li/>", {class: "link"});
+                        li.data("facet", facet);
+                        li.data("value", facetvals[i]);
+
+                        var plus = $("<span/>", {class: "plus", title: "přidat"});
+                        plus.text('+');
+                        //plus.button();
+                        plus.click(function () {
+                            arup.MAP.addFilter($(this).parent().data("facet"), '"' + $(this).parent().data("value") + '"');
+                        });
+
+                        li.append(plus);
+
+                        var minus = $("<span/>", {class: "plus", title: "vyloučit"});
+                        minus.text('-');
+                        //minus.button();
+                        minus.click(function () {
+                            arup.MAP.addExFilter($(this).parent().data("facet"), '"' + $(this).parent().data("value") + '"');
+                        });
+                        li.append(minus);
+
+                        var label = $("<span/>");
+                        var txt = facetvals[i];
+                        if(txt.length > this.facetMaxChars){
+                            label.attr("title", txt);
+                            txt = txt.substring(0, this.facetMaxChars-1) + "...";
+                        }
+                        label.text(txt + " (" + facetvals[i + 1] + ")");
+                        label.click(function () {
+                            arup.MAP.addFilter($(this).parent().data("facet"), '"' + $(this).parent().data("value") + '"');
+                        });
+                        li.append(label);
+
+                        ul.append(li);
+                    }
+                }
+
+                fdiv.append(ul);
+                this.facetsContainer.append(fdiv);
+            }, this));
     },
     onMapClick: function (e) {
 //        var url = "data?action=BYPOINT&lat=" + e.latlng.lat + "&lng=" + e.latlng.lng + "&dist=" + this.dist;
@@ -89,9 +175,11 @@ arup.MAP = {
         var doc = this.results.response.docs[docid];
         var obdobi = "";
 
-        var c = doc.nazev + " at " + doc.lat + ", " + doc.lng + "<br/>" +
+        var c = doc.title + " at " + doc.lat + ", " + doc.lng + "<br/>" +
+                '<img class="img-popup" src="img?id='+ doc.id +'" />' + '<br/>' +
                 obdobi + " (" + doc.od + " - " + doc.do + ")";
         var latlng = {lat: doc.lat, lng: doc.lng};
+        
         this.popup
                 .setLatLng(latlng)
                 .setContent(c)
@@ -116,8 +204,6 @@ arup.MAP = {
         var distY = (maxY - minY) / rows;
         console.log(gridLevel, rows, columns, distX, distY);
         var counts_ints2D = facet[15];
-        var maxVal = 0;
-        var maxValCoords = {};
         for (var i = 0; i < counts_ints2D.length; i++) {
             if (counts_ints2D[i] !== null && counts_ints2D[i] !== "null") {
                 var row = counts_ints2D[i];
@@ -131,62 +217,21 @@ arup.MAP = {
                             [lat - distY, lng + distX]
                         ]);
                         mapdata.push({lat: bounds.getCenter().lat, lng: bounds.getCenter().lng, count: count});
-                        if (count > maxVal) {
-                            maxValCoords.lat = bounds.getCenter().lat;
-                            maxValCoords.lng = bounds.getCenter().lng;
-                            maxValCoords.count = count;
-                            maxValCoords.i = i;
-                            maxValCoords.j = j;
-                            maxVal = count;
-                        }
+                        
                     }
                 }
             }
         }
-        //console.log(maxValCoords);
-
-//            this.results = d;
-//            this.numFound = d.response.numFound;
-//            this.renderSearchResults();
         return mapdata;
-    },
-    getHeatMapData: function () {
-
-        //console.log(geom);
-        var url = "data?action=HEATMAP&geom=" + this.getMapsBoundsFilter();
-        $.getJSON(url, _.bind(function (d) {
-            this.results = d;
-            this.numFound = d.response.numFound;
-            this.data = this.processHeatMapFacet();
-            //console.log(mapdata);
-            this.mapData = {
-                max: 10,
-                data: this.data
-            };
-            this.heatmapLayer.setData(this.mapData);
-
-        }, this));
     },
     setMarkers: function () {
 
-    },
-    getData: function () {
-        var url = "data?action=ALL&geom=" + this.getMapsBoundsFilter();
-        $.getJSON(url, _.bind(function (d) {
-            this.results = d;
-            this.numFound = d.response.numFound;
-            this.data = this.results.response.docs;
-            this.mapData = {
-                data: this.data
-            };
-            this.heatmapLayer.setData(this.mapData);
-        }, this));
     },
     prepareMap: function () {
         var baseLayer = L.tileLayer(
                 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                     attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
-                    maxZoom: 18
+                    maxZoom: this.conf.maxZoom
                 }
         );
 
@@ -247,8 +292,9 @@ arup.MAP = {
         this.map.on('moveend', _.bind(this.onZoomEnd, this));
 
     },
-    onZoomEnd: function () {
-        if(this.map.getZoom()<this.markerZoomLevel){
+    setView: function(){
+        var isHeat = this.map.getZoom()<this.markerZoomLevel && this.numFound > 30;
+        if(isHeat){
             if(this.map.hasLayer(this.markers)){
                 this.map.removeLayer(this.markers);
             }
@@ -263,6 +309,8 @@ arup.MAP = {
                 this.map.removeLayer(this.heatmapLayer);
             }
         }
+    },
+    onZoomEnd: function () {
         this.search();
     }
 

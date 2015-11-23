@@ -82,188 +82,215 @@ public class DataServlet extends HttpServlet {
     enum Actions {
 
         INDEX {
-                    @Override
-                    void doPerform(HttpServletRequest req, HttpServletResponse resp) throws Exception {
-                        resp.setContentType("application/json;charset=UTF-8");
-                        try (PrintWriter out = resp.getWriter()) {
-                            int success = 0;
-                            int errors = 0;
-                            SolrClient sclient = SolrIndex.getServer();
-                            JSONObject ret = new JSONObject();
-                            JSONArray ja = new JSONArray();
-                            String filename = req.getParameter("filename");
-                            String maps = req.getParameter("fmap");
-                            JSONObject jmap = new JSONObject(FileUtils.readFileToString(new File(maps), "UTF-8"));
-                            //Otocim
-                            Set keyset = jmap.keySet();
-                            Object[] keys = keyset.toArray();
-                            for (Object s : keys) {
-                                String key = (String) s;
-                                jmap.put(jmap.getString(key), key);
-                            }
-                            
-                            CSVReader reader = new CSVReader(new InputStreamReader(new FileInputStream(filename), "UTF-8"), '#', '\"', false);
-                            
-                            String[] headerLine = reader.readNext();
-                            if (headerLine != null) {
-                                Map<String, Integer> fNames = new HashMap<>();
-                                for (int j = 0; j < headerLine.length; j++) {
-                                    fNames.put(headerLine[j], j);
-                                }
-                                String[] nextLine = null;
-                                while ((nextLine = reader.readNext()) != null) {
-                                    try {
-                                        SolrInputDocument doc = new SolrInputDocument();
-                                        for (int j = 0; j < nextLine.length; j++) {
-                                            doc.addField(jmap.getString(headerLine[j]), nextLine[j]);
-                                        }
+            @Override
+            void doPerform(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+                resp.setContentType("application/json;charset=UTF-8");
+                try (PrintWriter out = resp.getWriter()) {
+                    Options opts = Options.getInstance();
+                    int success = 0;
+                    int errors = 0;
+                    SolrClient sclient = SolrIndex.getServer();
+                    JSONObject ret = new JSONObject();
+                    JSONArray ja = new JSONArray();
+                    String[] filenames = req.getParameterValues("filename");
+                    JSONArray sources;
+                    if (filenames == null || filenames.length == 0) {
+                        sources = opts.getJSONArray("indexSources");
+                    } else {
+                        sources = new JSONArray(filenames);
+                    }
+                    String maps = req.getParameter("fmap");
 
-                                        String loc = nextLine[fNames.get(jmap.getString("lat"))] + "," + nextLine[fNames.get(jmap.getString("lng"))];
-                                        doc.addField("loc", loc);
-                                        doc.addField("loc_rpt", loc);
-                                        sclient.add(doc);
-                                        success++;
-                                        if (success % 500 == 0) {
-                                            sclient.commit();
-                                            LOGGER.log(Level.INFO, "Indexed {0} docs", success);
-                                        }
-                                    } catch (Exception ex) {
-                                        errors++;
-                                        ja.put(nextLine);
-                                        LOGGER.log(Level.SEVERE, "Error indexing doc {0}", nextLine);
-                                        LOGGER.log(Level.SEVERE, null,ex);
+                    for (int i = 0; i < sources.length(); i++) {
+                        String filename = sources.getJSONObject(i).getString("file");
+                        String db = sources.getJSONObject(i).getString("db");
+
+                        if (maps == null || maps.equals("")) {
+                            maps = sources.getJSONObject(i).getString("map");
+                        }
+                        JSONObject jmap = new JSONObject(FileUtils.readFileToString(new File(maps), "UTF-8"));
+                        //Otocim
+                        Set keyset = jmap.keySet();
+                        Object[] keys = keyset.toArray();
+                        for (Object s : keys) {
+                            String key = (String) s;
+                            jmap.put(jmap.getString(key), key);
+                        }
+
+                        CSVReader reader = new CSVReader(new InputStreamReader(new FileInputStream(filename), "UTF-8"), '#', '\"', false);
+                        LOGGER.log(Level.INFO, "indexing file {0}", filename);
+                        String[] headerLine = reader.readNext();
+                        if (headerLine != null) {
+                            Map<String, Integer> fNames = new HashMap<>();
+                            for (int j = 0; j < headerLine.length; j++) {
+                                fNames.put(headerLine[j], j);
+                                if (!jmap.has(headerLine[j])) {
+                                    jmap.put(headerLine[j], headerLine[j]);
+                                }
+                            }
+                            String[] nextLine = null;
+                            while ((nextLine = reader.readNext()) != null) {
+                                try {
+                                    SolrInputDocument doc = new SolrInputDocument();
+                                    for (int j = 0; j < nextLine.length; j++) {
+                                        doc.addField(jmap.getString(headerLine[j]), nextLine[j]);
                                     }
-                                    
+
+                                    String loc = nextLine[fNames.get(jmap.getString("lat"))] + "," + nextLine[fNames.get(jmap.getString("lng"))];
+                                    doc.addField("loc", loc);
+                                    doc.addField("loc_rpt", loc);
+                                    doc.addField("database", db);
+                                    sclient.add(doc);
+                                    success++;
+                                    if (success % 500 == 0) {
+                                        sclient.commit();
+                                        LOGGER.log(Level.INFO, "Indexed {0} docs", success);
+                                    }
+                                } catch (Exception ex) {
+                                    errors++;
+                                    ja.put(nextLine);
+                                    LOGGER.log(Level.SEVERE, "Error indexing doc {0}", nextLine);
+                                    LOGGER.log(Level.SEVERE, null, ex);
                                 }
-                            }
-                            sclient.commit();
-                            ret.put("docs indexed", success);
-                            ret.put("errors", errors);
-                            ret.put("errors msgs", ja);
 
-                            out.println(ret.toString());
+                            }
                         }
+                        sclient.commit();
+                        ret.put("docs indexed", success);
+                        ret.put("errors", errors);
+                        ret.put("errors msgs", ja);
                     }
-                },
+                    LOGGER.log(Level.INFO, "Indexed Finished. {0} success, {1} errors", new Object[]{success, errors});
+                    out.println(ret.toString());
+                }
+            }
+        },
         ALL {
-                    @Override
-                    void doPerform(HttpServletRequest req, HttpServletResponse resp) throws Exception {
-                        resp.setContentType("application/json;charset=UTF-8");
-                        try (PrintWriter out = resp.getWriter()) {
+            @Override
+            void doPerform(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+                resp.setContentType("application/json;charset=UTF-8");
+                try (PrintWriter out = resp.getWriter()) {
 
-                            SolrQuery query = new SolrQuery();
-                            query.setQuery("*:*");
-                            String geom = req.getParameter("geom");
-                            if (geom != null && "".equals(geom)) {
-                                String[] coords = geom.split(";");
-                                String gf = String.format("[%s,%s TO %s,%s]", 
-                                        coords[0], coords[1], coords[2], coords[3]);
-                                query.set("fq", "loc_rpt:" + gf);
-                            }
-                            query.setRows(ROWS);
-                            //query.setFields("lat,lng");
-                            JSONObject json = new JSONObject(SolrIndex.json(query));
-
-                            out.println(json.toString());
-                        }
+                    SolrQuery query = new SolrQuery();
+                    query.setQuery("*:*");
+                    String geom = req.getParameter("geom");
+                    if (geom != null && "".equals(geom)) {
+                        String[] coords = geom.split(";");
+                        String gf = String.format("[%s,%s TO %s,%s]",
+                                coords[0], coords[1], coords[2], coords[3]);
+                        query.set("fq", "loc_rpt:" + gf);
                     }
-                },
+                    query.setRows(ROWS);
+                    //query.setFields("lat,lng");
+                    JSONObject json = new JSONObject(SolrIndex.json(query));
+
+                    out.println(json.toString());
+                }
+            }
+        },
         HEATMAP {
-                    @Override
-                    void doPerform(HttpServletRequest req, HttpServletResponse resp) throws Exception {
-                        resp.setContentType("application/json;charset=UTF-8");
-                        try (PrintWriter out = resp.getWriter()) {
-                            String geom = req.getParameter("geom");
-                            String[] coords = geom.split(";");
-                            String gf = String.format("[%s %s TO %s %s]", 
-                                    coords[0], coords[1], coords[2], coords[3]);
-                            SolrQuery query = new SolrQuery();
+            @Override
+            void doPerform(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+                resp.setContentType("application/json;charset=UTF-8");
+                try (PrintWriter out = resp.getWriter()) {
+                    String geom = req.getParameter("geom");
+                    String[] coords = geom.split(";");
+                    String gf = String.format("[%s %s TO %s %s]",
+                            coords[0], coords[1], coords[2], coords[3]);
+                    SolrQuery query = new SolrQuery();
 
-                            query.setQuery("*:*");
-                            query.setRows(0);
-                            query.setFacet(true);
-                            query.set("facet.heatmap", "loc_rpt");
-                            query.set("facet.heatmap.distErrPct", "0.02");
-                            query.set("facet.heatmap.geom", gf);
-                            JSONObject json = new JSONObject(SolrIndex.json(query));
+                    query.setQuery("*:*");
+                    query.setRows(0);
+                    query.setFacet(true);
+                    query.set("facet.heatmap", "loc_rpt");
+                    query.set("facet.heatmap.distErrPct", "0.02");
+                    query.set("facet.heatmap.geom", gf);
+                    JSONObject json = new JSONObject(SolrIndex.json(query));
 
-                            out.println(json.toString());
-                        }
-                    }
-                },
+                    out.println(json.toString());
+                }
+            }
+        },
         BYPOINT {
-                    @Override
-                    void doPerform(HttpServletRequest req, HttpServletResponse resp) throws Exception {
-                        resp.setContentType("application/json;charset=UTF-8");
-                        try (PrintWriter out = resp.getWriter()) {
+            @Override
+            void doPerform(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+                resp.setContentType("application/json;charset=UTF-8");
+                try (PrintWriter out = resp.getWriter()) {
 
-                            String lat = req.getParameter("lat");
-                            String lng = req.getParameter("lng");
-                            String dist = req.getParameter("dist");
-                            String fq = String.format("{!geofilt pt=%s,%s sfield=loc_rpt d=%s}", lat, lng, dist);
-                            SolrQuery query = new SolrQuery();
+                    String lat = req.getParameter("lat");
+                    String lng = req.getParameter("lng");
+                    String dist = req.getParameter("dist");
+                    String fq = String.format("{!geofilt pt=%s,%s sfield=loc_rpt d=%s}", lat, lng, dist);
+                    SolrQuery query = new SolrQuery();
 
-                            query.setQuery("*:*");
-                            query.set("fq", fq);
-                            query.setRows(ROWS);
-                            //query.setSort("geodist()", SolrQuery.ORDER.asc);
-                            JSONObject json = new JSONObject(SolrIndex.json(query));
+                    query.setQuery("*:*");
+                    query.set("fq", fq);
+                    query.setRows(ROWS);
+                    //query.setSort("geodist()", SolrQuery.ORDER.asc);
+                    JSONObject json = new JSONObject(SolrIndex.json(query));
 
-                            out.println(json.toString());
-                        }
-                    }
-                },
+                    out.println(json.toString());
+                }
+            }
+        },
         BYQUERY {
-                    @Override
-                    void doPerform(HttpServletRequest req, HttpServletResponse resp) throws Exception {
-                        resp.setContentType("application/json;charset=UTF-8");
-                        try (PrintWriter out = resp.getWriter()) {
-                            String q = req.getParameter("q");
-                            String od = req.getParameter("od");
-                            String to = req.getParameter("do");
-                            if (q == null || "".equals(q)) {
-                                q = "*:*";
-                            }
-                            SolrQuery query = new SolrQuery();
-                            query.setQuery(q);
-                            if (od != null && !"".equals(od)) {
-                                query.add("fq", "od:["+od+" TO "+to+"] OR do:["+od+" TO "+to+"]");
-                                
-                            }
-                            String geom = req.getParameter("geom");
-                            if (geom != null && !"".equals(geom)) {
-                                
-                                String[] coords = geom.split(";");
-                                String gf = String.format("[%s,%s TO %s,%s]", 
-                                        coords[1], coords[0], coords[3], coords[2]);
-                                
-                                double latCenter = (Double.parseDouble(coords[3]) + Double.parseDouble(coords[1])) * .5;
-                                double lngCenter = (Double.parseDouble(coords[0]) + Double.parseDouble(coords[2])) * .5;
-                                double dist = (Double.parseDouble(coords[2]) - Double.parseDouble(coords[0])) * .02;
-                                query.add("fq", "loc_rpt:" + gf);
-                                
-//                                String sort = String.format("query({!bbox v='' filter=false score=distance })", latCenter, lngCenter, dist);
-                                String sort = "query({!bbox v='' filter=false score=distance })";
-                                query.setSort(sort, SolrQuery.ORDER.asc);
-                                query.set("d", Double.toString(dist));
-                                query.set("pt", latCenter+","+lngCenter);
-                                query.set("sfield", "loc_rpt");
-                                query.setFacet(true);
-                                query.set("facet.heatmap", "loc_rpt");
-                                query.set("facet.heatmap.distErrPct", Double.toString(dist));
-                                query.set("facet.heatmap.maxCells", 200000);
-                                query.set("facet.heatmap.maxLevel", 7);
-                                
-                                query.set("facet.heatmap.geom", String.format("[%s %s TO %s %s]", 
-                                    coords[0], coords[1], coords[2], coords[3]));
-                            }
-                            query.setRows(ROWS);
-                            JSONObject json = new JSONObject(SolrIndex.json(query));
-
-                            out.println(json.toString());
+            @Override
+            void doPerform(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+                resp.setContentType("application/json;charset=UTF-8");
+                try (PrintWriter out = resp.getWriter()) {
+                    String q = req.getParameter("q");
+                    String od = req.getParameter("od");
+                    String to = req.getParameter("do");
+                    if (q == null || "".equals(q)) {
+                        q = "*:*";
+                    }
+                    SolrQuery query = new SolrQuery();
+                    query.setQuery(q);
+                    if (od != null && !"".equals(od)) {
+                        query.add("fq", "od:[" + od + " TO " + to + "] OR do:[" + od + " TO " + to + "]");
+                    }
+                    
+                    if (req.getParameterValues("fq") != null) {
+                        for (String fq : req.getParameterValues("fq")) {
+                            query.addFilterQuery(fq);
                         }
                     }
-                };
+                    
+                    String geom = req.getParameter("geom");
+                    if (geom != null && !"".equals(geom)) {
+
+                        String[] coords = geom.split(";");
+                        String gf = String.format("[%s,%s TO %s,%s]",
+                                coords[1], coords[0], coords[3], coords[2]);
+
+                        double latCenter = (Double.parseDouble(coords[3]) + Double.parseDouble(coords[1])) * .5;
+                        double lngCenter = (Double.parseDouble(coords[0]) + Double.parseDouble(coords[2])) * .5;
+                        double dist = (Double.parseDouble(coords[2]) - Double.parseDouble(coords[0])) * .02;
+                        query.add("fq", "loc_rpt:" + gf);
+
+//                                String sort = String.format("query({!bbox v='' filter=false score=distance })", latCenter, lngCenter, dist);
+                        String sort = "query({!bbox v='' filter=false score=distance })";
+                        query.setSort(sort, SolrQuery.ORDER.asc);
+                        query.set("d", Double.toString(dist));
+                        query.set("pt", latCenter + "," + lngCenter);
+                        query.set("sfield", "loc_rpt");
+                        query.setFacet(true);
+                        query.set("facet.heatmap", "loc_rpt");
+                        query.set("facet.heatmap.distErrPct", Double.toString(dist));
+                        query.set("facet.heatmap.maxCells", 200000);
+                        query.set("facet.heatmap.maxLevel", 7);
+
+                        query.set("facet.heatmap.geom", String.format("[%s %s TO %s %s]",
+                                coords[0], coords[1], coords[2], coords[3]));
+                    }
+                    query.setRows(ROWS);
+                    query.addFacetField(Options.getInstance().getStrings("facets"));
+                    JSONObject json = new JSONObject(SolrIndex.json(query));
+
+                    out.println(json.toString());
+                }
+            }
+        };
 
         abstract void doPerform(HttpServletRequest req, HttpServletResponse resp) throws Exception;
     }

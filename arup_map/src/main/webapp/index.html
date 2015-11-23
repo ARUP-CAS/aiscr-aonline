@@ -5,8 +5,17 @@
     <title>Institute of Archaeology Prague</title>
     <style>
       body, html { margin:0; padding:0; height:100%; font-size: 11pt; font-family: arial;}
-      h1 { position:absolute; background:white; padding:10px;}
+      #header{
+          height: 64px;
+      }
+      #content{
+           
+          position: relative;
+          height:calc(100% - 64px);
+          width: 100%;
+      }
       #map { 
+          position: relative;
           height:100%; 
           width: calc(100% - 350px);
           float: left;
@@ -27,8 +36,16 @@
           border-bottom: 1px solid darkblue;
       }
       
+      #results li:hover{
+          background: burlywood;
+      }
+      
       .leaflet-container {
         background: rgba(0,0,0,.8) !important;
+      }
+      
+      .leaflet-container img.img-popup{
+          max-width: 100% !important;   
       }
     </style>
     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
@@ -41,19 +58,22 @@
     
   </head>
   <body>
-   <h1 style="z-index: 10;background: transparent;">Institute of Archaeology Prague</h1>
-   <div id="map"></div>
-   <div id="actions">
-       <form id="searchForm">
-       </form>
-       <input type="text" id="q" name="q" /><br/>
-       <input type="text" id="od" name="od" />
-       <input type="text" id="do" name="do" />
-       <input type="submit" value="->" onClick="arup.MAP.search()" />
-       <h3 id="numFound" ></h3>
-       <ul id="results"></ul>
+      
+   <div id="header"><h1 style="z-index: 10;background: transparent;">Institute of Archaeology Prague</h1></div>
+   <div id="content">
+    <div id="map"></div>
+    <div id="actions">
+        <form id="searchForm">
+            <input type="text" id="q" name="q" /><br/>
+            <input type="text" id="od" name="od" />
+            <input type="text" id="do" name="do" />
+        </form>
+            <input type="submit" value="->" onClick="arup.MAP.search()" />
+        <h3 id="numFound" ></h3>
+        <ul id="results"></ul>
+        <div id="facets"></div>
+    </div>
    </div>
-   
     <script>
       
       window.onload = function() {
