@@ -1,0 +1,363 @@
+/*** CSS by Incad ***/
+body {
+  background-color: #EFEFEF;
+  /*color: #949494
+  color:#778E98*/
+}
+
+h1 {
+  font-size: 20px;
+}
+
+h2 {
+  font-size: 18px;
+}
+
+h3 {
+  font-size: 14px;
+}
+
+h1, h2, h3 {
+  margin: 0;
+  margin-bottom: 10px;
+}
+
+img.pull-left {
+  margin-right: 10px;
+  /*alberto velikost obrazku na home */
+  width: 80px;
+  height: 60px;
+}
+
+/* alberto rozsliseni titulku na seznamu */
+#home_mapa span.title{
+    font-weight: bold;
+}
+
+
+/*** Segoe font ***/
+.arup-segoe-ui-light {
+  font-family: wf_segoe-ui_light,"Segoe UI Light","Segoe WP Light","Segoe UI","Segoe WP",Tahoma,Arial,sans-serif;
+}
+
+.arup-segoe-ui-bold {
+  font-family: wf_segoe-ui_bold,"Segoe UI Bold","Segoe WP Bold","Segoe UI","Segoe WP",Tahoma,Arial,sans-serif;
+}
+
+
+/*** Cleaners ***/
+.arup-clean-conner {
+  border-radius: 0;
+}
+
+.arup-clean-border,
+.arup-navbar-form .form-control:focus {
+  border: 0;
+}
+
+.arup-clean-border-bottom {
+  border-bottom: 0 !important;
+}
+
+.arup-clean-radius {
+  border-radius: 0;
+}
+
+.arup-clean-box-shadow {
+  box-shadow: none !important;
+}
+
+/*** mg, pd ***/
+.arup-mg-bottom-30 {
+  margin-bottom: 30px;
+}
+
+
+/*** Colors - font ***/
+.arup-color-white,
+.arup-color-white a {
+  color: #ffffff !important;
+}
+
+.arup-color-gray-pastel,
+.arup-color-gray-pastel a {
+  color: #778E98;
+}
+
+.arup-color-gray-pastel-dark {
+  color: #637780;
+}
+
+.arup-color-gray,
+.arup-color-gray a {
+  color: #868686;
+}
+
+.arup-color-gray a:hover {
+  color: #595959;
+}
+
+.arup-color-gray-dark,
+.arup-color-gray-dark a {
+  color: #595959;
+}
+
+.arup-color-gray-dark a:hover {
+  color: #868686;
+}
+
+.arup-color-blue {
+  color: #2d85ae;
+}
+
+.arup-color-pink {
+  color: #e85344;
+}
+
+.arup-color-orange {
+  color: #f39c12;
+}
+
+
+/*** Colors - bg ***/
+.arup-bg-white {
+  background-color: #ffffff !important;
+}
+
+.arup-bg-black {
+  background-color: #232323;
+}
+
+/*** Colors - border ***/
+.arup-border-white,
+.arup-border-white:hover {
+  border-color: #ffffff;
+}
+
+
+/*** Page container ***/
+.arup-page-container {
+  padding-left: 0;
+  padding-right: 0;
+  height: 100vh;
+  box-shadow: 0 0 5px silver;
+  /*-webkit-box-shadow: 4px 2px  #222,  -4px 0 2px #222;
+  -moz-box-shadow: 4px 0 2px #222,  -4px 0 2px #222;
+  box-shadow: 4px 0 2px #222,  -4px 0 2px #222;*/
+  /*box-shadow: 0 9px 0px 0px white, 0 -9px 0px 0px white, 0 0 8px -4px silver, 0 0 8px -4px silver;*/
+}
+
+
+/*** Header ***/
+.arup-logo {
+  padding: 35px 0 10px 15px;
+}
+
+.arup-logo a {
+  display: block;
+  width: 214px;
+  height: 14px;
+  background: url('../img/logo-archeologie-online.png');
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+.arup-logo span {
+  display:none;
+}
+
+/*** Navbar ***/
+/*
+.arup-navbar-form .btn {
+  padding: 7px 12px 3px;
+}
+
+.arup-navbar-form .btn .glyphicon {
+  font-size: 18px;
+}
+*/
+
+
+.arup-navbar {
+  padding-bottom: 25px;
+  margin-bottom: 0;
+  background-color: #778E98;
+}
+
+.arup-navbar-nav li {
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+.arup-navbar-nav li a {
+  padding-top: 7px;
+  padding-bottom: 7px;
+}
+
+.arup-navbar-nav li a:hover,
+.arup-navbar-nav li a:focus {
+  background-color: #63767F;
+}
+
+.arup-navbar-nav li.arup-nav-mapa a:hover,
+.arup-navbar-nav li.arup-nav-mapa a:focus {
+  background-color: #3184AD !important;
+}
+
+.arup-navbar-nav li.arup-nav-zdroje a:hover,
+.arup-navbar-nav li.arup-nav-zdroje a:focus,
+.arup-col-zdroj .btn {
+  background-color: #EC7568 !important;
+}
+
+.arup-navbar-nav li.arup-nav-praxe a:hover,
+.arup-navbar-nav li.arup-nav-praxe a:focus,
+.arup-col-praxe .btn {
+  background-color: #F5AF42 !important;
+}
+
+/*** Content ***/
+.arup-content-container {
+  padding:30px 15px;
+  background: url('../img/bg-content.jpg');
+}
+
+.arup-col-default {
+  background-color: #ffffff;
+  -webkit-box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.08);
+  -moz-box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.08);
+  box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.08);
+  border-top: 5px solid #589CBD;
+  padding: 15px 15px 30px 15px;
+  font-size: 13px;
+  position: relative;
+}
+
+.arup-col-default p {
+  border-bottom: 1px dotted silver;
+  padding-bottom: 10px;
+}
+
+.arup-col-default .btn {
+  position: absolute;
+  bottom:0;
+  right:0;
+  background-color: #589CBD;
+}
+
+.arup-col-zdroj {
+  border-top-color: #EC7568;
+}
+
+.arup-col-praxe {
+  border-top-color: #F5AF42;
+}
+
+
+/*** Footer ***/
+.arup-footer {
+  padding-top: 30px;
+  padding-bottom: 30px;
+  font-size: 13px;
+  background-color: #232323;
+}
+
+.arup-footer img {
+  margin-left: 30px;
+}
+
+
+
+
+/************************/
+/**** MEDIA QUERIES ****/
+/************************/
+
+/*** Min 992 ***/
+@media (min-width: 992px) {
+  .arup-navbar-form input {
+    width: 400px !important;
+  }
+  .arup-col-default {
+    min-height: 540px;
+  }
+}
+
+/*** Max 992 ***/
+@media (max-width: 992px) {
+  .arup-col-default {
+    margin-bottom: 30px;
+  }
+  .arup-footer .text-right {
+    text-align: left;
+    padding-top: 20px;
+    margin-top: 20px;
+    border-top: 1px solid #333333;
+  }
+  .arup-footer img {
+    margin-left: 0;
+    margin-right: 30px;
+  }
+}
+
+
+/*** Min 768 ***/
+@media (min-width: 768px) {
+  .arup-navbar {
+    padding-top: 25px;
+    padding-bottom: 25px;
+  }
+  .arup-navbar-nav {
+    margin-left: 25px;
+    padding-left: 20px;
+    border-left: 1px solid #AAB9BF;
+  }
+  .arup-navbar-nav li:hover:after,
+  .arup-navbar-nav li > a:focus:after {
+    content: ' ';
+    position: absolute;
+    border: solid 7px transparent;
+    border-top: solid 7px transparent;
+    border-width: 7px;
+    left: 50%;
+    top:34px;
+    margin-left: -7px;
+    border-color: #63767F transparent transparent transparent;
+  }
+  .arup-navbar-nav li.arup-nav-mapa:hover:after,
+  .arup-navbar-nav li.arup-nav-mapa > a:focus:after {
+    border-color: #3184AD transparent transparent transparent; 
+  }
+  .arup-navbar-nav li.arup-nav-zdroje:hover:after,
+  .arup-navbar-nav li.arup-nav-zdroje > a:focus:after {
+    border-color: #EC7568 transparent transparent transparent; 
+  }
+  .arup-navbar-nav li.arup-nav-praxe:hover:after,
+  .arup-navbar-nav li.arup-nav-praxe > a:focus:after {
+    border-color: #F5AF42 transparent transparent transparent; 
+  }
+}
+
+/*** Max 768 ***/
+@media (max-width: 768px) {
+  .arup-navbar-header {
+    border-bottom: 1px solid #859AA3;
+  }
+  .arup-navbar-header .navbar-toggle {
+    margin-right: 5px;
+  }
+  .arup-navbar-form {
+    box-shadow: none;
+  }
+  .arup-navbar {
+    padding-bottom: 0;
+  }
+  .
+}
+
+
+/*** Max 767 ***/
+@media (max-width: 767px) {
+  .arup-content-container {
+    padding: 30px 0 0 0;
+}

@@ -1,83 +1,223 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" xmlns:mso="urn:schemas-microsoft-com:office:office" xmlns:msdt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882">
   <head>
     <meta charset="utf-8">
-    <title>Institute of Archaeology Prague</title>
-    <style>
-      body, html { margin:0; padding:0; height:100%; font-size: 11pt; font-family: arial;}
-      #header{
-          height: 64px;
-      }
-      #content{
-           
-          position: relative;
-          height:calc(100% - 64px);
-          width: 100%;
-      }
-      #map { 
-          position: relative;
-          height:100%; 
-          width: calc(100% - 350px);
-          float: left;
-      }
-      #actions { 
-          position: relative;
-          height:100%; 
-          width: 350px;
-          float: left;
-          overflow-y: auto;
-          
-      }
-      #results{
-          padding: 0;
-          margin: 2px;
-      }
-      #results li{
-          border-bottom: 1px solid darkblue;
-      }
-      
-      #results li:hover{
-          background: burlywood;
-      }
-      
-      .leaflet-container {
-        background: rgba(0,0,0,.8) !important;
-      }
-      
-      .leaflet-container img.img-popup{
-          max-width: 100% !important;   
-      }
-    </style>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>Archeologie Online</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Arup CSS -->
+    <link href="css/arup.css" rel="stylesheet">
+    
+    <!-- Font CSS -->
+    <link href="css/segoe-ui-normal.css" rel="stylesheet">
+    <link href="css/segoe-ui-light.css" rel="stylesheet">
+    <link href="css/segoe-ui-semibold.css" rel="stylesheet">
+    <link href="css/segoe-ui-bold.css" rel="stylesheet">
+    
+    
     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
-    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
     <script src="js/underscore-min.js" type="text/javascript" ></script>
     <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
     <script src="js/heatmap.js"></script>
     <script src="js/leaflet-heatmap.js"></script>
-    <script src="js/arup-heatmap.js"></script>
-    
-  </head>
+    <script src="js/leaflet-heatmap.js"></script>
+    <script src="js/arup-home.js"></script>
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="js/ie-emulation-modes-warning.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  
+<!--[if gte mso 9]><xml>
+<mso:CustomDocumentProperties>
+<mso:_dlc_DocId msdt:dt="string">KAAZ7N6DRQ4K-438874667-319</mso:_dlc_DocId>
+<mso:_dlc_DocIdItemGuid msdt:dt="string">e2404769-f718-40cc-a535-f560d1af2096</mso:_dlc_DocIdItemGuid>
+<mso:_dlc_DocIdUrl msdt:dt="string">https://sto365.sharepoint.com/sites/consulting/arup/_layouts/15/DocIdRedir.aspx?ID=KAAZ7N6DRQ4K-438874667-319, KAAZ7N6DRQ4K-438874667-319</mso:_dlc_DocIdUrl>
+</mso:CustomDocumentProperties>
+</xml><![endif]-->
+</head>
+
   <body>
+    <!-- Page container -->
+    <div class="container arup-page-container arup-bg-black">
+      <!-- Bg white -->
+      <div class="arup-bg-white">
       
-   <div id="header"><h1 style="z-index: 10;background: transparent;">Institute of Archaeology Prague</h1></div>
-   <div id="content">
-    <div id="map"></div>
-    <div id="actions">
-        <form id="searchForm">
-            <input type="text" id="q" name="q" /><br/>
-            <input type="text" id="od" name="od" />
-            <input type="text" id="do" name="do" />
-        </form>
-            <input type="submit" value="->" onClick="arup.MAP.search()" />
-        <h3 id="numFound" ></h3>
-        <ul id="results"></ul>
-        <div id="facets"></div>
-    </div>
-   </div>
+        <!-- Header -->
+        <div class="arup-header">
+          <div class="container">
+            <!--<h1 class="arup-segoe-ui-light arup-color-gray arup-logo"><a href="#">ARCHEOLOGIE <span class="arup-segoe-ui-bold arup-color-gray-pastel">ONLINE</span></a></h1>-->
+            <h1 class="arup-logo"><a href="#"><span>ARCHEOLOGIE ONLINE</span></a></h1>
+          </div>
+        </div><!--/.header -->
+
+        <!-- Navbar -->
+        <nav class="navbar arup-navbar arup-color-white arup-clean-conner">
+          <div class="container">
+            <div class="navbar-header arup-navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar arup-bg-white"></span>
+                <span class="icon-bar arup-bg-white"></span>
+                <span class="icon-bar arup-bg-white"></span>
+              </button>
+            </div>
+
+            <!-- Search form -->
+            <form class="navbar-form navbar-left arup-navbar-form">
+              <div class="input-group">
+                <input type="text" placeholder="Search for..." class="form-control arup-clean-radius arup-clean-box-shadow arup-border-white">
+                <span class="input-group-btn">
+                  <button type="button" class="btn btn-default arup-clean-radius arup-border-white"><span class="glyphicon glyphicon-search"> </span></button>
+                </span>
+              </div>
+            </form><!--/.search form -->
+
+            <div id="navbar" class="navbar-collapse collapse">
+              <ul class="nav navbar-nav arup-navbar-nav">
+                <li class="active"><a href="#">Home</a></li>
+                <li class="arup-nav-mapa"><a href="#">Mapa</a></li>
+                <li class="arup-nav-zdroje"><a href="#">Zdroj</a></li>
+                <li class="arup-nav-praxe"><a href="#">Praxe</a></li>
+                <li><a href="#">O webu</a></li>
+              </ul>
+            </div><!--/.nav-collapse -->
+          </div><!--/.container -->
+        </nav><!--/.navbar -->
+
+        <!-- Container content -->
+        <div class="container arup-content-container">
+          <div class="col-md-12 arup-mg-bottom-30 arup-color-gray-pastel-dark">
+            Tyto internetové stránky umožňují přístup k základním datům o jednotlivých archeobotanických výzkumech v České republice (autor botanického určení, archeologická  
+            datace, typ lokality, počet analyzovaných semen/plodů, počet nalezených rostlinných taxonů). Aby byla zaručena ochrana dat jednotlivých autorů, jsou pro vyhledávání  
+            podle taxonů (čeleď/rod/druh) dostupná pouze publikovaná data.  
+          </div>
+          <div class="col-md-4">
+            <div class="arup-col-default">
+              <h2 class="arup-segoe-ui-bold arup-color-blue">Mapa</h2>
+              <div id="home_mapa">
+                <img src="img/thumb-img.jpg" alt="" class="pull-left" /><!-- boot class for thumb -> img-thumbnail  -->
+                <p>
+                  Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi ...
+                  <span class="clearfix"> </span>
+                </p>
+                <img src="img/thumb-img.jpg" alt="" class="pull-left" /><!-- boot class for thumb -> img-thumbnail  -->
+                <p>
+                  Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi ...
+                  <span class="clearfix"> </span>
+                </p>
+               <img src="img/thumb-img.jpg" alt="" class="pull-left" /><!-- boot class for thumb -> img-thumbnail  -->
+                <p>
+                  Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi ...
+                  <span class="clearfix"> </span>
+                </p>
+                <img src="img/thumb-img.jpg" alt="" class="pull-left" /><!-- boot class for thumb -> img-thumbnail  -->
+                <p class="arup-clean-border-bottom">
+                  Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi ...
+                  <span class="clearfix"> </span>
+                </p>
+              </div>
+                <button type="button" class="btn arup-clean-radius arup-color-white">Více</button>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="arup-col-default arup-col-zdroj">
+              <h2 class="arup-segoe-ui-bold arup-color-pink">Zdroj</h2>
+              <p>
+                Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi 
+                architecto beatae vitae dicta sunt explicabo ...
+              </p>
+              <p>
+                Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi 
+                architecto beatae vitae dicta sunt explicabo ...
+              </p>
+              <p>
+                Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi 
+                architecto beatae vitae dicta sunt explicabo ...
+              </p>
+              <p class="arup-clean-border-bottom">
+                Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi 
+                architecto beatae vitae dicta sunt explicabo ...
+              </p>
+              <button type="button" class="btn arup-clean-radius arup-color-white">Více</button>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="arup-col-default arup-col-praxe">
+              <h2 class="arup-segoe-ui-bold arup-color-orange">Praxe</h2>
+              <p>
+                Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi 
+                architecto beatae vitae dicta sunt explicabo ...
+              </p>
+              <p>
+                Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi 
+                architecto beatae vitae dicta sunt explicabo ...
+              </p>
+              <p>
+                Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi 
+                architecto beatae vitae dicta sunt explicabo ...
+              </p>
+              <p class="arup-clean-border-bottom">
+                Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi 
+                architecto beatae vitae dicta sunt explicabo ...
+              </p>
+              <button type="button" class="btn arup-clean-radius arup-color-white">Více</button>
+            </div>
+          </div>
+        </div><!--/.container content -->
+
+        <!-- Footer -->
+        <footer class="arup-footer">
+          <div class="container">
+            <div class="col-md-6 arup-color-gray-dark">
+              <p class="arup-color-gray">
+                © 2015 Archeologie Online. All Rights Reserved.
+              </p>
+              <p>
+                <a href="#" title="Terms, privacy and cookie policy">Terms, privacy and cookie policy</a>
+              </p>
+              <p>
+                <a href="#" title="Email us">E-mail us</a> | <a href="#" title="Kontakt">Kontakt</a>
+              </p>
+            </div>
+            <div class="col-md-6 text-right">
+              <a href="" title=""><img src="img/logo-arup.png" alt="" /></a>
+              <a href="" title=""><img src="img/logo-avcr.png" alt="" /></a>
+              <a href="" title=""><img src="img/logo-av21.png" alt="" /></a>
+            </div>
+          </div>
+        </footer><!--/.footer -->
+
+      </div><!--/.bg white -->
+    </div><!--/.page container -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="js/ie10-viewport-bug-workaround.js"></script>
+    
     <script>
       
       window.onload = function() {
-        var arupmap = arup.MAP.create();
+        var aruphome = arup.HOME.init();
         
       };
     </script>

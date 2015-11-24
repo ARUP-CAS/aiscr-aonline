@@ -165,29 +165,6 @@ public class DataServlet extends HttpServlet {
                 }
             }
         },
-        ALL {
-            @Override
-            void doPerform(HttpServletRequest req, HttpServletResponse resp) throws Exception {
-                resp.setContentType("application/json;charset=UTF-8");
-                try (PrintWriter out = resp.getWriter()) {
-
-                    SolrQuery query = new SolrQuery();
-                    query.setQuery("*:*");
-                    String geom = req.getParameter("geom");
-                    if (geom != null && "".equals(geom)) {
-                        String[] coords = geom.split(";");
-                        String gf = String.format("[%s,%s TO %s,%s]",
-                                coords[0], coords[1], coords[2], coords[3]);
-                        query.set("fq", "loc_rpt:" + gf);
-                    }
-                    query.setRows(ROWS);
-                    //query.setFields("lat,lng");
-                    JSONObject json = new JSONObject(SolrIndex.json(query));
-
-                    out.println(json.toString());
-                }
-            }
-        },
         HEATMAP {
             @Override
             void doPerform(HttpServletRequest req, HttpServletResponse resp) throws Exception {
@@ -265,7 +242,17 @@ public class DataServlet extends HttpServlet {
 
                         double latCenter = (Double.parseDouble(coords[3]) + Double.parseDouble(coords[1])) * .5;
                         double lngCenter = (Double.parseDouble(coords[0]) + Double.parseDouble(coords[2])) * .5;
-                        double dist = (Double.parseDouble(coords[2]) - Double.parseDouble(coords[0])) * .02;
+                        double dist = (Double.parseDouble(coords[2]) - Double.parseDouble(coords[0])) * .01;
+                        
+                        String d = req.getParameter("d");
+                        if(d!=null && !d.equals("")){
+                            try{
+                                dist = Math.min(dist, Double.parseDouble(d));
+                            }catch(Exception e){
+                                
+                            }
+                        }
+                        
                         query.add("fq", "loc_rpt:" + gf);
 
 //                                String sort = String.format("query({!bbox v='' filter=false score=distance })", latCenter, lngCenter, dist);

@@ -40,9 +40,10 @@ public class ImageServlet extends HttpServlet {
             throws ServletException, IOException {
         try (OutputStream out = response.getOutputStream()) {
             String id = request.getParameter("id");
+            String db = request.getParameter("db");
             if (id != null && !id.equals("")) {
 
-                File f = new File(Options.getInstance().getString("imagesDir") + id + ".jpg");
+                File f = new File(Options.getInstance().getJSONObject("imagesDir").getString(db) + id + ".jpg");
                 if (f.exists()) {
                     response.setContentType("image/jpeg");
                     BufferedImage bi = ImageIO.read(f);

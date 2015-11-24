@@ -56,6 +56,49 @@ arup.MAP = {
             
         }, this));
     },
+    setUsedFilters: function () {
+        var hasFilters = false;
+        $("#used_filters").html('');
+        hasFilters = $("#searchForm>input.filter").length > 0 || $('#q').val() !== '';
+        if (hasFilters) {
+            if ($('#q').val() !== '') {
+                var li = $("<button/>", {class: "link"});
+                li.text($('#q').val());
+                li.button({
+                    icons: {
+                        secondary: "ui-icon-close"
+                    }
+                });
+                li.click(function () {
+                    $('#q').val('');
+                    arup.MAP.search();
+                });
+                $("#used_filters").append(li);
+            }
+
+            $("#searchForm>input.filter").each(function () {
+                var id = $(this).attr("id");
+                var name = $(this).attr("name");
+                var field = $(this).val().split(":")[0];
+                var val = $(this).val().split(":")[1];
+                if (name === "ex") {
+                    val = "není " + val;
+                }
+                var li = $("<button/>", {class: "link"});
+                li.text(arup.MAP.localize(field) + ": " + val);
+                li.button({
+                    icons: {
+                        secondary: "ui-icon-close"
+                    }
+                });
+                li.click(function () {
+                    $("#" + id).remove();
+                    arup.MAP.search();
+                });
+                $("#used_filters").append(li);
+            });
+        }
+    },
     renderSearchResults: function () {
         this.resultsContainer.empty();
         var docs = this.results.response.docs;
@@ -78,17 +121,22 @@ arup.MAP = {
                 li.append(a);
             }
             li.data("docid", i);
-            li.on("mouseenter", _.partial(function (ar) {
-                ar.updatePopup($(this).data("docid"));
-            }, this));
             this.resultsContainer.append(li);
-            var marker = L.marker([docs[i].lat, docs[i].lng]);
-            this.markersList.push(marker);
-            marker.bindPopup(li.html()).addTo(this.markers);
+            var marker = L.marker([docs[i].lat, docs[i].lng], {docid: i});
+            this.markersList[i] = marker;
+            marker.on("popupopen", _.partial(function (ar) {
+                this.setPopupContent(ar.popupContent(this.options.docid));
+            }, this));
+            //marker.addTo(this.markers);
+            
+            li.on("mouseenter", _.partial(function (ar) {
+                var docid = $(this).data("docid");
+                ar.markersList[docid].openPopup();
+            }, this));
+            var c = this.popupContent(i);
+            marker.bindPopup(c).addTo(this.markers);
             this.renderFacets();
         }
-        
-        //this.updatePopup(0);
     },
     localize: function(key){
         return key;
@@ -110,6 +158,7 @@ arup.MAP = {
     renderFacets: function(){
         this.facetsContainer.empty();
         var facets =  this.conf.facets;
+        this.setUsedFilters();
         $.each(facets, _.bind(function(idx, facet){
             if(!this.results.facet_counts.facet_fields.hasOwnProperty(facet)){
                 return;
@@ -171,13 +220,17 @@ arup.MAP = {
 //            this.renderSearchResults();
 //        }, this));
     },
-    updatePopup: function (docid) {
+    popupContent: function(docid){
         var doc = this.results.response.docs[docid];
         var obdobi = "";
 
         var c = doc.title + " at " + doc.lat + ", " + doc.lng + "<br/>" +
                 '<img class="img-popup" src="img?id='+ doc.id +'" />' + '<br/>' +
                 obdobi + " (" + doc.od + " - " + doc.do + ")";
+        return c;
+    },
+    updatePopup: function (docid) {
+        var c = this.popupContent(docid);
         var latlng = {lat: doc.lat, lng: doc.lng};
         
         this.popup
@@ -202,7 +255,6 @@ arup.MAP = {
         var maxY = facet[13];
         var distX = (maxX - minX) / columns;
         var distY = (maxY - minY) / rows;
-        console.log(gridLevel, rows, columns, distX, distY);
         var counts_ints2D = facet[15];
         for (var i = 0; i < counts_ints2D.length; i++) {
             if (counts_ints2D[i] !== null && counts_ints2D[i] !== "null") {
@@ -276,24 +328,18 @@ arup.MAP = {
 
 
         this.markers = new L.featureGroup();
+            
         this.map.addLayer(this.heatmapLayer);
-        //this.map.addLayer(this.markers);
-
-//        this.overlayMaps = {
-//            "heat": this.heatmapLayer,
-//            "markers": this.markers
-//        };
-//        L.control.layers(this.overlayMaps).addTo(this.map);
             
         this.popup = L.popup();
 
         this.map.on('click', _.bind(this.onMapClick, this));
         //this.map.on('zoomend', _.bind(this.onZoomEnd, this));
-        this.map.on('moveend', _.bind(this.onZoomEnd, this));
+        this.map.on('dragend', _.bind(this.onZoomEnd, this));
 
     },
     setView: function(){
-        var isHeat = this.map.getZoom()<this.markerZoomLevel && this.numFound > 30;
+        var isHeat = this.map.getZoom()<this.markerZoomLevel && this.numFound > this.conf.displayRows;
         if(isHeat){
             if(this.map.hasLayer(this.markers)){
                 this.map.removeLayer(this.markers);
