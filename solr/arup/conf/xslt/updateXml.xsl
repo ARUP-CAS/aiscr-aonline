@@ -45,6 +45,10 @@
 	    <xsl:attribute name="name">loc</xsl:attribute>
 	<xsl:value-of select="concat(./float[@name='lat'], ',', ./float[@name='lng'])"/>
 	</xsl:element>
+        <xsl:element name="field">
+	    <xsl:attribute name="name">loc_rpt</xsl:attribute>
+	<xsl:value-of select="concat(./float[@name='lat'], ',', ./float[@name='lng'])"/>
+	</xsl:element>
     </doc>
   </xsl:template>
 
@@ -63,11 +67,12 @@
 
   <xsl:template match="doc/*">
       <xsl:variable name="fn" select="@name"/>
-
+      <xsl:if test="not($fn = '_version_') and not($fn = 'timestamp') and not($fn = 'loc') and not($fn = 'loc_rpt')" >
 	<xsl:element name="field">
 	    <xsl:attribute name="name"><xsl:value-of select="$fn"/></xsl:attribute>
         <xsl:value-of select="."/>
 	</xsl:element>
+       </xsl:if>
   </xsl:template>
 
   <xsl:template match="*"/>

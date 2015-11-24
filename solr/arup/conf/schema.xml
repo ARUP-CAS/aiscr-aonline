@@ -69,20 +69,21 @@
      tokens
    -->   
    
-   <field name="fid" type="string" indexed="true" stored="true" />
    
    <field name="id" type="string" indexed="true" stored="true" required="true" multiValued="false"  /> 
-   <field name="nazev" type="text_general_cs" indexed="true" stored="true" />
+   <field name="database" type="string" indexed="true" stored="true" />
+   
+   <field name="title" type="text_general_cs" indexed="true" stored="true" />
    
    <field name="od" type="tint" indexed="true" stored="true" />
    <field name="do" type="tint" indexed="true" stored="true"  />
    
    <field name="url" type="string" indexed="true" stored="true"  />
    
-   <field name="typ1" type="string" indexed="true" stored="true"  />
-   <field name="typ2" type="string" indexed="true" stored="true"  />
-   <field name="popis1" type="string" indexed="true" stored="true"  />
-   <field name="popis2" type="string" indexed="true" stored="true"  />
+   <field name="Type_area" type="string" indexed="true" stored="true"  />
+   <field name="Type_site" type="string" indexed="true" stored="true"  />
+   <field name="Description_1" type="string" indexed="true" stored="true"  />
+   <field name="Description_2" type="string" indexed="true" stored="true"  />
    
    <field name="loc" type="location" indexed="true" stored="true" />
    <field name="loc_rpt" type="location_rpt" indexed="true" stored="true" />
@@ -185,9 +186,8 @@
     <fieldType name="location" class="solr.LatLonType" subFieldSuffix="_coordinate"/>
     <fieldType name="location_rpt"   class="solr.SpatialRecursivePrefixTreeFieldType"
                geo="true"
-               distErrPct="0.02"
-               maxDistErr="0.001"
-               distanceUnits="kilometers" />
+               distErrPct="0.01" 
+               distanceUnits="degrees" maxLevels="7" />
 
     <!-- The format for this date field is of the form 1995-12-31T23:59:59Z, and
          is a more restricted form of the canonical representation of dateTime
