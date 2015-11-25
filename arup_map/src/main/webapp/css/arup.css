@@ -1,8 +1,6 @@
 /*** CSS by Incad ***/
 body {
   background-color: #EFEFEF;
-  /*color: #949494
-  color:#778E98*/
 }
 
 h1 {
@@ -141,10 +139,6 @@ img.pull-left {
   padding-right: 0;
   height: 100vh;
   box-shadow: 0 0 5px silver;
-  /*-webkit-box-shadow: 4px 2px  #222,  -4px 0 2px #222;
-  -moz-box-shadow: 4px 0 2px #222,  -4px 0 2px #222;
-  box-shadow: 4px 0 2px #222,  -4px 0 2px #222;*/
-  /*box-shadow: 0 9px 0px 0px white, 0 -9px 0px 0px white, 0 0 8px -4px silver, 0 0 8px -4px silver;*/
 }
 
 
@@ -167,15 +161,10 @@ img.pull-left {
 }
 
 /*** Navbar ***/
-/*
 .arup-navbar-form .btn {
-  padding: 7px 12px 3px;
-}
-
-.arup-navbar-form .btn .glyphicon {
+  padding: 4px 12px 2px 12px;
   font-size: 18px;
 }
-*/
 
 
 .arup-navbar {
@@ -195,23 +184,27 @@ img.pull-left {
 }
 
 .arup-navbar-nav li a:hover,
-.arup-navbar-nav li a:focus {
+.arup-navbar-nav li a:focus,
+.arup-navbar-nav li.arup-nav-default-active {
   background-color: #63767F;
 }
 
 .arup-navbar-nav li.arup-nav-mapa a:hover,
-.arup-navbar-nav li.arup-nav-mapa a:focus {
+.arup-navbar-nav li.arup-nav-mapa a:focus,
+.arup-navbar-nav li.arup-nav-mapa-active {
   background-color: #3184AD !important;
 }
 
-.arup-navbar-nav li.arup-nav-zdroje a:hover,
-.arup-navbar-nav li.arup-nav-zdroje a:focus,
+.arup-navbar-nav li.arup-nav-zdroj a:hover,
+.arup-navbar-nav li.arup-nav-zdroj a:focus,
+.arup-navbar-nav li.arup-nav-zdroj-active,
 .arup-col-zdroj .btn {
   background-color: #EC7568 !important;
 }
 
 .arup-navbar-nav li.arup-nav-praxe a:hover,
 .arup-navbar-nav li.arup-nav-praxe a:focus,
+.arup-navbar-nav li.arup-nav-praxe-active,
 .arup-col-praxe .btn {
   background-color: #F5AF42 !important;
 }
@@ -238,11 +231,27 @@ img.pull-left {
   padding-bottom: 10px;
 }
 
+.arup-col-default h2 span {
+  font-size: 14px;
+}
+
 .arup-col-default .btn {
   position: absolute;
   bottom:0;
   right:0;
   background-color: #589CBD;
+}
+
+.arup-col-default .btn:hover {
+  background-color: #2d85ae !important;
+}
+
+.arup-col-zdroj .btn:hover {
+  background-color: #e85344 !important;
+}
+
+.arup-col-praxe .btn:hover {
+  background-color: #f39c12 !important;
 }
 
 .arup-col-zdroj {
@@ -265,8 +274,6 @@ img.pull-left {
 .arup-footer img {
   margin-left: 30px;
 }
-
-
 
 
 /************************/
@@ -300,7 +307,6 @@ img.pull-left {
   }
 }
 
-
 /*** Min 768 ***/
 @media (min-width: 768px) {
   .arup-navbar {
@@ -313,7 +319,11 @@ img.pull-left {
     border-left: 1px solid #AAB9BF;
   }
   .arup-navbar-nav li:hover:after,
-  .arup-navbar-nav li > a:focus:after {
+  .arup-navbar-nav li > a:focus:after,
+  .arup-navbar-nav li.arup-nav-default-active:after,
+  .arup-navbar-nav li.arup-nav-mapa-active:after,
+  .arup-navbar-nav li.arup-nav-zdroj-active:after,
+  .arup-navbar-nav li.arup-nav-praxe-active:after {
     content: ' ';
     position: absolute;
     border: solid 7px transparent;
@@ -322,18 +332,26 @@ img.pull-left {
     left: 50%;
     top:34px;
     margin-left: -7px;
-    border-color: #63767F transparent transparent transparent;
+    /*border-color: #63767F transparent transparent transparent;*/
+  }
+  .arup-navbar-nav li.arup-nav-default:hover:after,
+  .arup-navbar-nav li.arup-nav-default > a:focus:after,
+  .arup-navbar-nav li.arup-nav-default-active:after {
+    border-color: #63767F transparent transparent transparent; 
   }
   .arup-navbar-nav li.arup-nav-mapa:hover:after,
-  .arup-navbar-nav li.arup-nav-mapa > a:focus:after {
-    border-color: #3184AD transparent transparent transparent; 
+  .arup-navbar-nav li.arup-nav-mapa > a:focus:after,
+  .arup-navbar-nav li.arup-nav-mapa-active:after {
+    border-color: #3184AD transparent transparent transparent !important; 
   }
-  .arup-navbar-nav li.arup-nav-zdroje:hover:after,
-  .arup-navbar-nav li.arup-nav-zdroje > a:focus:after {
+  .arup-navbar-nav li.arup-nav-zdroj:hover:after,
+  .arup-navbar-nav li.arup-nav-zdroj > a:focus:after,
+  .arup-navbar-nav li.arup-nav-zdroj-active:after {
     border-color: #EC7568 transparent transparent transparent; 
   }
   .arup-navbar-nav li.arup-nav-praxe:hover:after,
-  .arup-navbar-nav li.arup-nav-praxe > a:focus:after {
+  .arup-navbar-nav li.arup-nav-praxe > a:focus:after,
+  .arup-navbar-nav li.arup-nav-praxe-active:after {
     border-color: #F5AF42 transparent transparent transparent; 
   }
 }
@@ -352,12 +370,11 @@ img.pull-left {
   .arup-navbar {
     padding-bottom: 0;
   }
-  .
 }
-
 
 /*** Max 767 ***/
 @media (max-width: 767px) {
   .arup-content-container {
     padding: 30px 0 0 0;
+}
 }

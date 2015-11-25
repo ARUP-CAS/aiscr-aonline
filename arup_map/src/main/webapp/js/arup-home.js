@@ -11,7 +11,10 @@ var arup = {};
 
 arup.HOME = {
     init: function () {
-        this.resultsContainer = $('#home_mapa');
+        this.resultsContainer = $('#home_mapa>div.res');
+        this.resultsHeader = $('#home_mapa>h2');
+        this.welcomeContainer = $('#home_text');
+        this.foundContainer = $('#home_found');
         $.getJSON("conf", _.bind(function (d) {
             this.conf = d;
             this.resultsNum = d.homeResultsNum;
@@ -20,12 +23,23 @@ arup.HOME = {
         return this;
     },
     search: function () {
-        
         var params = $("#searchForm").serialize();
-        var url = "data?action=BYQUERY&fq=database:Atlas";
+        var url = "data?action=BYQUERY&fq=database:Atlas&" + params;
         $.getJSON(url, _.bind(function (d) {
             this.results = d;
             this.numFound = d.response.numFound;
+            if($("#q").val() !== ""){
+                this.welcomeContainer.hide();
+                this.foundContainer.show();
+                this.foundContainer.find("strong").text(this.numFound);
+                this.resultsHeader.find("span").show();
+                this.resultsHeader.find("span>strong").text(this.numFound);
+                this.foundContainer.find("span.q").text($("#q").val());
+            }else{
+                this.welcomeContainer.show();
+                this.foundContainer.hide();
+                this.resultsHeader.find("span").hide();
+            }
             this.renderSearchResults();
             this.data = this.results.response.docs;
             

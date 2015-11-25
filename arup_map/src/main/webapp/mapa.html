@@ -22,15 +22,6 @@
     <link href="css/segoe-ui-light.css" rel="stylesheet">
     <link href="css/segoe-ui-semibold.css" rel="stylesheet">
     <link href="css/segoe-ui-bold.css" rel="stylesheet">
-    
-    
-    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
-    <script src="js/underscore-min.js" type="text/javascript" ></script>
-    <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
-    <script src="js/heatmap.js"></script>
-    <script src="js/leaflet-heatmap.js"></script>
-    <script src="js/leaflet-heatmap.js"></script>
-    <script src="js/arup-home.js"></script>
 
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="js/ie8-responsive-file-warning.js"></script><![endif]-->
@@ -44,9 +35,9 @@
   
 <!--[if gte mso 9]><xml>
 <mso:CustomDocumentProperties>
-<mso:_dlc_DocId msdt:dt="string">KAAZ7N6DRQ4K-438874667-319</mso:_dlc_DocId>
-<mso:_dlc_DocIdItemGuid msdt:dt="string">e2404769-f718-40cc-a535-f560d1af2096</mso:_dlc_DocIdItemGuid>
-<mso:_dlc_DocIdUrl msdt:dt="string">https://sto365.sharepoint.com/sites/consulting/arup/_layouts/15/DocIdRedir.aspx?ID=KAAZ7N6DRQ4K-438874667-319, KAAZ7N6DRQ4K-438874667-319</mso:_dlc_DocIdUrl>
+<mso:_dlc_DocId msdt:dt="string">KAAZ7N6DRQ4K-438874667-355</mso:_dlc_DocId>
+<mso:_dlc_DocIdItemGuid msdt:dt="string">ab39de1e-6430-427e-b619-213500267773</mso:_dlc_DocIdItemGuid>
+<mso:_dlc_DocIdUrl msdt:dt="string">https://sto365.sharepoint.com/sites/consulting/arup/_layouts/15/DocIdRedir.aspx?ID=KAAZ7N6DRQ4K-438874667-355, KAAZ7N6DRQ4K-438874667-355</mso:_dlc_DocIdUrl>
 </mso:CustomDocumentProperties>
 </xml><![endif]-->
 </head>
@@ -89,11 +80,11 @@
 
             <div id="navbar" class="navbar-collapse collapse">
               <ul class="nav navbar-nav arup-navbar-nav">
-                <li class="arup-nav-default arup-nav-default-active"><a href="#">Home</a></li><!-- active item class -> arup-nav-default-active -->
-                <li class="arup-nav-mapa"><a href="#">Mapa</a></li><!-- active item class -> arup-nav-mapa-active -->
-                <li class="arup-nav-zdroj"><a href="#">Zdroj</a></li><!-- active item class -> arup-nav-zdroj-active -->
-                <li class="arup-nav-praxe"><a href="#">Praxe</a></li><!-- active item class -> arup-nav-praxe-active -->
-                <li class="arup-nav-default"><a href="#">O webu</a></li><!-- active item class -> arup-nav-default-active -->
+                <li class="active"><a href="#">Home</a></li>
+                <li class="arup-nav-mapa"><a href="#">Mapa</a></li>
+                <li class="arup-nav-zdroje"><a href="#">Zdroj</a></li>
+                <li class="arup-nav-praxe"><a href="#">Praxe</a></li>
+                <li><a href="#">O webu</a></li>
               </ul>
             </div><!--/.nav-collapse -->
           </div><!--/.container -->
@@ -109,29 +100,27 @@
           <div class="col-md-4">
             <div class="arup-col-default">
               <h2 class="arup-segoe-ui-bold arup-color-blue">Mapa</h2>
-              <div id="home_mapa">
-                <img src="img/thumb-img.jpg" alt="" class="pull-left" /><!-- boot class for thumb -> img-thumbnail  -->
-                <p>
-                  Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi ...
-                  <span class="clearfix"> </span>
-                </p>
-                <img src="img/thumb-img.jpg" alt="" class="pull-left" /><!-- boot class for thumb -> img-thumbnail  -->
-                <p>
-                  Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi ...
-                  <span class="clearfix"> </span>
-                </p>
-               <img src="img/thumb-img.jpg" alt="" class="pull-left" /><!-- boot class for thumb -> img-thumbnail  -->
-                <p>
-                  Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi ...
-                  <span class="clearfix"> </span>
-                </p>
-                <img src="img/thumb-img.jpg" alt="" class="pull-left" /><!-- boot class for thumb -> img-thumbnail  -->
-                <p class="arup-clean-border-bottom">
-                  Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi ...
-                  <span class="clearfix"> </span>
-                </p>
-              </div>
-                <button type="button" class="btn arup-clean-radius arup-color-white">Více</button>
+              <img src="img/thumb-img.jpg" alt="" class="pull-left" /><!-- boot class for thumb -> img-thumbnail  -->
+              <p>
+                Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi ...
+                <span class="clearfix"> </span>
+              </p>
+              <img src="img/thumb-img.jpg" alt="" class="pull-left" /><!-- boot class for thumb -> img-thumbnail  -->
+              <p>
+                Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi ...
+                <span class="clearfix"> </span>
+              </p>
+             <img src="img/thumb-img.jpg" alt="" class="pull-left" /><!-- boot class for thumb -> img-thumbnail  -->
+              <p>
+                Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi ...
+                <span class="clearfix"> </span>
+              </p>
+              <img src="img/thumb-img.jpg" alt="" class="pull-left" /><!-- boot class for thumb -> img-thumbnail  -->
+              <p class="arup-clean-border-bottom">
+                Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi ...
+                <span class="clearfix"> </span>
+              </p>
+              <button type="button" class="btn arup-clean-radius arup-color-white">Více</button>
             </div>
           </div>
           <div class="col-md-4">
@@ -213,13 +202,5 @@
     <script src="js/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="js/ie10-viewport-bug-workaround.js"></script>
-    
-    <script>
-      
-      window.onload = function() {
-        var aruphome = arup.HOME.init();
-        
-      };
-    </script>
   </body>
 </html>

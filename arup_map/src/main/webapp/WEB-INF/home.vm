@@ -78,11 +78,11 @@
             </div>
 
             <!-- Search form -->
-            <form class="navbar-form navbar-left arup-navbar-form">
+            <form class="navbar-form navbar-left arup-navbar-form" id="searchForm" onsubmit="arup.HOME.search(); return false;">
               <div class="input-group">
-                <input type="text" placeholder="Search for..." class="form-control arup-clean-radius arup-clean-box-shadow arup-border-white">
+                <input id="q" name="q" type="text" placeholder="Search for..." class="form-control arup-clean-radius arup-clean-box-shadow arup-border-white">
                 <span class="input-group-btn">
-                  <button type="button" class="btn btn-default arup-clean-radius arup-border-white"><span class="glyphicon glyphicon-search"> </span></button>
+                  <button onclick="arup.HOME.search()" type="button" class="btn btn-default arup-clean-radius arup-border-white"><span class="glyphicon glyphicon-search"> </span></button>
                 </span>
               </div>
             </form><!--/.search form -->
@@ -101,15 +101,19 @@
 
         <!-- Container content -->
         <div class="container arup-content-container">
-          <div class="col-md-12 arup-mg-bottom-30 arup-color-gray-pastel-dark">
+
+          <div class="col-md-12 arup-mg-bottom-30" id="home_found">
+            Na dotaz '<span class="q">vykopavky</span>' bylo nalezeno celkem <strong>1 833</strong> záznamů.
+          </div>
+          <div class="col-md-12 arup-mg-bottom-30 arup-color-gray-pastel-dark" id="home_text">
             Tyto internetové stránky umožňují přístup k základním datům o jednotlivých archeobotanických výzkumech v České republice (autor botanického určení, archeologická  
             datace, typ lokality, počet analyzovaných semen/plodů, počet nalezených rostlinných taxonů). Aby byla zaručena ochrana dat jednotlivých autorů, jsou pro vyhledávání  
             podle taxonů (čeleď/rod/druh) dostupná pouze publikovaná data.  
           </div>
           <div class="col-md-4">
-            <div class="arup-col-default">
-              <h2 class="arup-segoe-ui-bold arup-color-blue">Mapa</h2>
-              <div id="home_mapa">
+            <div class="arup-col-default" id="home_mapa">
+              <h2 class="arup-segoe-ui-bold arup-color-blue">Mapa<span> (<strong>456</strong> záznamů)</span></h2>
+              <div class="res">
                 <img src="img/thumb-img.jpg" alt="" class="pull-left" /><!-- boot class for thumb -> img-thumbnail  -->
                 <p>
                   Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi ...
@@ -180,27 +184,7 @@
           </div>
         </div><!--/.container content -->
 
-        <!-- Footer -->
-        <footer class="arup-footer">
-          <div class="container">
-            <div class="col-md-6 arup-color-gray-dark">
-              <p class="arup-color-gray">
-                © 2015 Archeologie Online. All Rights Reserved.
-              </p>
-              <p>
-                <a href="#" title="Terms, privacy and cookie policy">Terms, privacy and cookie policy</a>
-              </p>
-              <p>
-                <a href="#" title="Email us">E-mail us</a> | <a href="#" title="Kontakt">Kontakt</a>
-              </p>
-            </div>
-            <div class="col-md-6 text-right">
-              <a href="" title=""><img src="img/logo-arup.png" alt="" /></a>
-              <a href="" title=""><img src="img/logo-avcr.png" alt="" /></a>
-              <a href="" title=""><img src="img/logo-av21.png" alt="" /></a>
-            </div>
-          </div>
-        </footer><!--/.footer -->
+        #parse("footer.vm")
 
       </div><!--/.bg white -->
     </div><!--/.page container -->
@@ -223,3 +207,4 @@
     </script>
   </body>
 </html>
+

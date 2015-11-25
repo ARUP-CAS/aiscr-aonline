@@ -1,0 +1,22 @@
+<tools>
+    <data type="boolean" key="xhtml" value="true"/>
+    <data type="boolean" key="isSimple" value="true"/>
+    <data type="number" key="version" value="2.0"/>
+    <toolbox scope="request">
+        <tool key="esc" class="org.apache.velocity.tools.generic.EscapeTool" />
+        <tool key="import" class="org.apache.velocity.tools.view.ImportTool" />
+        <tool class="org.apache.velocity.tools.generic.ConversionTool"
+              dateFormat="yyyy-MM-dd"/>
+        <tool key="link" class="org.apache.velocity.tools.view.LinkTool" />
+        <tool key="date" class="org.apache.velocity.tools.generic.DateTool" />
+        <tool class="org.apache.velocity.tools.view.ParameterTool" />
+        
+        
+     
+    </toolbox>
+    <toolbox scope="session">
+        <tool key="map" class="java.util.HashMap"/>
+    </toolbox>
+    <toolbox scope="application">
+   </toolbox>
+</tools>
