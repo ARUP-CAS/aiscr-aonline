@@ -2,19 +2,14 @@
 /* global _, L */
 
 
-/**
- * 
- * @type the namespace
- */
-var arup = {};
 
 
 arup.MAP = {
     create: function () {
         this.dist = 5;
         this.mapContainer = $('#map');
-        this.resultsContainer = $('#results');
-        this.facetsContainer = $('#facets');
+        this.resultsContainer = $('#results>ul');
+        
         $.getJSON("conf", _.bind(function (d) {
             this.conf = d;
             this.markerZoomLevel = d.markerZoomLevel;
@@ -58,45 +53,36 @@ arup.MAP = {
     },
     setUsedFilters: function () {
         var hasFilters = false;
-        $("#used_filters").html('');
         hasFilters = $("#searchForm>input.filter").length > 0 || $('#q').val() !== '';
-        if (hasFilters) {
-            if ($('#q').val() !== '') {
-                var li = $("<button/>", {class: "link"});
-                li.text($('#q').val());
-                li.button({
-                    icons: {
-                        secondary: "ui-icon-close"
-                    }
-                });
+        $("#facets li.facet").removeClass("arup-facet-active");
+        $("#facets li.facet a i").remove();
+        
+        for(var i=0; i<$("#facets li.facet").length; i++){
+            
+        
+        
+            var field = $($("#facets li.facet")[i]).data("field");
+            var li = $("#facets li." + field);
+            var a = li.find("a");
+                
+            if($("#searchForm>input.filter."+field).length>0){
+                var input = $("#searchForm>input.filter."+field);
+                var id = input.attr("id");
+                var field = input.val().split(":")[0];
+                var val = input.val().split(":")[1];
+                a.text(arup.MAP.localize(val));
                 li.click(function () {
-                    $('#q').val('');
+                    var field = $(this).data('field');
+                    $("#searchForm>input.filter."+field).remove();
                     arup.MAP.search();
                 });
-                $("#used_filters").append(li);
+                
+                li.addClass("arup-facet-active");
+                a.append(' <i class="glyphicon glyphicon-ok"></i>');
+            }else{
+                
+                a.text($(li).data("label"));
             }
-
-            $("#searchForm>input.filter").each(function () {
-                var id = $(this).attr("id");
-                var name = $(this).attr("name");
-                var field = $(this).val().split(":")[0];
-                var val = $(this).val().split(":")[1];
-                if (name === "ex") {
-                    val = "není " + val;
-                }
-                var li = $("<button/>", {class: "link"});
-                li.text(arup.MAP.localize(field) + ": " + val);
-                li.button({
-                    icons: {
-                        secondary: "ui-icon-close"
-                    }
-                });
-                li.click(function () {
-                    $("#" + id).remove();
-                    arup.MAP.search();
-                });
-                $("#used_filters").append(li);
-            });
         }
     },
     renderSearchResults: function () {
@@ -110,16 +96,16 @@ arup.MAP = {
         this.setView();
         for (var i = 0; i < docs.length; i++) {
             var li = $('<li/>');
-            li.append('<div>'+docs[i].title+'</div>');
-            li.append('<div>'+docs[i].database+'</div>');
-            li.append('<div>'+docs[i].Type_area+'</div>');
-            if (docs[i].hasOwnProperty("url")) {
+//            li.append('<div>'+docs[i].title+'</div>');
+//            li.append('<div>'+docs[i].database+'</div>');
+//            li.append('<div>'+docs[i].Type_area+'</div>');
+            //if (docs[i].hasOwnProperty("url")) {
                 var a = $("<a/>");
                 a.attr("href", docs[i].url);
                 a.attr("target", "docdetail");
-                a.text("->");
+                a.text(docs[i].title);
                 li.append(a);
-            }
+            //}
             li.data("docid", i);
             this.resultsContainer.append(li);
             var marker = L.marker([docs[i].lat, docs[i].lng], {docid: i});
@@ -135,8 +121,8 @@ arup.MAP = {
             }, this));
             var c = this.popupContent(i);
             marker.bindPopup(c).addTo(this.markers);
-            this.renderFacets();
         }
+        this.renderFacets();
     },
     localize: function(key){
         return key;
@@ -146,17 +132,18 @@ arup.MAP = {
             var index = $("#searchForm>input[name='fq']").length + 1;
             var input = $('<input name="fq" type="hidden" class="filter ' + field + '" />');
             $(input).attr("id", "fq_" + index);
+            $(input).data("field", field);
             input.val(field + ":" + value);
             $("#searchForm").append(input);
         } else {
             $("#searchForm>input." + field).val(field + ":" + value);
         }
-        this.isHome = false;
+        
+        
         $("#offset").val(0);
         this.search();
     },
     renderFacets: function(){
-        this.facetsContainer.empty();
         var facets =  this.conf.facets;
         this.setUsedFilters();
         $.each(facets, _.bind(function(idx, facet){
@@ -166,31 +153,14 @@ arup.MAP = {
                 var facetvals = this.results.facet_counts.facet_fields[facet];
                 if (facetvals.length < 3)
                     return;
-                this.facetsContainer.append("<h3>" + this.localize(facet) + "</h3>");
-                var fdiv = $("<div/>");
-                var ul = $("<ul/>");
+                
+                var ul = $("#"+facet + ">ul");
+                ul.empty();
                 for (var i = 0; i < facetvals.length; i = i + 2) {
                     if (facetvals[i] !== "null") {
                         var li = $("<li/>", {class: "link"});
                         li.data("facet", facet);
                         li.data("value", facetvals[i]);
-
-                        var plus = $("<span/>", {class: "plus", title: "přidat"});
-                        plus.text('+');
-                        //plus.button();
-                        plus.click(function () {
-                            arup.MAP.addFilter($(this).parent().data("facet"), '"' + $(this).parent().data("value") + '"');
-                        });
-
-                        li.append(plus);
-
-                        var minus = $("<span/>", {class: "plus", title: "vyloučit"});
-                        minus.text('-');
-                        //minus.button();
-                        minus.click(function () {
-                            arup.MAP.addExFilter($(this).parent().data("facet"), '"' + $(this).parent().data("value") + '"');
-                        });
-                        li.append(minus);
 
                         var label = $("<span/>");
                         var txt = facetvals[i];
@@ -207,9 +177,6 @@ arup.MAP = {
                         ul.append(li);
                     }
                 }
-
-                fdiv.append(ul);
-                this.facetsContainer.append(fdiv);
             }, this));
     },
     onMapClick: function (e) {
@@ -225,7 +192,7 @@ arup.MAP = {
         var obdobi = "";
 
         var c = doc.title + " at " + doc.lat + ", " + doc.lng + "<br/>" +
-                '<img class="img-popup" src="img?id='+ doc.id +'" />' + '<br/>' +
+                '<img class="img-popup" src="img?id='+ doc.id +'&db='+ doc.database +'" />' + '<br/>' +
                 obdobi + " (" + doc.od + " - " + doc.do + ")";
         return c;
     },
@@ -334,7 +301,7 @@ arup.MAP = {
         this.popup = L.popup();
 
         this.map.on('click', _.bind(this.onMapClick, this));
-        //this.map.on('zoomend', _.bind(this.onZoomEnd, this));
+        this.map.on('zoomend', _.bind(this.onZoomEnd, this));
         this.map.on('dragend', _.bind(this.onZoomEnd, this));
 
     },

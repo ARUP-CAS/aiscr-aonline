@@ -6,9 +6,6 @@
 package cz.incad.arup.arup_map;
 
 import au.com.bytecode.opencsv.CSVReader;
-import java.awt.Rectangle;
-import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -264,7 +261,7 @@ public class DataServlet extends HttpServlet {
                         query.setFacet(true);
                         query.set("facet.heatmap", "loc_rpt");
                         query.set("facet.heatmap.distErrPct", Double.toString(dist));
-                        query.set("facet.heatmap.maxCells", 200000);
+                        query.set("facet.heatmap.maxCells", 400000);
                         query.set("facet.heatmap.maxLevel", 7);
 
                         query.set("facet.heatmap.geom", String.format("[%s %s TO %s %s]",

@@ -2,11 +2,6 @@
 /* global _, L */
 
 
-/**
- * 
- * @type the namespace
- */
-var arup = {};
 
 
 arup.HOME = {

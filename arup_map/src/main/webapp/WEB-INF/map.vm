@@ -9,11 +9,10 @@
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
-    <title>Archeologie Online</title>
+    <title>$i18n.app.title</title>
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
-    <!--<link href="css/bootstrap.vertical-tabs.css" rel="stylesheet"-->
     
     <!-- Arup CSS -->
     <link href="css/arup.css" rel="stylesheet">
@@ -25,6 +24,15 @@
     <link href="css/segoe-ui-light.css" rel="stylesheet">
     <link href="css/segoe-ui-semibold.css" rel="stylesheet">
     <link href="css/segoe-ui-bold.css" rel="stylesheet">
+    
+    
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+    <script src="js/underscore-min.js" type="text/javascript" ></script>
+    <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+    <script src="js/heatmap.js"></script>
+    <script src="js/leaflet-heatmap.js"></script>
+    <script src="js/arup.js"></script>
+    <script src="js/arup-heatmap.js"></script>
 
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="js/ie8-responsive-file-warning.js"></script><![endif]-->
@@ -38,9 +46,9 @@
   
 <!--[if gte mso 9]><xml>
 <mso:CustomDocumentProperties>
-<mso:_dlc_DocId msdt:dt="string">KAAZ7N6DRQ4K-438874667-355</mso:_dlc_DocId>
-<mso:_dlc_DocIdItemGuid msdt:dt="string">ab39de1e-6430-427e-b619-213500267773</mso:_dlc_DocIdItemGuid>
-<mso:_dlc_DocIdUrl msdt:dt="string">https://sto365.sharepoint.com/sites/consulting/arup/_layouts/15/DocIdRedir.aspx?ID=KAAZ7N6DRQ4K-438874667-355, KAAZ7N6DRQ4K-438874667-355</mso:_dlc_DocIdUrl>
+<mso:_dlc_DocId msdt:dt="string">KAAZ7N6DRQ4K-438874667-319</mso:_dlc_DocId>
+<mso:_dlc_DocIdItemGuid msdt:dt="string">e2404769-f718-40cc-a535-f560d1af2096</mso:_dlc_DocIdItemGuid>
+<mso:_dlc_DocIdUrl msdt:dt="string">https://sto365.sharepoint.com/sites/consulting/arup/_layouts/15/DocIdRedir.aspx?ID=KAAZ7N6DRQ4K-438874667-319, KAAZ7N6DRQ4K-438874667-319</mso:_dlc_DocIdUrl>
 </mso:CustomDocumentProperties>
 </xml><![endif]-->
 </head>
@@ -49,68 +57,29 @@
     <!-- Page container -->
     <div class="container arup-page-container arup-bg-black">
       <!-- Bg white -->
-      <div class="arup-bg-white">
+      <div class="arup-bg-white" style="height: 100%;">
       
-        <!-- Header -->
-        <div class="arup-header">
-          <div class="container">
-            <!--<h1 class="arup-segoe-ui-light arup-color-gray arup-logo"><a href="#">ARCHEOLOGIE <span class="arup-segoe-ui-bold arup-color-gray-pastel">ONLINE</span></a></h1>-->
-            <h1 class="arup-logo"><a href="#"><span>ARCHEOLOGIE ONLINE</span></a></h1>
-          </div>
-        </div><!--/.header -->
+        #parse("header.vm")
 
-        <!-- Navbar -->
-        <nav class="navbar arup-navbar arup-color-white arup-clean-conner">
-          <div class="container">
-            <div class="navbar-header arup-navbar-header">
-              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar arup-bg-white"></span>
-                <span class="icon-bar arup-bg-white"></span>
-                <span class="icon-bar arup-bg-white"></span>
-              </button>
-            </div>
 
-            <!-- Search form -->
-            <form class="navbar-form navbar-left arup-navbar-form">
-              <div class="input-group">
-                <input type="text" placeholder="Search for..." class="form-control arup-clean-radius arup-clean-box-shadow arup-border-white">
-                <span class="input-group-btn">
-                  <button type="button" class="btn btn-default arup-clean-radius arup-border-white"><span class="glyphicon glyphicon-search"> </span></button>
-                </span>
-              </div>
-            </form><!--/.search form -->
-
-            <div id="navbar" class="navbar-collapse collapse">
-              <ul class="nav navbar-nav arup-navbar-nav">
-                <li class="arup-nav-default"><a href="index.html">Home</a></li><!-- active item class -> arup-nav-default-active -->
-                <li class="arup-nav-mapa arup-nav-mapa-active"><a href="mapa.html">Mapa</a></li><!-- active item class -> arup-nav-mapa-active -->
-                <li class="arup-nav-zdroj"><a href="#">Zdroj</a></li><!-- active item class -> arup-nav-zdroj-active -->
-                <li class="arup-nav-praxe"><a href="#">Praxe</a></li><!-- active item class -> arup-nav-praxe-active -->
-                <li class="arup-nav-default"><a href="#">O webu</a></li><!-- active item class -> arup-nav-default-active -->
-              </ul>
-            </div><!--/.nav-collapse -->
-          </div><!--/.container -->
-        </nav><!--/.navbar -->
-
-        <!-- Container mapa -->
+<!-- Container mapa -->
         <div class="container arup-mapa-container">
             <!-- Map -->
-            <div class="col-md-12" id="arup-map">
-              <!-- Zde bude mapa -->
+            <div class="col-md-12" id="arup-map" style="padding:0;margin:0;">
+              <div id="map" style="height: 100%;"></div>
             </div><!--/.map -->
             
             <!-- Tabs -->
             <div class="arup-widget-pane arup-color-gray-dark">
-              <ul class="nav nav-tabs arup-clean-border">
-                <li class="active"><a href="#results" data-toggle="tab">Výsledky</a></li>
-                <li><a href="#database" data-toggle="tab">Databáze</a></li>
-                <li><a href="#type_location" data-toggle="tab">Typ lokality</a></li>
-                <li><a href="#type_activity" data-toggle="tab">Typ aktivity</a></li>
-                <li><a href="#timeline" data-toggle="tab">Časová osa</a></li>
+              <ul class="nav nav-tabs arup-clean-border" id="facets">
+                <li class="active"><a href="#results" data-toggle="tab">$i18n.results</a></li>
+                <li class="facet database" data-field="database" data-label="$i18n.facet.database"><a href="#database" data-toggle="tab">$i18n.facet.database</a></li>
+                <li class="facet Type_site" data-field="Type_site" data-label="$i18n.facet.loc"><a href="#Type_site" data-toggle="tab">$i18n.facet.loc</a></li>
+                <li class="facet Type_area" data-field="Type_area" data-label="$i18n.facet.activity"><a href="#Type_area" data-toggle="tab">$i18n.facet.activity</a></li>
+                <li><a href="#timeline" data-toggle="tab">$i18n.timeline</a></li>
                 <li class="arup-facet-active"><a href="#">Aktivni facet <i class="glyphicon glyphicon-ok"></i></a></li><!-- vzor html pro aktivni facet -->
               </ul>
-              <div class="tab-content">
+              <div class="tab-content" style="max-width: 40%;">
                 <div class="tab-pane active" id="results">
                   <ul class="list-unstyled">
                     <li><a href="">Archeobotanická databáze ČR</a></li>
@@ -131,7 +100,7 @@
                     <li><a href="">Kostel</a></li>
                   </ul>
                 </div>
-                <div class="tab-pane" id="type_location">
+                <div class="tab-pane" id="Type_area">
                   <ul class="list-unstyled">
                     <li><a href="">Hrad</a></li>
                     <li><a href="">Mohylník</a></li>
@@ -141,7 +110,7 @@
                     <li><a href="">Kostel</a></li>
                   </ul>
                 </div>
-                <div class="tab-pane" id="type_activity">
+                <div class="tab-pane" id="Type_site">
                   <ul class="list-unstyled">
                     <li><a href="">Hrad</a></li>
                     <li><a href="">Mohylník</a></li>
@@ -199,27 +168,8 @@
             </div><!--/.tabs -->
         </div><!--/.container mapa -->
 
-        <!-- Footer -->
-        <footer class="arup-footer">
-          <div class="container">
-            <div class="col-md-6 arup-color-gray-dark">
-              <p class="arup-color-gray">
-                © 2015 Archeologie Online. All Rights Reserved.
-              </p>
-              <p>
-                <a href="#" title="Terms, privacy and cookie policy">Terms, privacy and cookie policy</a>
-              </p>
-              <p>
-                <a href="#" title="Email us">E-mail us</a> | <a href="#" title="Kontakt">Kontakt</a>
-              </p>
-            </div>
-            <div class="col-md-6 text-right">
-              <a href="" title=""><img src="img/logo-arup.png" alt="" /></a>
-              <a href="" title=""><img src="img/logo-avcr.png" alt="" /></a>
-              <a href="" title=""><img src="img/logo-av21.png" alt="" /></a>
-            </div>
-          </div>
-        </footer><!--/.footer -->
+
+        #parse("footer.vm")
 
       </div><!--/.bg white -->
     </div><!--/.page container -->
@@ -232,5 +182,14 @@
     <script src="js/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="js/ie10-viewport-bug-workaround.js"></script>
+    
+    <script>
+      
+      window.onload = function() {
+        arup.init();
+        arup.current = arup.MAP.create();
+      };
+    </script>
   </body>
 </html>
+

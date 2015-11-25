@@ -185,26 +185,26 @@ img.pull-left {
 
 .arup-navbar-nav li a:hover,
 .arup-navbar-nav li a:focus,
-.arup-navbar-nav li.arup-nav-default-active {
+.arup-navbar-nav li.arup-nav-default.active {
   background-color: #63767F;
 }
 
 .arup-navbar-nav li.arup-nav-mapa a:hover,
 .arup-navbar-nav li.arup-nav-mapa a:focus,
-.arup-navbar-nav li.arup-nav-mapa-active {
+.arup-navbar-nav li.arup-nav-mapa.active {
   background-color: #3184AD !important;
 }
 
 .arup-navbar-nav li.arup-nav-zdroj a:hover,
 .arup-navbar-nav li.arup-nav-zdroj a:focus,
-.arup-navbar-nav li.arup-nav-zdroj-active,
+.arup-navbar-nav li.arup-nav-zdroj.active,
 .arup-col-zdroj .btn {
   background-color: #EC7568 !important;
 }
 
 .arup-navbar-nav li.arup-nav-praxe a:hover,
 .arup-navbar-nav li.arup-nav-praxe a:focus,
-.arup-navbar-nav li.arup-nav-praxe-active,
+.arup-navbar-nav li.arup-nav-praxe.active,
 .arup-col-praxe .btn {
   background-color: #F5AF42 !important;
 }
@@ -320,10 +320,7 @@ img.pull-left {
   }
   .arup-navbar-nav li:hover:after,
   .arup-navbar-nav li > a:focus:after,
-  .arup-navbar-nav li.arup-nav-default-active:after,
-  .arup-navbar-nav li.arup-nav-mapa-active:after,
-  .arup-navbar-nav li.arup-nav-zdroj-active:after,
-  .arup-navbar-nav li.arup-nav-praxe-active:after {
+  .arup-navbar-nav li.active:after {
     content: ' ';
     position: absolute;
     border: solid 7px transparent;
@@ -336,22 +333,22 @@ img.pull-left {
   }
   .arup-navbar-nav li.arup-nav-default:hover:after,
   .arup-navbar-nav li.arup-nav-default > a:focus:after,
-  .arup-navbar-nav li.arup-nav-default-active:after {
+  .arup-navbar-nav li.arup-nav-default.active:after {
     border-color: #63767F transparent transparent transparent; 
   }
   .arup-navbar-nav li.arup-nav-mapa:hover:after,
   .arup-navbar-nav li.arup-nav-mapa > a:focus:after,
-  .arup-navbar-nav li.arup-nav-mapa-active:after {
+  .arup-navbar-nav li.arup-nav-mapa.active:after {
     border-color: #3184AD transparent transparent transparent !important; 
   }
   .arup-navbar-nav li.arup-nav-zdroj:hover:after,
   .arup-navbar-nav li.arup-nav-zdroj > a:focus:after,
-  .arup-navbar-nav li.arup-nav-zdroj-active:after {
+  .arup-navbar-nav li.arup-nav-zdroj.active:after {
     border-color: #EC7568 transparent transparent transparent; 
   }
   .arup-navbar-nav li.arup-nav-praxe:hover:after,
   .arup-navbar-nav li.arup-nav-praxe > a:focus:after,
-  .arup-navbar-nav li.arup-nav-praxe-active:after {
+  .arup-navbar-nav li.arup-nav-praxe.active:after {
     border-color: #F5AF42 transparent transparent transparent; 
   }
 }

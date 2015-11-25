@@ -11,6 +11,7 @@
         <tool key="date" class="org.apache.velocity.tools.generic.DateTool" />
         <tool class="org.apache.velocity.tools.view.ParameterTool" />
         
+        <tool key="i18n" class="cz.incad.arup.arup_map.tools.LanguageTool" bundles="bundle" />
         
      
     </toolbox>

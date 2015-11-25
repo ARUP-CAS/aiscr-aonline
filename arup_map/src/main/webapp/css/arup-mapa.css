@@ -1,0 +1,95 @@
+/*******************/
+/*** CSS for map ***/
+/*******************/
+
+
+/*** Content ***/
+.arup-mapa-container {
+  padding: 0;
+  position: relative;
+}
+
+#arup-map {
+  background: url('../img/map.jpg') no-repeat;
+  height: 689px;
+}
+
+.arup-widget-pane {
+  position: absolute;
+  right: 0;
+  height: 100%;
+}  
+  
+
+/*** Tabs ***/
+.nav-tabs {
+  float: right;
+  border-bottom: 0;
+  width:140px;
+  background-color: #F5F5F5;
+  height: 100%;
+}
+
+.nav-tabs li {
+  float: none;
+  margin: 0;
+}
+
+.nav-tabs li a {
+  padding: 15px;
+  margin-right: 0;
+  border-radius: 0;
+  border-bottom: 1px solid #d9d9d9 !important;
+}
+
+.nav-tabs li a:hover {
+  background-color: #EFEFEF;
+}
+
+
+/*** Tab content ***/
+.tab-content {
+  float: right;
+  height: 100%;
+  -webkit-box-shadow: -15px 0 20px -15px #333;
+  box-shadow: -10px 0 20px -15px gray;
+}
+
+.tab-content .tab-pane {
+  display: none;
+  background-color: #fff;
+  padding: 10px 20px;
+  overflow-y: auto;
+  height: 100%;
+}
+
+.tab-content .active {
+  display: block;
+}
+
+.tab-content .tab-pane ul li {
+  border-bottom: 1px dotted silver;
+  padding: 10px 0 10px 0;
+}
+
+.tab-content #results ul li a {
+  border-left: 3px solid #589CBD;
+  padding-left: 10px;
+}
+
+
+/*** Active facet ***/
+.arup-facet-active a {
+  color: #37a2d4;
+  font-weight: bold;
+}
+
+
+
+.leaflet-container {
+  background: rgba(0,0,0,.8) !important;
+}
+
+.leaflet-container img.img-popup{
+    max-width: 100% !important;   
+}
