@@ -2,8 +2,19 @@ package cz.incad.arup.arup_map;
 
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Reader;
+import java.io.Writer;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.ProtocolException;
 import java.net.URL;
+import java.util.function.Supplier;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.apache.commons.io.IOUtils;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrClient;
@@ -19,6 +30,7 @@ import org.apache.solr.common.SolrDocumentList;
  */
 public class SolrIndex {
 
+    public static final Logger LOGGER = Logger.getLogger(SolrIndex.class.getName());
     private static final String DEFAULT_HOST = "http://localhost:8983/solr";
     private static final String DEFAULT_CORE = "arup";
     
@@ -67,9 +79,9 @@ public class SolrIndex {
         return xml(query);
     }
     
-    private static String doQuery(SolrQuery query) throws MalformedURLException, IOException {
-        
+    private static String doQuery(SolrQuery query) throws MalformedURLException, IOException, ProtocolException {
 
+        
         // use org.apache.solr.client.solrj.util.ClientUtils 
         // to make a URL compatible query string of your SolrQuery
         String urlQueryString = ClientUtils.toQueryString(query, false);
@@ -78,11 +90,60 @@ public class SolrIndex {
                 opts.getString("solrHost", DEFAULT_HOST),
                 opts.getString("solrCore", DEFAULT_CORE));
         URL url = new URL(solrURL + urlQueryString);
+        
+        
+            // use org.apache.commons.io.IOUtils to do the http handling for you
+//            String xmlResponse = IOUtils.toString(url, "UTF-8");
+//            return xmlResponse;
+        
+            HttpURLConnection urlc = null;
+        String POST_ENCODING = "UTF-8";
+        
+            urlc = (HttpURLConnection) url.openConnection();
+            urlc.setConnectTimeout(10000);
+            
+            urlc.setRequestMethod("GET");
+            urlc.setDoOutput(false);
+            urlc.setDoInput(true);
+            
+            String ret = null;
+            String errorStream = "";
+            InputStream in = null;
+            try {
+                in = urlc.getInputStream();
+                int status = urlc.getResponseCode();
+                if (status != HttpURLConnection.HTTP_OK) {
+                    LOGGER.log(Level.WARNING, " HTTP response code={0}", status);
+                }
+                ret = IOUtils.toString(in, "UTF-8");
+                
+                
+            } catch (IOException e) {
+                
+                    LOGGER.log(Level.WARNING, "IOException while reading response");
+                    LOGGER.log(Level.WARNING, null, e);
+            } finally {
+                IOUtils.closeQuietly(in);
+            }
 
-        // use org.apache.commons.io.IOUtils to do the http handling for you
-        String xmlResponse = IOUtils.toString(url, "UTF-8");
+            InputStream es = urlc.getErrorStream();
+            if (es != null) {
+                try {
+                    errorStream = IOUtils.toString(es);
+                    LOGGER.log(Level.WARNING, "Mame ERROR {0}", errorStream);
+                } catch (IOException e) {
+                    LOGGER.log(Level.WARNING, "IOException while reading response");
+                    throw new IOException(e);
+                } finally {
+                        es.close();
+                }
+            }
+            if (errorStream.length() > 0) {
+                LOGGER.log(Level.WARNING, "errorStream: {0}", errorStream.toString());
+            }
 
-        return xmlResponse;
+            return ret;
+        
     }
     
     public static String csv(SolrQuery query) throws MalformedURLException, IOException {

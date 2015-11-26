@@ -92,7 +92,8 @@
             </div><!--/.nav-collapse -->
           </div><!--/.container -->
         </nav><!--/.navbar -->
-
+        
+        
         <!-- Container mapa -->
         <div class="container arup-mapa-container">
             <!-- Map -->
@@ -101,8 +102,8 @@
             </div><!--/.map -->
             
             <!-- Tabs -->
-            <div class="arup-widget-pane arup-color-gray-dark">
-              <ul class="nav nav-tabs arup-clean-border">
+            <div class="arup-widget-pane arup-color-gray-dark" id="arup-widget-pane">
+              <ul class="nav nav-tabs arup-nav-tabs arup-clean-border">
                 <li class="active"><a href="#results" data-toggle="tab">Výsledky</a></li>
                 <li><a href="#database" data-toggle="tab">Databáze</a></li>
                 <li><a href="#type_location" data-toggle="tab">Typ lokality</a></li>
@@ -197,6 +198,11 @@
                 </div><!--/.timeline -->
               </div><!--/.tab-content -->
             </div><!--/.tabs -->
+            
+            <!-- Btn show/hide widget pane -->
+            <button class="btn arup-btn-hide-widget-pane">
+                <i class="glyphicon glyphicon-menu-right"></i>
+            </button><!--/.Btn show/hide widget pane -->
         </div><!--/.container mapa -->
 
         <!-- Footer -->
@@ -232,5 +238,14 @@
     <script src="js/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="js/ie10-viewport-bug-workaround.js"></script>
+    
+    <!-- Custom js -->
+    <script type="text/javascript">
+      // show / hide widget pane
+      $(".arup-btn-hide-widget-pane").on('click',function(){
+        $(".arup-widget-pane").toggle();
+        $("i",this).toggleClass("glyphicon-menu-left glyphicon-menu-right");
+      });
+    </script>
   </body>
 </html>

@@ -250,7 +250,7 @@ public class DataServlet extends HttpServlet {
                             }
                         }
                         
-                        query.add("fq", "loc_rpt:" + gf);
+                        //query.add("fq", "loc_rpt:" + gf);
 
 //                                String sort = String.format("query({!bbox v='' filter=false score=distance })", latCenter, lngCenter, dist);
                         String sort = "query({!bbox v='' filter=false score=distance })";
@@ -260,7 +260,7 @@ public class DataServlet extends HttpServlet {
                         query.set("sfield", "loc_rpt");
                         query.setFacet(true);
                         query.set("facet.heatmap", "loc_rpt");
-                        query.set("facet.heatmap.distErrPct", Double.toString(dist));
+                        query.set("facet.heatmap.distErr", Double.toString(dist));
                         query.set("facet.heatmap.maxCells", 400000);
                         query.set("facet.heatmap.maxLevel", 7);
 

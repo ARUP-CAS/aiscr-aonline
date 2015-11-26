@@ -73,13 +73,12 @@
             <div class="arup-widget-pane arup-color-gray-dark">
               <ul class="nav nav-tabs arup-clean-border" id="facets">
                 <li class="active"><a href="#results" data-toggle="tab">$i18n.results</a></li>
-                <li class="facet database" data-field="database" data-label="$i18n.facet.database"><a href="#database" data-toggle="tab">$i18n.facet.database</a></li>
-                <li class="facet Type_site" data-field="Type_site" data-label="$i18n.facet.loc"><a href="#Type_site" data-toggle="tab">$i18n.facet.loc</a></li>
-                <li class="facet Type_area" data-field="Type_area" data-label="$i18n.facet.activity"><a href="#Type_area" data-toggle="tab">$i18n.facet.activity</a></li>
+                <li class="facet" data-field="database" data-label="$i18n.facet.database"><a href="#database" data-toggle="tab">$i18n.facet.database</a></li>
+                <li class="facet" data-field="Type_site" data-label="$i18n.facet.loc"><a href="#Type_site" data-toggle="tab">$i18n.facet.loc</a></li>
+                <li class="facet" data-field="Type_area" data-label="$i18n.facet.activity"><a href="#Type_area" data-toggle="tab">$i18n.facet.activity</a></li>
                 <li><a href="#timeline" data-toggle="tab">$i18n.timeline</a></li>
-                <li class="arup-facet-active"><a href="#">Aktivni facet <i class="glyphicon glyphicon-ok"></i></a></li><!-- vzor html pro aktivni facet -->
               </ul>
-              <div class="tab-content" style="max-width: 40%;">
+              <div class="tab-content" style="max-width: 280px;">
                 <div class="tab-pane active" id="results">
                   <ul class="list-unstyled">
                     <li><a href="">Archeobotanická databáze ČR</a></li>
@@ -166,6 +165,13 @@
                 </div><!--/.timeline -->
               </div><!--/.tab-content -->
             </div><!--/.tabs -->
+
+
+            <!-- Btn show/hide widget pane -->
+            <button class="btn arup-btn-hide-widget-pane">
+                <i class="glyphicon glyphicon-menu-right"></i>
+            </button><!--/.Btn show/hide widget pane -->
+
         </div><!--/.container mapa -->
 
 
@@ -185,6 +191,12 @@
     
     <script>
       
+      // show / hide widget pane
+      $(".arup-btn-hide-widget-pane").on('click',function(){
+        $(".arup-widget-pane").toggle();
+        $("i",this).toggleClass("glyphicon-menu-left glyphicon-menu-right");
+      });
+
       window.onload = function() {
         arup.init();
         arup.current = arup.MAP.create();

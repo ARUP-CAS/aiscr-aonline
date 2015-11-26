@@ -58,11 +58,10 @@ arup.MAP = {
         $("#facets li.facet a i").remove();
         
         for(var i=0; i<$("#facets li.facet").length; i++){
-            
-        
         
             var field = $($("#facets li.facet")[i]).data("field");
-            var li = $("#facets li." + field);
+            //var li = $("#facets li." + field);
+            var li = $("#facets").find("li[data-field='" + field + "']");
             var a = li.find("a");
                 
             if($("#searchForm>input.filter."+field).length>0){
@@ -210,6 +209,25 @@ arup.MAP = {
         return b._southWest.lng + ';' + b._southWest.lat + ';' +
                 b._northEast.lng + ';' + b._northEast.lat;
     },
+    getVisibleCount: function(){
+        
+        var facet = this.results.facet_counts.facet_heatmaps.loc_rpt;
+        var counts_ints2D = facet[15];
+        var count = 0;
+        if(counts_ints2D !== null){
+     
+            for (var i = 0; i < counts_ints2D.length; i++) {
+                
+                if (counts_ints2D[i] !== null && counts_ints2D[i] !== "null") {
+                    var row = counts_ints2D[i];
+                    for (var j = 0; j < row.length; j++) {
+                        count += row[j];
+                    }
+                }
+            }
+        }
+        return count;
+    },
     processHeatMapFacet: function () {
         var mapdata = [];
         var facet = this.results.facet_counts.facet_heatmaps.loc_rpt;
@@ -223,20 +241,24 @@ arup.MAP = {
         var distX = (maxX - minX) / columns;
         var distY = (maxY - minY) / rows;
         var counts_ints2D = facet[15];
-        for (var i = 0; i < counts_ints2D.length; i++) {
-            if (counts_ints2D[i] !== null && counts_ints2D[i] !== "null") {
-                var row = counts_ints2D[i];
-                var lat = maxY - i * distY;
-                for (var j = 0; j < row.length; j++) {
-                    var count = row[j];
-                    if (count > 0) {
-                        var lng = minX + j * distX;
-                        var bounds = new L.latLngBounds([
-                            [lat, lng],
-                            [lat - distY, lng + distX]
-                        ]);
-                        mapdata.push({lat: bounds.getCenter().lat, lng: bounds.getCenter().lng, count: count});
-                        
+        console.log(gridLevel, rows, columns);
+        if(counts_ints2D !== null){
+     
+            for (var i = 0; i < counts_ints2D.length; i++) {
+                if (counts_ints2D[i] !== null && counts_ints2D[i] !== "null") {
+                    var row = counts_ints2D[i];
+                    var lat = maxY - i * distY;
+                    for (var j = 0; j < row.length; j++) {
+                        var count = row[j];
+                        if (count > 0) {
+                            var lng = minX + j * distX;
+                            var bounds = new L.latLngBounds([
+                                [lat, lng],
+                                [lat - distY, lng + distX]
+                            ]);
+                            mapdata.push({lat: bounds.getCenter().lat, lng: bounds.getCenter().lng, count: count});
+
+                        }
                     }
                 }
             }
@@ -306,7 +328,10 @@ arup.MAP = {
 
     },
     setView: function(){
-        var isHeat = this.map.getZoom()<this.markerZoomLevel && this.numFound > this.conf.displayRows;
+        var count = this.getVisibleCount();
+        var isHeat = this.map.getZoom()<this.markerZoomLevel && 
+                this.numFound > this.conf.displayRows &&
+                count > this.conf.displayRows;
         if(isHeat){
             if(this.map.hasLayer(this.markers)){
                 this.map.removeLayer(this.markers);

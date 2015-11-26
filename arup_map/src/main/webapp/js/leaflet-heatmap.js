@@ -70,6 +70,9 @@ var HeatmapOverlay = L.Class.extend({
     scale = Math.pow(2, zoom);
 
     if (this._data.length == 0) {
+        if(this._heatmap){
+            this._heatmap.setData({ max: this._max, data: [] });
+        }
       return;
     }
 
