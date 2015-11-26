@@ -188,11 +188,13 @@ arup.MAP = {
     },
     popupContent: function(docid){
         var doc = this.results.response.docs[docid];
-        var obdobi = "";
 
-        var c = doc.title + " at " + doc.lat + ", " + doc.lng + "<br/>" +
+        var c = '<b>' + doc.title + "</b><br/>" +
                 '<img class="img-popup" src="img?id='+ doc.id +'&db='+ doc.database +'" />' + '<br/>' +
-                obdobi + " (" + doc.od + " - " + doc.do + ")";
+                doc.Type_site + '<br/>' +
+                doc.Type_area + '<br/>' +
+                doc.Description_1 + '<br/>' +
+                doc.Description_2 + '<br/>';
         return c;
     },
     updatePopup: function (docid) {

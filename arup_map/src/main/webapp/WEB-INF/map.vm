@@ -81,42 +81,18 @@
               <div class="tab-content" style="max-width: 280px;">
                 <div class="tab-pane active" id="results">
                   <ul class="list-unstyled">
-                    <li><a href="">Archeobotanická databáze ČR</a></li>
-                    <li><a href="">Pro ukládání dat do databáze byl použit</a></li>
-                    <li><a href="">Tyto internetové stránky umožňují přístup</a></li>
-                    <li><a href="">Vykopávka zahrnuje také trpělivost</a></li>
-                    <li><a href="">Akademie věd České republiky M300020902</a></li>
-                    <li><a href="">Archeobotanická databáze ArboDat</a></li>
                   </ul>
                 </div>
                 <div class="tab-pane" id="database">
                   <ul class="list-unstyled">
-                    <li><a href="">Hrad</a></li>
-                    <li><a href="">Mohylník</a></li>
-                    <li><a href="">Hrobka</a></li>
-                    <li><a href="">Kaplička</a></li>
-                    <li><a href="">Pyramida</a></li>
-                    <li><a href="">Kostel</a></li>
                   </ul>
                 </div>
                 <div class="tab-pane" id="Type_area">
                   <ul class="list-unstyled">
-                    <li><a href="">Hrad</a></li>
-                    <li><a href="">Mohylník</a></li>
-                    <li><a href="">Hrobka</a></li>
-                    <li><a href="">Kaplička</a></li>
-                    <li><a href="">Pyramida</a></li>
-                    <li><a href="">Kostel</a></li>
                   </ul>
                 </div>
                 <div class="tab-pane" id="Type_site">
                   <ul class="list-unstyled">
-                    <li><a href="">Hrad</a></li>
-                    <li><a href="">Mohylník</a></li>
-                    <li><a href="">Hrobka</a></li>
-                    <li><a href="">Kaplička</a></li>
-                    <li><a href="">Pyramida</a></li>
-                    <li><a href="">Kostel</a></li>
                   </ul>
                 </div>
                 <!-- Timeline -->
