@@ -110,6 +110,7 @@ arup.MAP = {
             var marker = L.marker([docs[i].lat, docs[i].lng], {docid: i});
             this.markersList[i] = marker;
             marker.on("popupopen", _.partial(function (ar) {
+                ar.map.setView(this.getLatLng())
                 this.setPopupContent(ar.popupContent(this.options.docid));
             }, this));
             //marker.addTo(this.markers);

@@ -1,0 +1,43 @@
+<div class="tab-pane" id="timeline">
+   <select class="form-control" id="sel1">
+    <option>Novovek 1</option>
+    <option>2</option>
+    <option>3</option>
+    <option>4</option>
+  </select>
+  <ul class="list-unstyled arup-clean-pd timeset arup-color-gray">
+    <li>1900&#160;&#160;<strong>-</strong></li>
+    <li>1500&#160;&#160;<strong>-</strong></li>
+    <li>1000&#160;&#160;<strong>-</strong></li>
+    <li>0&#160;&#160;<strong>-</strong></li>
+    <li>-1000&#160;&#160;<strong>-</strong></li>
+    <li>-2500&#160;&#160;<strong>-</strong></li>
+    <li>-5000&#160;&#160;<strong>-</strong></li>
+    <li>-10000&#160;&#160;<strong>-</strong></li>
+  </ul>
+  <ul class="timeline arup-clean-pd">
+    <li class="timeline-inverted timeline-top">
+      <div class="timeline-badge"><i class="glyphicon glyphicon-hand-down"></i></div>
+      <div class="timeline-panel">
+        <div class="timeline-body">
+          <p><strong>10 000</strong></p>
+        </div>
+      </div>
+    </li>
+    <li class="timeline-inverted timeline-bottom">
+      <div class="timeline-badge"><i class="glyphicon glyphicon-hand-up"></i></div>
+      <div class="timeline-panel">
+        <div class="timeline-body">
+          <p><strong>20 000</strong></p>
+        </div>
+      </div>
+    </li>
+    <span class="clearfix"> </span>
+  </ul><span class="clearfix"> </span>
+  <select class="form-control" id="sel1">
+    <option>Novovek 1</option>
+    <option>2</option>
+    <option>3</option>
+    <option>4</option>
+  </select>
+</div>

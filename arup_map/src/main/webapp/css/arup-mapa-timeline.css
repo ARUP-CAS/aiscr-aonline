@@ -5,6 +5,7 @@
 /*** Tab content ***/
 #timeline {
   padding-top: 30px;
+  overflow: hidden;
 }
 
 /*** Timeset ***/

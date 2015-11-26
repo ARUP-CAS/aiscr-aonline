@@ -239,7 +239,7 @@ public class DataServlet extends HttpServlet {
 
                         double latCenter = (Double.parseDouble(coords[3]) + Double.parseDouble(coords[1])) * .5;
                         double lngCenter = (Double.parseDouble(coords[0]) + Double.parseDouble(coords[2])) * .5;
-                        double dist = (Double.parseDouble(coords[2]) - Double.parseDouble(coords[0])) * .01;
+                        double dist = (Double.parseDouble(coords[2]) - Double.parseDouble(coords[0])) * .005;
                         
                         String d = req.getParameter("d");
                         if(d!=null && !d.equals("")){
