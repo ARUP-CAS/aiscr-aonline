@@ -24,9 +24,6 @@
     <link href="css/segoe-ui-semibold.css" rel="stylesheet">
     <link href="css/segoe-ui-bold.css" rel="stylesheet">
 
-
-    <script src="js/arup.js"></script>
-
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="js/ie8-responsive-file-warning.js"></script><![endif]-->
     <script src="js/ie-emulation-modes-warning.js"></script>
@@ -52,7 +49,47 @@
       <!-- Bg white -->
       <div class="arup-bg-white">
       
-        #parse("header.vm")
+        <!-- Header -->
+        <div class="arup-header">
+          <div class="container">
+            <!--<h1 class="arup-segoe-ui-light arup-color-gray arup-logo"><a href="#">ARCHEOLOGIE <span class="arup-segoe-ui-bold arup-color-gray-pastel">ONLINE</span></a></h1>-->
+            <h1 class="arup-logo"><a href="#"><span>ARCHEOLOGIE ONLINE</span></a></h1>
+          </div>
+        </div><!--/.header -->
+
+        <!-- Navbar -->
+        <nav class="navbar arup-navbar arup-color-white arup-clean-conner">
+          <div class="container">
+            <div class="navbar-header arup-navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar arup-bg-white"></span>
+                <span class="icon-bar arup-bg-white"></span>
+                <span class="icon-bar arup-bg-white"></span>
+              </button>
+            </div>
+
+            <!-- Search form -->
+            <form class="navbar-form navbar-left arup-navbar-form">
+              <div class="input-group">
+                <input type="text" placeholder="Search for..." class="form-control arup-clean-radius arup-clean-box-shadow arup-border-white">
+                <span class="input-group-btn">
+                  <button type="button" class="btn btn-default arup-clean-radius arup-border-white"><span class="glyphicon glyphicon-search"> </span></button>
+                </span>
+              </div>
+            </form><!--/.search form -->
+
+            <div id="navbar" class="navbar-collapse collapse">
+              <ul class="nav navbar-nav arup-navbar-nav">
+                <li><a href="index.html">Home</a></li><!-- active item class -> arup-nav-default-active -->
+                <li class="arup-nav-mapa"><a href="mapa.html">Mapa</a></li><!-- active item class -> arup-nav-mapa-active -->
+                <li class="arup-nav-zdroj active"><a href="zdroje.html">Zdroj</a></li><!-- active item class -> arup-nav-zdroj-active -->
+                <li class="arup-nav-praxe"><a href="praxe.html">Praxe</a></li><!-- active item class -> arup-nav-praxe-active -->
+                <li><a href="owebu.html">O webu</a></li><!-- active item class -> arup-nav-default-active -->
+              </ul>
+            </div><!--/.nav-collapse -->
+          </div><!--/.container -->
+        </nav><!--/.navbar -->
 
         <!-- Container content -->
         <div class="container arup-content-container">
@@ -407,10 +444,6 @@
         $("#"+divId).toggle();
         $("i",this).toggleClass("glyphicon-menu-down glyphicon-menu-up");
       }
-
-      window.onload = function() {
-        arup.init();
-      };
     </script>
   </body>
 </html>

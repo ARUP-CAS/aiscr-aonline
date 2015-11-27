@@ -1,0 +1,104 @@
+/**********************/
+/*** CSS for zdroje ***/
+/**********************/
+
+
+/*** Content container ***/
+.arup-content-container {
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-bottom: 0;
+}
+
+/*** Item desc ***/
+.arup-zdroje-desc {
+  padding: 15px;
+  position: relative;
+  font-size: 13px;
+  border-top: 5px solid #595959;
+  background-color: #F7F7F7;
+  color: #595959;
+}
+
+.arup-zdroje-desc .btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: #fff;
+  padding: 0 5px 0 5px;
+  background-color: #595959;
+}
+
+.arup-zdroje-desc img {
+  height: 40px;
+  margin-right:5px;
+}
+
+.arup-zdroje-desc .media-body {
+  border-left: 1px solid silver;
+  padding-left: 15px;
+  padding-right: 10px;
+}
+
+.arup-tab-pane .table {
+  margin-bottom: 0 !important;
+}
+
+.arup-tab-pane p {
+  margin-bottom: 15px;
+}
+
+/*** Item desc colored  ***/
+.arup-zdroje-atlas {
+  border-top: 5px solid #841B15;
+  background-color: #F5ECEB;
+  color: #841B15;
+}
+
+.arup-zdroje-atlas .media-body {
+  border-left-color: #dfc2c0;
+}
+
+.arup-zdroje-atlas .btn {
+  background-color: #841B15;
+}
+
+
+.arup-zdroje-praha {
+  border-top: 5px solid #FF7000;
+  background-color: #FFF4EA;
+  color: #FF7000;
+}
+
+.arup-zdroje-praha .media-body {
+  border-left-color: #FFD9BA;
+}
+
+.arup-zdroje-praha .btn {
+  background-color: #FF7000;
+}
+
+/*** Item tabs ***/
+.arup-zdroje-nav-tabs {
+  margin-top: 2px;
+  border: 0;
+}
+
+.arup-zdroje-nav-tabs li > a {
+  border-radius: 0 !important;
+  border: 0;
+}
+
+.arup-zdroje-nav-tabs > li.active > a,
+.arup-zdroje-nav-tabs > li.active > a:focus,
+.arup-zdroje-nav-tabs > li.active > a:hover {
+  border: 0;
+  color: #637780;
+  font-weight: bold;
+  background-color: #EFEFEF;
+}
+
+.tab-content {
+  padding: 15px;
+  background-color: #EFEFEF;
+}
