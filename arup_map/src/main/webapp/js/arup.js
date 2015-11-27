@@ -6,10 +6,10 @@
 var arup = {
     init: function(){
         this.setMenuActive();
-        
+        $.getJSON("conf", _.bind(function (d) {
+            this.conf = d;
+        }, this));
     },
-    
-
     setMenuActive: function(){
         $("#navbar li").removeClass("active");
         var loc = window.location.href;
@@ -26,9 +26,11 @@ var arup = {
         e.addClass("active");
         
     },
-    
     navigate: function(page){
         window.location.href = page + ".vm?" + $("#searchForm").serialize();
+    },
+    localize: function(key){
+        return key;
     }
 
 };

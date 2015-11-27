@@ -21,6 +21,8 @@
             <!-- Search form -->
             <form class="navbar-form navbar-left arup-navbar-form" id="searchForm" onsubmit="arup.current.search(); return false;">
               <div class="input-group">
+                <input type="hidden" id="od" name="od" />
+                <input type="hidden" id="do" name="do" />
                 <input id="q" name="q" type="text" class="form-control arup-clean-radius arup-clean-box-shadow arup-border-white"
                     placeholder="$i18n.query.placeholder" value="$!params.q" >
                 <span class="input-group-btn">

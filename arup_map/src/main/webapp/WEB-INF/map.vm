@@ -33,6 +33,7 @@
     <script src="js/leaflet-heatmap.js"></script>
     <script src="js/arup.js"></script>
     <script src="js/arup-heatmap.js"></script>
+    <script src="js/arup-timeline.js"></script>
 
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="js/ie8-responsive-file-warning.js"></script><![endif]-->
@@ -72,14 +73,14 @@
             <!-- Tabs -->
             <div class="arup-widget-pane arup-color-gray-dark">
               <ul class="nav nav-tabs arup-clean-border" id="facets">
-                <li class="active"><a href="#results" data-toggle="tab">$i18n.results</a></li>
+                <li><a href="#results" data-toggle="tab">$i18n.results</a></li>
                 <li class="facet" data-field="database" data-label="$i18n.facet.database"><a href="#database" data-toggle="tab">$i18n.facet.database</a></li>
                 <li class="facet" data-field="Type_site" data-label="$i18n.facet.loc"><a href="#Type_site" data-toggle="tab">$i18n.facet.loc</a></li>
                 <li class="facet" data-field="Type_area" data-label="$i18n.facet.activity"><a href="#Type_area" data-toggle="tab">$i18n.facet.activity</a></li>
-                <li><a href="#timeline" data-toggle="tab">$i18n.timeline</a></li>
+                <li class="active"><a href="#timeline" data-toggle="tab">$i18n.timeline</a></li>
               </ul>
               <div class="tab-content" style="max-width: 280px;">
-                <div class="tab-pane active" id="results">
+                <div class="tab-pane" id="results">
                   <ul class="list-unstyled">
                   </ul>
                 </div>
@@ -135,6 +136,7 @@
       window.onload = function() {
         arup.init();
         arup.current = arup.MAP.create();
+        arup.TIMELINE.init();
       };
     </script>
   </body>

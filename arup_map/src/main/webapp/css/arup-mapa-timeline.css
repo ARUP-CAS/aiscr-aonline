@@ -11,12 +11,12 @@
 /*** Timeset ***/
 .timeset, 
 .timeline {
-  margin: 30px 0 20px 0;
+  margin: 10px 0 20px 0;
 }
 
 .timeset {
   width: 70px;
-  padding-top: 35px !important;
+  padding-top: 15px !important;
   margin-right: 15px;
   text-align: right;
   float: left;
@@ -24,14 +24,15 @@
 
 .timeset li {
   border-bottom: none !important;
-  margin-bottom: 38px;
+  margin-bottom: 10px;
+  padding: 5px 0 5px 0 !important;
 }
 
 /*** Timeline ***/
 .timeline {
   width: 150px;
   list-style: none;
-  padding: 20px 0 20px;
+  padding: 0 0 20px;
   position: relative;
   float: left;
 }
@@ -45,13 +46,14 @@
   background-color: #eeeeee;
   left: 20%;
   margin-left: -1.5px;
-  height: 500px;
+  height: 100%;
 }
 
 .timeline > li {
   margin-bottom: 20px;
   position: relative;
   border-bottom: none !important;
+  padding: 2px 0 2px 0 !important;
 }
 
 .timeline > li:before,
@@ -151,11 +153,13 @@
 }
 
 .timeline-top {
-  margin-top: 20px;
+  margin-top: 0px;
+  margin-bottom: 0 !important;
 }
 
 .timeline-bottom {
-  margin-top: 355px;
+  margin-top: 100%;
+  margin-bottom: 0 !important;
 }
 
 .timeline-bottom .timeline-badge {
