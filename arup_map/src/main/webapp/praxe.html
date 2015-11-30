@@ -49,7 +49,47 @@
       <!-- Bg white -->
       <div class="arup-bg-white">
       
-        #parse("header.vm")
+        <!-- Header -->
+        <div class="arup-header">
+          <div class="container">
+            <!--<h1 class="arup-segoe-ui-light arup-color-gray arup-logo"><a href="#">ARCHEOLOGIE <span class="arup-segoe-ui-bold arup-color-gray-pastel">ONLINE</span></a></h1>-->
+            <h1 class="arup-logo"><a href="#"><span>ARCHEOLOGIE ONLINE</span></a></h1>
+          </div>
+        </div><!--/.header -->
+
+        <!-- Navbar -->
+        <nav class="navbar arup-navbar arup-color-white arup-clean-conner">
+          <div class="container">
+            <div class="navbar-header arup-navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar arup-bg-white"></span>
+                <span class="icon-bar arup-bg-white"></span>
+                <span class="icon-bar arup-bg-white"></span>
+              </button>
+            </div>
+
+            <!-- Search form -->
+            <form class="navbar-form navbar-left arup-navbar-form">
+              <div class="input-group">
+                <input type="text" placeholder="Search for..." class="form-control arup-clean-radius arup-clean-box-shadow arup-border-white">
+                <span class="input-group-btn">
+                  <button type="button" class="btn btn-default arup-clean-radius arup-border-white"><span class="glyphicon glyphicon-search"> </span></button>
+                </span>
+              </div>
+            </form><!--/.search form -->
+
+            <div id="navbar" class="navbar-collapse collapse">
+              <ul class="nav navbar-nav arup-navbar-nav">
+                <li><a href="index.html">Home</a></li><!-- active item class -> arup-nav-default-active -->
+                <li class="arup-nav-mapa"><a href="mapa.html">Mapa</a></li><!-- active item class -> arup-nav-mapa-active -->
+                <li class="arup-nav-zdroj"><a href="zdroje.html">Zdroje</a></li><!-- active item class -> arup-nav-zdroj-active -->
+                <li class="arup-nav-praxe active"><a href="praxe.html">Praxe</a></li><!-- active item class -> arup-nav-praxe-active -->
+                <li><a href="owebu.html">O webu</a></li><!-- active item class -> arup-nav-default-active -->
+              </ul>
+            </div><!--/.nav-collapse -->
+          </div><!--/.container -->
+        </nav><!--/.navbar -->
 
         <!-- Container content -->
         <div class="container arup-content-container">

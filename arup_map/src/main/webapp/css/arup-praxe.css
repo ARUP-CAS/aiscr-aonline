@@ -1,3 +1,14 @@
 /**********************/
 /*** CSS for praxe ***/
 /**********************/
+
+.arup-praxe ul li {
+  border-bottom: 1px dotted silver;
+  padding-bottom: 5px;
+  margin-bottom: 15px;
+}
+
+.arup-praxe-item-container {
+  border-left: 4px solid #F5AF42;
+  padding-left: 15px;
+}

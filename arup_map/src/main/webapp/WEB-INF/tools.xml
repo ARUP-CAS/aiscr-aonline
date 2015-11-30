@@ -12,6 +12,7 @@
         <tool class="org.apache.velocity.tools.view.ParameterTool" />
         
         <tool key="i18n" class="cz.incad.arup.arup_map.tools.LanguageTool" bundles="bundle" />
+        <tool key="xslt" class="cz.incad.arup.arup_map.tools.XSLTool" />
         
      
     </toolbox>

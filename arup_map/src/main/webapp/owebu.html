@@ -16,16 +16,13 @@
     
     <!-- Arup CSS -->
     <link href="css/arup.css" rel="stylesheet">
-    <link href="css/arup-zdroje.css" rel="stylesheet"><!-- page css -->
+    <link href="css/arup-owebu.css" rel="stylesheet"><!-- page css -->
     
     <!-- Font CSS -->
     <link href="css/segoe-ui-normal.css" rel="stylesheet">
     <link href="css/segoe-ui-light.css" rel="stylesheet">
     <link href="css/segoe-ui-semibold.css" rel="stylesheet">
     <link href="css/segoe-ui-bold.css" rel="stylesheet">
-
-
-    <script src="js/arup.js"></script>
 
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="js/ie8-responsive-file-warning.js"></script><![endif]-->
@@ -39,9 +36,9 @@
   
 <!--[if gte mso 9]><xml>
 <mso:CustomDocumentProperties>
-<mso:_dlc_DocId msdt:dt="string">KAAZ7N6DRQ4K-438874667-367</mso:_dlc_DocId>
-<mso:_dlc_DocIdItemGuid msdt:dt="string">e740a008-ff16-4e98-a710-132194b2e573</mso:_dlc_DocIdItemGuid>
-<mso:_dlc_DocIdUrl msdt:dt="string">https://sto365.sharepoint.com/sites/consulting/arup/_layouts/15/DocIdRedir.aspx?ID=KAAZ7N6DRQ4K-438874667-367, KAAZ7N6DRQ4K-438874667-367</mso:_dlc_DocIdUrl>
+<mso:_dlc_DocId msdt:dt="string">KAAZ7N6DRQ4K-438874667-366</mso:_dlc_DocId>
+<mso:_dlc_DocIdItemGuid msdt:dt="string">0c29f7f1-d8ee-4ba5-a6e2-3cf5ba20d4ac</mso:_dlc_DocIdItemGuid>
+<mso:_dlc_DocIdUrl msdt:dt="string">https://sto365.sharepoint.com/sites/consulting/arup/_layouts/15/DocIdRedir.aspx?ID=KAAZ7N6DRQ4K-438874667-366, KAAZ7N6DRQ4K-438874667-366</mso:_dlc_DocIdUrl>
 </mso:CustomDocumentProperties>
 </xml><![endif]-->
 </head>
@@ -52,14 +49,55 @@
       <!-- Bg white -->
       <div class="arup-bg-white">
       
-        #parse("header.vm")
+        <!-- Header -->
+        <div class="arup-header">
+          <div class="container">
+            <!--<h1 class="arup-segoe-ui-light arup-color-gray arup-logo"><a href="#">ARCHEOLOGIE <span class="arup-segoe-ui-bold arup-color-gray-pastel">ONLINE</span></a></h1>-->
+            <h1 class="arup-logo"><a href="#"><span>ARCHEOLOGIE ONLINE</span></a></h1>
+          </div>
+        </div><!--/.header -->
+
+        <!-- Navbar -->
+        <nav class="navbar arup-navbar arup-color-white arup-clean-conner">
+          <div class="container">
+            <div class="navbar-header arup-navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar arup-bg-white"></span>
+                <span class="icon-bar arup-bg-white"></span>
+                <span class="icon-bar arup-bg-white"></span>
+              </button>
+            </div>
+
+            <!-- Search form -->
+            <form class="navbar-form navbar-left arup-navbar-form">
+              <div class="input-group">
+                <input type="text" placeholder="Search for..." class="form-control arup-clean-radius arup-clean-box-shadow arup-border-white">
+                <span class="input-group-btn">
+                  <button type="button" class="btn btn-default arup-clean-radius arup-border-white"><span class="glyphicon glyphicon-search"> </span></button>
+                </span>
+              </div>
+            </form><!--/.search form -->
+
+            <div id="navbar" class="navbar-collapse collapse">
+              <ul class="nav navbar-nav arup-navbar-nav">
+                <li><a href="index.html">Home</a></li><!-- active item class -> arup-nav-default-active -->
+                <li class="arup-nav-mapa"><a href="mapa.html">Mapa</a></li><!-- active item class -> arup-nav-mapa-active -->
+                <li class="arup-nav-zdroj"><a href="zdroje.html">Zdroje</a></li><!-- active item class -> arup-nav-zdroj-active -->
+                <li class="arup-nav-praxe"><a href="praxe.html">Praxe</a></li><!-- active item class -> arup-nav-praxe-active -->
+                <li class="active"><a href="owebu.html">O webu</a></li><!-- active item class -> arup-nav-default-active -->
+              </ul>
+            </div><!--/.nav-collapse -->
+          </div><!--/.container -->
+        </nav><!--/.navbar -->
 
         <!-- Container content -->
         <div class="container arup-content-container">
-          
-$xslt.transform("3298863", "source.xsl")
-
-          
+          <div class="col-md-12 arup-mg-bottom-30 arup-color-gray-pastel-dark">
+            <br /><br /><br /><br /><br /><br /><br />
+            This is a page of owebu ...
+            <br /><br /><br /><br /><br /><br /><br />
+          </div>
         </div><!--/.container content -->
 
         <!-- Footer -->
@@ -95,17 +133,5 @@ $xslt.transform("3298863", "source.xsl")
     <script src="js/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="js/ie10-viewport-bug-workaround.js"></script>
-    
-    <!-- Custom js -->
-    <script type="text/javascript">
-      function toggleItem(divId) {
-        $("#"+divId).toggle();
-        $("i").toggleClass("glyphicon-menu-down glyphicon-menu-up");
-      }
-
-      window.onload = function() {
-        arup.init();
-      };
-    </script>
   </body>
 </html>

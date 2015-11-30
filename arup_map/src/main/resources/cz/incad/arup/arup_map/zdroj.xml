@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<source id="3298863">
+  <infrastructure name="general">
+    <description>
+      AMČR sjednocuje základní archeologické infrastruktury v ČR a poskytuje nástroje pro evidenci terénních aktivit, shromažďuje metadata o jejich výsledcích, slouží jako repozitář sekundární dokumentace a data       poskytuje veřejnosti k užití.
+    </description>
+    <meta name="title">Archeologická mapa České republiky</meta>
+    <meta name="acronym">AMČR</meta>
+    
+    <table>
+      <tr>
+        <th>název</th>
+        <th>Akronym</th>
+        <th>podnázev</th>
+        <th>URL</th>
+        <th>provozovatel</th>
+        <th>Akronym</th>
+        <th>Logo</th>
+      </tr>
+      <tr>
+        <td>Archeologická mapa České republiky </td>
+        <td>AMČR</td>
+        <td>Systém pro sběr, správu a prezentaci dat terénní archeologické aktivitě na území ČR</td>
+        <td>www.archeologickamapa.cz</td>
+        <td>Archeologický ústav AV ČR, Praha, v.v.i.</td>
+        <td>http://test/logo.png</td>
+      </tr>
+    </table>
+  </infrastructure>
+  <infrastructure name="characteristic">
+    <para>
+      <![CDATA[
+      AMČR do sebe integruje několik základních informačních bází české a moravské archeologie, které doposud fungovaly jako samostatné systémy. Ústředním z nich je autoritní databáze tzv. archeologických akcí. Tou je myšlen logický celek terénních poznávacích aktivit (výzkumná sezóna na lokalitě, několik sezón výzkumu, komplexní nedestruktivní průzkum atp.), její popis se skládá z údajů o akci samotné (vedoucí, vročení terénních prací, okolnosti, základní užité výzkumné postupy), prostorové informace, popisu odborných zjištění (datace a funkční určení objevených struktur, charakteristické nálezy) a odkazu na zdrojové dokumenty (modul Digitální archiv ARUP, bibliografická databáze ARUP). Součástí AMČR je i modul registru terénních zásahů, který slouží k naplnění zákonné ohlašovací povinnosti stavebníka a distribuci a evidenci terénních zásahů mezi jednotlivými organizacemi oprávněnými k archeologickým výzkumům.]]> 
+    </para>
+    <table>
+      <tr>
+        <th>Základní evidenční jednotky (počet)</th>
+        <th>Chronologický rozsah</th>
+        <th>Uzavřená databáze</th>
+        <th>Vznik dat</th>
+        <th>Autorizace dat</th>
+        <th>Jazyk obsahu</th>
+        <th>Vznik dat – vročení</th>
+        <th>Aktualizace dat</th>
+      </tr>
+      <tr>
+        <td>Archeologický projekt (20 000)<br />Archeologická akce (60 000)<br />Archeologická lokalita (5 000)<br />Digitální dokument (300 000)<br />Bibliografický záznam (100 000)<br /></td>
+        <td>paleolit – industriální období</td>
+        <td>Ne</td>
+        <td>Uživatelé</td>
+        <td>Administrátor</td>
+        <td>Čeština</td>
+        <td>1990</td>
+        <td>Průběžná</td>
+      </tr>
+    </table>
+  </infrastructure>
+  <infrastructure name="function">
+    <table>
+      <tr>
+        <th>Formulářové zadávání dat</th>
+        <th>Fulltextové vyhledávání</th>
+        <th>Heslářové vyhledávání</th>
+        <th>Tvorba dotazů</th>
+        <th>Mapový prohlížeč</th>
+        <th>Prostorový výběr</th>
+        <th>Export datové sestavy (formát)</th>
+        <th>Výpis datové sestavy (formát)</th>
+        <th>Export prostorových dat (formát)</th>
+        <th>Export mapového výřezu (formát)</th>
+        <th>Hromadný export a importu dat</th>
+        <th>Uživatelské prostředí</th>
+        <th>Přístupnost</th>
+        <th>Jazyk rozhraní</th>
+        <th>Další funkce</th>
+      </tr>
+      <tr>
+        <td>Ano</td>
+        <td>Ano</td>
+        <td>Ano</td>
+        <td>Ano</td>
+        <td>Ano</td>
+        <td>Ano</td>
+        <td>Ano (csv)</td>
+        <td>Ano (rtf, pdf)</td>
+        <td>Ano (csv, shp)</td>
+        <td>Ano (jpg)</td>
+        <td>Ano (administrátor)</td>
+        <td>Desktopový klient</td>
+        <td>Anonymní uživatel (pouze pro prohlížení základních dat), registrovaný uživatel (pro tvorbu a prohlížení pokročilých dat)</td>
+        <td>Čeština </td>
+        <td>-</td>
+      </tr>
+    </table>
+  </infrastructure>
+  <infrastructure name="technical">
+    <table>
+      <tr>
+        <th>Autor technického řešení</th>
+        <th>URL</th>
+        <th>Platforma rozhraní</th>
+        <th>Platforma databáze</th>
+        <th>API</th>
+        <th>Open Source</th>
+        <th>Kompatibilní standardy</th>
+        <th>Datové formáty repozitářů</th>
+      </tr>
+      <tr>
+        <td>SmartGIS, s.r.o.</td>
+        <td>www.smartGIS.cz</td>
+        <td>Java</td>
+        <td>PostgreSQL, PostGIS</td>
+        <td>Ne</td>
+        <td>Ne</td>
+        <td>Dublin Core</td>
+        <td>pdf, tiff, jpg</td>
+      </tr>
+    </table>
+  </infrastructure>
+  <infrastructure name="author">
+    <table>
+      <tr>
+        <th>Provozovatel</th>
+        <th>URL</th>
+        <th>Kontaktní osoba</th>
+        <th>Kontakt</th>
+        <th>Partneři a spolupracující instituce</th>
+        <th>Vykonavatel autorských práv</th>
+        <th>URL</th>
+        <th>Kontaktní osoba</th>
+        <th>Kontakt</th>
+        <th>administrace/technická podpora</th>
+        <th>URL</th>
+        <th>Kontaktní osoba</th>
+        <th>Kontakt</th>
+      </tr>
+      <tr>
+        <td>Archeologický ústav AV ČR, Praha, v.v.i.</td>
+        <td><a href="www.arup.cas.cz">www.arup.cas.cz</a></td>
+        <td>Mgr. David Novák</td>
+        <td>novak@arup.cas.cz</td>
+        <td>Národní památkový ústav – generální ředitelství</td>
+        <td>Archeologický ústav AV ČR, Praha, v.v.i.</td>
+        <td>www.arup.cas.cz</td>
+        <td>PhDr. Martin Kuna, PhD., DSc.</td>
+        <td>kuna@arup.cas.cz</td>
+        <td>Archeologický ústav AV ČR, Praha, v.v.i.</td>
+        <td>www.arup.cas.cz</td>
+        <td>Ing. Dana Křivánková</td>
+        <td>krivankova@arup.cas.cz</td>
+      </tr>
+    </table>
+  </infrastructure>
+  <infrastructure name="data">
+   <description>popisny text</description>
+    <attachement name="Datovy model ke stazeni">priloha-1.pdf</attachement>
+    <attachement name="Ukazda dat">priloha-2.doc</attachement>
+  </infrastructure>
+  <infrastructure name="presentation">
+    <para>
+      AMČR: Jak to začalo? Odpovídá Anonymní Spoluautor. 
+    </para>
+    <para>
+      <![CDATA[<strong>S oblibou nazýváte AMČR páteřní a autoritní databází archeologie v Čechách a na Moravě. Pro laika mohou tato slova znít jistě vzletně, ale nemusí mu být zcela zřejmá.</strong>]]>
+    </para>
+    <para>
+      <![CDATA[Jistě, ovšem vysvětlení bude možná vhodnější od konce. Většina poznatků, se kterými archeologie zachází, byla získána v rámci poznávací aktivity v terénu, jako je například povrchový sběr artefaktů na zoraném poli, vzorkování pomocí pedologických vrtů či mnohahektarový plošný odkryv. Z toho vyplývá, že valná většina archeologických dat má přirozený vztah k některému výzkumu či průzkumu, tedy k archeologické akci, podle které může být popisována a identifikována – např. fotografie, nálezové zprávy, digitální data všeho druhu, odebrané přírodovědné vzorky či samotné nálezy. Pro ty všechny je archeologická akce unikátně a jednoznačně identifikovaná v rámci AMČR – její identifikátor je jako pomyslné rodné číslo dítěte. Bez podobného nástroje nebude v archeologických datech nikdy pořádek – a tím se vysvětluje i to, jak rozumíme pojmu „páteřní“. Artefakty, nemovité objekty, samotné sondy, publikace, nálezové zprávy či naopak výsledky přírodovědných analýz mohou být dále popisovány v mnoha databázových strukturách či informačních systémech. AMČR nabízí hned několik úrovní autoritních identifikátorů (pro akce, jejich části či dílčí složky jejich odborného zjištění, nebo třeba pro dokumenty), na které se tyto systémy mohou navázat a přes které je možno informace mezi různými systémy sdílet.]]>
+    </para>
+    <para>
+      <![CDATA[<strong>Záměr, který popisujete, jistě nemohl vzniknout na zelené louce. Jak to všechno začalo?</strong>]]>
+    </para>
+    <para>
+      <![CDATA[Předchůdce dnešního ARUP, Státní archeologický ústav, vznikl roku 1919 a v jeho rámci se záhy vytvořila spisovna či chcete-li archiv, kde se dodnes shromažďují zprávy o archeologických objevech v Čechách. Podobný archiv funguje i při moravském ARUB. To je jeden zdroj informace. V 60. letech se ukázalo, že každoročně informací přibývá tolik, že je třeba vydávat bulletin s krátkými strukturovanými informacemi, od konce 70. let pak funguje systém PIAN – Prostorová identifikace archeologických nalezišť, založená na jednoduché, ale velmi efektivní metodě odměřování souřadnic v milimetrech od sekčních čar mapových listů základních map.]]>
+    </para>
+    <para>
+      <![CDATA[Velký posun vpřed pak přinesla 90. léta a nástup počítačů; vznikla Archeologická databáze Čech, „matka“ dnešní AMČR, která ještě neměla mapové rozhraní, ale která čítala na konci svého fungování přes 90 000 záznamů o archeologických výzkumech. Obecné rozšíření GIS pak samozřejmě nutně stimulovalo směrem ke vzniku geograficko-informační platformy, jíž je AMČR.]]>
+    </para>
+    
+    <para>
+      <![CDATA[<strong>A jaké budou další úkoly?</strong>]]>
+    </para>
+    <para>
+      <![CDATA[Nikdy nekončícím úkolem bude samozřejmě stálá péče o to, aby do AMČR přicházela data o výzkumech, kterých každý den běží na území ČR několik stovek. Náročným soustem je také doplnění těch starších akcí, které AMČR doposud neeviduje – mohou jich být řádově desítky tisíc. Informační báze ARUP jsou dnes z velké části vytěženy, ale o jiných institucích (např. muzejní sbírky) toto rozhodně neplatí. Velké výzvy ale samozřejmě přinášejí i mezinárodní infrastruktury a snahy sdílet data nejen v rámci jednotlivých států, ale i širších regionů.]]>
+    </para>
+  </infrastructure>
+</source>

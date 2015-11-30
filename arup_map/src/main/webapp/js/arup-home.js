@@ -19,7 +19,7 @@ arup.HOME = {
     },
     search: function () {
         var params = $("#searchForm").serialize();
-        var url = "data?action=BYQUERY&fq=database:Atlas&" + params;
+        var url = "data?action=BYQUERY&fq=hasImage:true&" + params;
         $.getJSON(url, _.bind(function (d) {
             this.results = d;
             this.numFound = d.response.numFound;

@@ -6,6 +6,7 @@
 package cz.incad.arup.arup_map;
 
 import au.com.bytecode.opencsv.CSVReader;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -16,6 +17,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -132,11 +134,23 @@ public class DataServlet extends HttpServlet {
                                     for (int j = 0; j < nextLine.length; j++) {
                                         doc.addField(jmap.getString(headerLine[j]), nextLine[j]);
                                     }
+                                    
+                                    String id = nextLine[fNames.get(jmap.getString("id"))];
 
                                     String loc = nextLine[fNames.get(jmap.getString("lat"))] + "," + nextLine[fNames.get(jmap.getString("lng"))];
                                     doc.addField("loc", loc);
                                     doc.addField("loc_rpt", loc);
                                     doc.addField("database", db);
+                                    
+                                    boolean hasImage = false;
+                                    try{
+                                        File f = new File(Options.getInstance().getJSONObject("imagesDir").getString(db) + id + ".jpg");
+                                        hasImage = f.exists();
+                                    }catch(Exception ex){
+                                        hasImage = false;
+                                    }
+                                    doc.addField("hasImage", hasImage);
+                                    
                                     sclient.add(doc);
                                     success++;
                                     if (success % 500 == 0) {
