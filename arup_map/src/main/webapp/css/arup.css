@@ -65,6 +65,11 @@ img.pull-left {
   box-shadow: none !important;
 }
 
+.arup-clean-pd,
+.arup-clean-pd li {
+  padding: 0 !important;
+}
+
 /*** mg, pd ***/
 .arup-mg-bottom-30 {
   margin-bottom: 30px;
