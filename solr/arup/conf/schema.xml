@@ -91,6 +91,9 @@
    <field name="lat" type="tfloat" indexed="true" stored="true" />
    <dynamicField name="*_coordinate"  type="tdouble" indexed="true"  stored="true"/>
    
+   <field name="hasImage" type="boolean" indexed="true" stored="true" />
+   
+   
    <field name="timestamp" type="date" indexed="true" stored="true" default="NOW" />
 
    <field name="text" type="text_general_cs" indexed="true" stored="false" multiValued="true" />
