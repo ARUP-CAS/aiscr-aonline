@@ -56,7 +56,8 @@
 
         <!-- Container content -->
         <div class="container arup-content-container">
-$xslt.transform("sources", "3298863", "source.xsl")
+$xslt.transform("sources", "Atlas", "source.xsl")
+$xslt.transform("sources", "AMCR", "source.xsl")
         </div><!--/.container content -->
 
         <!-- Footer -->
