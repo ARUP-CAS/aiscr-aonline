@@ -78,6 +78,7 @@ arup.MAP = {
                 
                 li.addClass("arup-facet-active");
                 a.append(' <i class="glyphicon glyphicon-ok"></i>');
+                
             }else{
                 
                 a.text($(li).data("label"));
@@ -163,6 +164,7 @@ arup.MAP = {
                         li.data("value", facetvals[i]);
 
                         var label = $("<span/>");
+                        var ico = $("<i class='glyphicon glyphicon-chevron-right arup-facet-ico'></i>"); // pedro
                         var txt = facetvals[i];
                         if(txt.length > this.facetMaxChars){
                             label.attr("title", txt);
@@ -170,10 +172,10 @@ arup.MAP = {
                         }
                         label.text(txt + " (" + facetvals[i + 1] + ")");
                         label.click(function () {
-                            arup.MAP.addFilter($(this).parent().data("facet"), '"' + $(this).parent().data("value") + '"');
+                            arup.MAP.addFilter($(this).parent().data("facet"), '' + $(this).parent().data("value") + ''); // pedro - removed "
                         });
+                        li.append(ico); // pedro
                         li.append(label);
-
                         ul.append(li);
                     }
                 }

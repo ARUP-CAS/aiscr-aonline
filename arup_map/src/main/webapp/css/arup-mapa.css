@@ -21,6 +21,7 @@
   right: 0;
   top: 0;
   height: 100%;
+  z-index: 1001;
 }  
   
 
@@ -28,7 +29,7 @@
 .nav-tabs {
   float: right;
   border-bottom: 0;
-  width:140px;
+  width:150px;
   background-color: #F5F5F5;
   height: 100%;
 }
@@ -38,11 +39,18 @@
   margin: 0;
 }
 
+.nav-tabs li::after {
+  border-top: 1px solid #d9d9d9 !important;
+  border-bottom: 1px solid #fff !important;
+  content: "";
+  display: block;
+}
+
 .nav-tabs li a {
   padding: 15px;
   margin-right: 0;
   border-radius: 0;
-  border-bottom: 1px solid #d9d9d9 !important;
+/*  border-bottom: 1px solid #d9d9d9 !important;*/
 }
 
 .nav-tabs li a:hover {
@@ -78,17 +86,25 @@
 .tab-content #results ul li a {
   border-left: 3px solid #589CBD;
   padding-left: 10px;
+  display: block;
 }
 
 
 /*** Active facet / tab ***/
-.arup-facet-active a {
-  color: #37a2d4;
+.arup-facet-active > a {
+  color: #37a2d4 !important;
   font-weight: bold;
 }
 
-.arup-nav-tabs .active a {
-  font-weight: bold;
+/*** Facet ico ***/
+.arup-facet-ico {
+  margin-right: 5px;
+  color: #BEBEBE;
+}
+
+.arup-nav-tabs > li.active > a,
+.arup-nav-tabs > li.active > a:focus {
+  font-weight: bold !important;
 }
 
 /*** Btn show / hide widget pane ***/
@@ -105,6 +121,7 @@
  -webkit-box-shadow: -15px 0 10px -12px #333;
   box-shadow: -2px 0 8px -3px silver;
   color: #37a2d4;
+  z-index: 1002;
 }
 
 
