@@ -56,33 +56,12 @@
 
         <!-- Container content -->
         <div class="container arup-content-container">
-          
-$xslt.transform("3298863", "source.xsl")
-
-          
+$xslt.transform("sources", "3298863", "source.xsl")
         </div><!--/.container content -->
 
         <!-- Footer -->
-        <footer class="arup-footer">
-          <div class="container">
-            <div class="col-md-6 arup-color-gray-dark">
-              <p class="arup-color-gray">
-                © 2015 Archeologie Online. All Rights Reserved.
-              </p>
-              <p>
-                <a href="#" title="Terms, privacy and cookie policy">Terms, privacy and cookie policy</a>
-              </p>
-              <p>
-                <a href="#" title="Email us">E-mail us</a> | <a href="#" title="Kontakt">Kontakt</a>
-              </p>
-            </div>
-            <div class="col-md-6 text-right">
-              <a href="" title=""><img src="img/logo-arup.png" alt="" /></a>
-              <a href="" title=""><img src="img/logo-avcr.png" alt="" /></a>
-              <a href="" title=""><img src="img/logo-av21.png" alt="" /></a>
-            </div>
-          </div>
-        </footer><!--/.footer -->
+        #parse("footer.vm")
+        <!--/.footer -->
 
       </div><!--/.bg white -->
     </div><!--/.page container -->

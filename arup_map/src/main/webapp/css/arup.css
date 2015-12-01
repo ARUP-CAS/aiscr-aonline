@@ -3,6 +3,8 @@ body {
   background-color: #EFEFEF;
 }
 
+@import url("//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc2/css/bootstrap-glyphicons.css");
+
 h1 {
   font-size: 20px;
 }
@@ -49,8 +51,9 @@ img.pull-left {
 }
 
 .arup-clean-border,
+.arup-clean-border a,
 .arup-navbar-form .form-control:focus {
-  border: 0;
+  border: 0 !important;
 }
 
 .arup-clean-border-bottom {
@@ -87,7 +90,8 @@ img.pull-left {
   color: #778E98;
 }
 
-.arup-color-gray-pastel-dark {
+.arup-color-gray-pastel-dark,
+.arup-color-gray-pastel-dark a {
   color: #637780;
 }
 
@@ -190,7 +194,7 @@ img.pull-left {
 
 .arup-navbar-nav li a:hover,
 .arup-navbar-nav li a:focus,
-.arup-navbar-nav li.arup-nav-default.active {
+.arup-navbar-nav li.active {
   background-color: #63767F;
 }
 
@@ -325,7 +329,11 @@ img.pull-left {
   }
   .arup-navbar-nav li:hover:after,
   .arup-navbar-nav li > a:focus:after,
-  .arup-navbar-nav li.active:after {
+  .arup-navbar-nav li.active:after,
+  .arup-navbar-nav li.arup-nav-mapa.active:after,
+  .arup-navbar-nav li.arup-nav-zdroj.active:after,
+  .arup-navbar-nav li.arup-nav-praxe.active:after {
+
     content: ' ';
     position: absolute;
     border: solid 7px transparent;
@@ -334,11 +342,6 @@ img.pull-left {
     left: 50%;
     top:34px;
     margin-left: -7px;
-    /*border-color: #63767F transparent transparent transparent;*/
-  }
-  .arup-navbar-nav li.arup-nav-default:hover:after,
-  .arup-navbar-nav li.arup-nav-default > a:focus:after,
-  .arup-navbar-nav li.arup-nav-default.active:after {
     border-color: #63767F transparent transparent transparent; 
   }
   .arup-navbar-nav li.arup-nav-mapa:hover:after,

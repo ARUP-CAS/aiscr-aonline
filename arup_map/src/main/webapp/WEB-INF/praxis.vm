@@ -24,6 +24,8 @@
     <link href="css/segoe-ui-semibold.css" rel="stylesheet">
     <link href="css/segoe-ui-bold.css" rel="stylesheet">
 
+    <script src="js/arup.js"></script>
+
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="js/ie8-responsive-file-warning.js"></script><![endif]-->
     <script src="js/ie-emulation-modes-warning.js"></script>
@@ -52,67 +54,12 @@
         #parse("header.vm")
 
         <!-- Container content -->
-        <div class="container arup-content-container">
-          <div class="col-md-12 arup-praxe">
-            <ul class="list-unstyled">
-              <!-- Item 1 -->
-              <li>
-                <div class="arup-praxe-item-container">
-                  <h2 class="arup-color-gray-pastel-dark"><a href="">Archeobotanická databáze ČR</a></h2>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco 
-                    laboris nisi ut aliquip ex ea commodo consequat ...
-                  </p>
-                  <p>
-                    <!-- 
-                    u priloh, pokud dostanu format, tak na zaklade nej mohu dosadit ikonu pro konkretni format - pdf, word, text atd. zatim dosazuji obecnou ikonu 
-                    jako napr. zde -> http://sluzby.incad.cz/staticDemo/skoda/search.html - filter Fomrat
-                    -->
-                    <a href="" title="" class="arup-color-gray-pastel-dark"><i class="glyphicon glyphicon-save-file"></i> Dokument ke stazeni</a>&#160;&#160;<span class="arup-color-gray">|</span>&#160;
-                    <a href="" title="" class="arup-color-gray-pastel-dark"><i class="glyphicon glyphicon-save-file"></i> Word dokument</a>
-                  </p>
-                </div>
-              </li><!--/.item 1 -->
-              <!-- Item 2 -->
-              <li>
-                <div class="arup-praxe-item-container">
-                  <h2 class="arup-color-gray-pastel-dark"><a href="">Archeobotanická databáze ČR</a></h2>
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco 
-                    laboris nisi ut aliquip ex ea commodo consequat ...
-                  </p>
-                  <p>
-                    <a href="" title="" class="arup-color-gray-pastel-dark"><i class="glyphicon glyphicon-save-file"></i> Dokument ke stazeni</a>&#160;&#160;<span class="arup-color-gray">|</span>&#160;
-                    <a href="" title="" class="arup-color-gray-pastel-dark"><i class="glyphicon glyphicon-save-file"></i> Dalsi dokument ke stazeni</a>&#160;&#160;<span class="arup-color-gray">|</span>&#160;
-                    <a href="" title="" class="arup-color-gray-pastel-dark"><i class="glyphicon glyphicon-save-file"></i> Word dokument</a>
-                  </p>
-                </div>
-              </li><!--/.item 2 -->
-            </ul>
-          </div>
-        </div><!--/.container content -->
+        $xslt.transform("praxis", "3298863", "praxis.xsl")
+        <!--/.container content -->
 
         <!-- Footer -->
-        <footer class="arup-footer">
-          <div class="container">
-            <div class="col-md-6 arup-color-gray-dark">
-              <p class="arup-color-gray">
-                © 2015 Archeologie Online. All Rights Reserved.
-              </p>
-              <p>
-                <a href="#" title="Terms, privacy and cookie policy">Terms, privacy and cookie policy</a>
-              </p>
-              <p>
-                <a href="#" title="Email us">E-mail us</a> | <a href="#" title="Kontakt">Kontakt</a>
-              </p>
-            </div>
-            <div class="col-md-6 text-right">
-              <a href="" title=""><img src="img/logo-arup.png" alt="" /></a>
-              <a href="" title=""><img src="img/logo-avcr.png" alt="" /></a>
-              <a href="" title=""><img src="img/logo-av21.png" alt="" /></a>
-            </div>
-          </div>
-        </footer><!--/.footer -->
+        #parse("footer.vm")
+        <!--/.footer -->
 
       </div><!--/.bg white -->
     </div><!--/.page container -->
@@ -125,5 +72,11 @@
     <script src="js/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="js/ie10-viewport-bug-workaround.js"></script>
+    <script type="text/javascript">
+      
+      window.onload = function() {
+        arup.init();
+      };
+    </script>
   </body>
 </html>

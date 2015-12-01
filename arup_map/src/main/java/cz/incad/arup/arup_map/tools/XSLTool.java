@@ -51,14 +51,14 @@ public class XSLTool {
     HashMap<String, String> params = new HashMap<String, String>();
     
     public String transform() {
-            return transform(xml, xslt);
+            return transform("", xml, xslt);
     }
 
-    public String transform(String xml, String xsl) {
+    public String transform(String dir, String xml, String xsl) {
         try {
             TransformerFactory tfactory = TransformerFactory.newInstance();
             
-            File f = new File(Options.getInstance().getString("sourcesDir") + xml + ".xml");
+            File f = new File(Options.getInstance().getString("dataDir") + dir + File.separator + xml + ".xml");
         
             StreamSource xsltSource = new StreamSource(XSLTool.class.getResourceAsStream("/cz/incad/arup/arup_map/" + xsl));
             //StreamSource xmlSource = new StreamSource(XSLTool.class.getResourceAsStream("/cz/incad/arup/arup_map/" + xml));
