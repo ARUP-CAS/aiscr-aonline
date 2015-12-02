@@ -52,7 +52,7 @@
     <!-- Page container -->
     <div class="container arup-page-container arup-bg-black">
       <!-- Bg white -->
-      <div class="arup-bg-white" style="height: 100%;">
+      <div class="arup-bg-white">
       
         #parse("header.vm")
         <!-- Container content -->

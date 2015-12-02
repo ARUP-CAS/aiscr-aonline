@@ -173,10 +173,13 @@ img.pull-left {
 
 /*** Navbar ***/
 .arup-navbar-form .btn {
-  padding: 4px 12px 2px 12px;
-  font-size: 18px;
+  padding: 6px 12px 8px 12px;
 }
 
+.arup-navbar-form .btn span {
+  font-size: 18px;
+  display: block;
+}
 
 .arup-navbar {
   padding-bottom: 25px;
