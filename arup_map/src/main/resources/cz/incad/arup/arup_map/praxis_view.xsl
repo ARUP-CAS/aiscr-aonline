@@ -7,7 +7,7 @@
          <div class="container arup-content-container">
           <div class="col-md-12 arup-praxe">
             <ul class="list-unstyled">
-                <xsl:for-each select="praxis">
+                <xsl:for-each select="practice">
                     <xsl:call-template name="li">
                         <xsl:with-param name="id"><xsl:value-of select="./@name"/></xsl:with-param>
                         <xsl:with-param name="name"><xsl:value-of select="./@name"/></xsl:with-param>

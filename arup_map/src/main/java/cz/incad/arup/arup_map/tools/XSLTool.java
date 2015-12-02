@@ -53,12 +53,26 @@ public class XSLTool {
     public String transform() {
             return transform("", xml, xslt);
     }
-
+    public String transform(String xml, String xsl) {
+            File f = new File(xml);
+            return transform(f, xsl);
+    }
     public String transform(String dir, String xml, String xsl) {
         try {
+            File f = new File(Options.getInstance().getString("dataDir") + dir + File.separator + xml);
+            return transform(f, xsl);
+        } catch (IOException ex) {
+            Logger.getLogger(XSLTool.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        } catch (JSONException ex) {
+            Logger.getLogger(XSLTool.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+
+    public String transform(File f, String xsl) {
+        try {
             TransformerFactory tfactory = TransformerFactory.newInstance();
-            
-            File f = new File(Options.getInstance().getString("dataDir") + dir + File.separator + xml + ".xml");
         
             StreamSource xsltSource = new StreamSource(XSLTool.class.getResourceAsStream("/cz/incad/arup/arup_map/" + xsl));
             //StreamSource xmlSource = new StreamSource(XSLTool.class.getResourceAsStream("/cz/incad/arup/arup_map/" + xml));
@@ -77,9 +91,6 @@ public class XSLTool {
             Logger.getLogger(XSLTool.class.getName()).log(Level.SEVERE, null, ex2);
             return null;
         } catch (TransformerException ex) {
-            Logger.getLogger(XSLTool.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
-        } catch (IOException ex) {
             Logger.getLogger(XSLTool.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         } catch (JSONException ex) {

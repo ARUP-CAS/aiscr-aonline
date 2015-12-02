@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Reader;
+import java.io.StringReader;
 import java.io.Writer;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -80,15 +81,16 @@ public class SolrIndex {
     }
     
     private static String doQuery(SolrQuery query) throws MalformedURLException, IOException, ProtocolException {
+        return doQuery(query, Options.getInstance().getString("solrCore", DEFAULT_CORE));
+    }
+    private static String doQuery(SolrQuery query, String core) throws MalformedURLException, IOException, ProtocolException {
 
         
-        // use org.apache.solr.client.solrj.util.ClientUtils 
-        // to make a URL compatible query string of your SolrQuery
         String urlQueryString = ClientUtils.toQueryString(query, false);
         Options opts = Options.getInstance();
         String solrURL = String.format("%s/%s/select",
                 opts.getString("solrHost", DEFAULT_HOST),
-                opts.getString("solrCore", DEFAULT_CORE));
+                core);
         URL url = new URL(solrURL + urlQueryString);
         
         
@@ -167,6 +169,13 @@ public class SolrIndex {
         return doQuery(query);
     }
     
+    public static String json(SolrQuery query, String core) throws MalformedURLException, IOException {
+        
+        query.set("indent", true);
+        query.set("wt", "json");
+        return doQuery(query, core);
+    }
+    
     
     
     public static String json(String urlQueryString) throws MalformedURLException, IOException {
@@ -181,6 +190,124 @@ public class SolrIndex {
         String xmlResponse = IOUtils.toString(url, "UTF-8");
 
         return xmlResponse;
+    }
+    
+    public static String postData(String dataStr)
+            throws Exception {
+        Options opts = Options.getInstance();
+        return postData(String.format("%s/%s/update",
+                opts.getString("solrHost", DEFAULT_HOST),
+                opts.getString("solrCore", DEFAULT_CORE)), dataStr);
+    }
+    
+    public static String postDataToCore(String dataStr, String core)
+            throws Exception {
+        Options opts = Options.getInstance();
+        return postData(String.format("%s/%s/update",
+                opts.getString("solrHost", DEFAULT_HOST),
+                core), dataStr);
+    }
+
+    public static String postData(String url, String dataStr)
+            throws Exception {
+
+        URL solrUrl = new URL(url);
+        Reader data = new StringReader(dataStr);
+        StringBuilder output = new StringBuilder();
+        HttpURLConnection urlc = null;
+        String POST_ENCODING = "UTF-8";
+
+        urlc = (HttpURLConnection) solrUrl.openConnection();
+        try {
+            urlc.setRequestMethod("POST");
+        } catch (ProtocolException e) {
+            throw new Exception("Shouldn't happen: HttpURLConnection doesn't support POST??", e);
+        }
+        urlc.setDoOutput(true);
+        urlc.setDoInput(true);
+        urlc.setUseCaches(false);
+        urlc.setAllowUserInteraction(false);
+        urlc.setRequestProperty("Content-type", "text/xml; charset=" + POST_ENCODING);
+
+        OutputStream out = urlc.getOutputStream();
+
+        try {
+            Writer writer = new OutputStreamWriter(out, POST_ENCODING);
+            pipe(data, writer);
+            writer.close();
+        } catch (IOException e) {
+            throw new Exception("IOException while posting data", e);
+        } finally {
+            if (out != null) {
+                out.close();
+            }
+        }
+
+        InputStream in = urlc.getInputStream();
+        int status = urlc.getResponseCode();
+        StringBuilder errorStream = new StringBuilder();
+        try {
+            if (status != HttpURLConnection.HTTP_OK) {
+                errorStream.append("postData URL=").append(solrUrl.toString()).append(" HTTP response code=").append(status).append(" ");
+                throw new Exception("URL=" + solrUrl.toString() + " HTTP response code=" + status);
+            }
+            Reader reader = new InputStreamReader(in);
+            pipeString(reader, output);
+            reader.close();
+        } catch (IOException e) {
+            throw new Exception("IOException while reading response", e);
+        } finally {
+            if (in != null) {
+                in.close();
+            }
+        }
+
+        InputStream es = urlc.getErrorStream();
+        if (es != null) {
+            try {
+                Reader reader = new InputStreamReader(es);
+                pipeString(reader, errorStream);
+                reader.close();
+            } catch (IOException e) {
+                throw new Exception("IOException while reading response", e);
+            } finally {
+                if (es != null) {
+                    es.close();
+                }
+            }
+        }
+        if (errorStream.length() > 0) {
+            throw new Exception("postData error: " + errorStream.toString());
+        }
+
+        return output.toString();
+
+    }
+
+    /**
+     * Pipes everything from the reader to the writer via a buffer
+     */
+    private static void pipe(Reader reader, Writer writer) throws IOException {
+        char[] buf = new char[1024];
+        int read = 0;
+        while ((read = reader.read(buf)) >= 0) {
+            writer.write(buf, 0, read);
+        }
+        writer.flush();
+    }
+
+    /**
+     * Pipes everything from the reader to the writer via a buffer except lines
+     * starting with '<?'
+     */
+    private static void pipeString(Reader reader, StringBuilder writer) throws IOException {
+        char[] buf = new char[1024];
+        int read = 0;
+        while ((read = reader.read(buf)) >= 0) {
+            if (!(buf[0] == '<' && buf[1] == '?')) {
+                writer.append(buf, 0, read);
+            }
+        }
     }
 
 }

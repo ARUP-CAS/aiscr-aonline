@@ -25,7 +25,9 @@
     <link href="css/segoe-ui-bold.css" rel="stylesheet">
 
 
+    <script src="js/underscore-min.js" type="text/javascript" ></script>
     <script src="js/arup.js"></script>
+    <script src="js/arup-source.js"></script>
 
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="js/ie8-responsive-file-warning.js"></script><![endif]-->
@@ -55,9 +57,7 @@
         #parse("header.vm")
 
         <!-- Container content -->
-        <div class="container arup-content-container">
-$xslt.transform("sources", "Atlas", "source.xsl")
-$xslt.transform("sources", "AMCR", "source.xsl")
+        <div class="container arup-content-container" id="results">
         </div><!--/.container content -->
 
         <!-- Footer -->
@@ -85,6 +85,7 @@ $xslt.transform("sources", "AMCR", "source.xsl")
 
       window.onload = function() {
         arup.init();
+        arup.current = arup.SOURCE.init();
       };
     </script>
   </body>

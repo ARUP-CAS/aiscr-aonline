@@ -6,12 +6,23 @@
 package cz.incad.arup.arup_map;
 
 import au.com.bytecode.opencsv.CSVReader;
+import cz.incad.arup.arup_map.tools.XSLTool;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.nio.file.FileVisitOption;
+import java.nio.file.FileVisitResult;
+import java.nio.file.FileVisitor;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -22,6 +33,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
 import org.apache.commons.io.FileUtils;
 import org.apache.solr.client.solrj.SolrClient;
 import org.apache.solr.client.solrj.SolrQuery;
@@ -78,9 +93,77 @@ public class DataServlet extends HttpServlet {
         }
     }
 
-    enum Actions {
+    private static JSONArray indexDir(final Path dir, final String xsl, final String core) throws IOException {
+        final JSONArray ja = new JSONArray();
+        final TransformerFactory tfactory = TransformerFactory.newInstance();
+        Files.walkFileTree(dir, EnumSet.of(FileVisitOption.FOLLOW_LINKS), Integer.MAX_VALUE,
+                new SimpleFileVisitor<Path>() {
 
-        INDEX {
+            @Override
+            public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+
+                try {
+                    StreamSource xsltSource = new StreamSource(DataServlet.class.getResourceAsStream("/cz/incad/arup/arup_map/" + xsl));
+                    StreamSource xmlSource = new StreamSource(file.toFile());
+                    Transformer transformer = tfactory.newTransformer(xsltSource);
+                    StreamResult destStream = new StreamResult(new StringWriter());
+
+                    transformer.setParameter("filename", file.toString());
+                    transformer.transform(xmlSource, destStream);
+                    StringWriter sw = (StringWriter) destStream.getWriter();
+
+                    SolrIndex.postDataToCore(sw.toString(), core);
+
+                    return FileVisitResult.CONTINUE;
+                } catch (Exception e) {
+                    LOGGER.log(Level.SEVERE, "Error indexing file {0}", file);
+
+                    ja.put("Error indexing file " + file);
+                    return FileVisitResult.CONTINUE;
+                }
+            }
+        });
+        return ja;
+    }
+
+    enum Actions {
+        INDEX_PRACTICES {
+            @Override
+            void doPerform(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+                resp.setContentType("application/json;charset=UTF-8");
+                try (PrintWriter out = resp.getWriter()) {
+                    final JSONObject ret = new JSONObject();
+                    Options opts = Options.getInstance();
+                    Path dir = Paths.get(opts.getString("dataDir") + opts.getString("practicesDir"));
+                    JSONArray ja = indexDir(dir, "praxis_index.xsl", "practices");
+
+                    LOGGER.log(Level.INFO, "Indexing finished.");
+                    SolrIndex.postDataToCore("<commit/>", "practices");
+                    ret.put("errors", ja.length());
+                    ret.put("errors msgs", ja);
+                    out.println(ret.toString());
+                }
+            }
+        },
+        INDEX_SOURCES {
+            @Override
+            void doPerform(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+                resp.setContentType("application/json;charset=UTF-8");
+                try (PrintWriter out = resp.getWriter()) {
+                    final JSONObject ret = new JSONObject();
+                    Options opts = Options.getInstance();
+                    Path dir = Paths.get(opts.getString("dataDir") + opts.getString("sourcesDir"));
+                    JSONArray ja = indexDir(dir, "source_index.xsl", "sources");
+
+                    LOGGER.log(Level.INFO, "Indexing finished.");
+                    SolrIndex.postDataToCore("<commit/>", "sources");
+                    ret.put("errors", ja.length());
+                    ret.put("errors msgs", ja);
+                    out.println(ret.toString());
+                }
+            }
+        },
+        INDEX_MAP {
             @Override
             void doPerform(HttpServletRequest req, HttpServletResponse resp) throws Exception {
                 resp.setContentType("application/json;charset=UTF-8");
@@ -94,7 +177,7 @@ public class DataServlet extends HttpServlet {
                     String[] filenames = req.getParameterValues("filename");
                     JSONArray sources;
                     if (filenames == null || filenames.length == 0) {
-                        sources = opts.getJSONArray("indexSources");
+                        sources = opts.getJSONArray("indexMapSources");
                     } else {
                         sources = new JSONArray(filenames);
                     }
@@ -134,23 +217,23 @@ public class DataServlet extends HttpServlet {
                                     for (int j = 0; j < nextLine.length; j++) {
                                         doc.addField(jmap.getString(headerLine[j]), nextLine[j]);
                                     }
-                                    
+
                                     String id = nextLine[fNames.get(jmap.getString("id"))];
 
                                     String loc = nextLine[fNames.get(jmap.getString("lat"))] + "," + nextLine[fNames.get(jmap.getString("lng"))];
                                     doc.addField("loc", loc);
                                     doc.addField("loc_rpt", loc);
                                     doc.addField("database", db);
-                                    
+
                                     boolean hasImage = false;
-                                    try{
+                                    try {
                                         File f = new File(Options.getInstance().getJSONObject("imagesDir").getString(db) + id + ".jpg");
                                         hasImage = f.exists();
-                                    }catch(Exception ex){
+                                    } catch (Exception ex) {
                                         hasImage = false;
                                     }
                                     doc.addField("hasImage", hasImage);
-                                    
+
                                     sclient.add(doc);
                                     success++;
                                     if (success % 500 == 0) {
@@ -237,13 +320,13 @@ public class DataServlet extends HttpServlet {
                     if (od != null && !"".equals(od)) {
                         query.add("fq", "od:[" + od + " TO " + to + "] OR do:[" + od + " TO " + to + "]");
                     }
-                    
+
                     if (req.getParameterValues("fq") != null) {
                         for (String fq : req.getParameterValues("fq")) {
                             query.addFilterQuery(fq);
                         }
                     }
-                    
+
                     String geom = req.getParameter("geom");
                     if (geom != null && !"".equals(geom)) {
 
@@ -254,18 +337,17 @@ public class DataServlet extends HttpServlet {
                         double latCenter = (Double.parseDouble(coords[3]) + Double.parseDouble(coords[1])) * .5;
                         double lngCenter = (Double.parseDouble(coords[0]) + Double.parseDouble(coords[2])) * .5;
                         double dist = (Double.parseDouble(coords[2]) - Double.parseDouble(coords[0])) * .005;
-                        
+
                         String d = req.getParameter("d");
-                        if(d!=null && !d.equals("")){
-                            try{
+                        if (d != null && !d.equals("")) {
+                            try {
                                 dist = Math.min(dist, Double.parseDouble(d));
-                            }catch(Exception e){
-                                
+                            } catch (Exception e) {
+
                             }
                         }
-                        
-                        //query.add("fq", "loc_rpt:" + gf);
 
+                        //query.add("fq", "loc_rpt:" + gf);
 //                                String sort = String.format("query({!bbox v='' filter=false score=distance })", latCenter, lngCenter, dist);
                         String sort = "query({!bbox v='' filter=false score=distance })";
                         query.setSort(sort, SolrQuery.ORDER.asc);
@@ -284,6 +366,56 @@ public class DataServlet extends HttpServlet {
                     query.setRows(ROWS);
                     query.addFacetField(Options.getInstance().getStrings("facets"));
                     JSONObject json = new JSONObject(SolrIndex.json(query));
+
+                    out.println(json.toString());
+                }
+            }
+        },
+        QUERYSOURCES {
+            @Override
+            void doPerform(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+                resp.setContentType("application/json;charset=UTF-8");
+                try (PrintWriter out = resp.getWriter()) {
+                    String q = req.getParameter("q");
+                    if (q == null || "".equals(q)) {
+                        q = "*:*";
+                    }
+                    SolrQuery query = new SolrQuery();
+                    query.setQuery(q);
+
+                    if (req.getParameterValues("fq") != null) {
+                        for (String fq : req.getParameterValues("fq")) {
+                            query.addFilterQuery(fq);
+                        }
+                    }
+                    query.setRows(ROWS);
+
+                    JSONObject json = new JSONObject(SolrIndex.json(query, "sources"));
+
+                    out.println(json.toString());
+                }
+            }
+        },
+        QUERYPRACTICES {
+            @Override
+            void doPerform(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+                resp.setContentType("application/json;charset=UTF-8");
+                try (PrintWriter out = resp.getWriter()) {
+                    String q = req.getParameter("q");
+                    if (q == null || "".equals(q)) {
+                        q = "*:*";
+                    }
+                    SolrQuery query = new SolrQuery();
+                    query.setQuery(q);
+
+                    if (req.getParameterValues("fq") != null) {
+                        for (String fq : req.getParameterValues("fq")) {
+                            query.addFilterQuery(fq);
+                        }
+                    }
+                    query.setRows(ROWS);
+
+                    JSONObject json = new JSONObject(SolrIndex.json(query, "practices"));
 
                     out.println(json.toString());
                 }
