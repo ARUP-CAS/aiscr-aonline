@@ -3,8 +3,6 @@ body {
   background-color: #EFEFEF;
 }
 
-@import url("//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc2/css/bootstrap-glyphicons.css");
-
 h1 {
   font-size: 20px;
 }
@@ -42,6 +40,10 @@ img.pull-left {
 
 .arup-segoe-ui-bold {
   font-family: wf_segoe-ui_bold,"Segoe UI Bold","Segoe WP Bold","Segoe UI","Segoe WP",Tahoma,Arial,sans-serif;
+}
+
+.arup-segoe-ui-semibold {
+  font-family: wf_segoe-ui_semibold,"Segoe UI Semi Bold","Segoe WP Semi Bold","Segoe UI","Segoe WP",Tahoma,Arial,sans-serif;
 }
 
 

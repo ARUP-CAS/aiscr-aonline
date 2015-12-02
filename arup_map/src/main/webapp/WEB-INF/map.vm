@@ -45,14 +45,14 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
   
-<!--[if gte mso 9]><xml>
-<mso:CustomDocumentProperties>
-<mso:_dlc_DocId msdt:dt="string">KAAZ7N6DRQ4K-438874667-319</mso:_dlc_DocId>
-<mso:_dlc_DocIdItemGuid msdt:dt="string">e2404769-f718-40cc-a535-f560d1af2096</mso:_dlc_DocIdItemGuid>
-<mso:_dlc_DocIdUrl msdt:dt="string">https://sto365.sharepoint.com/sites/consulting/arup/_layouts/15/DocIdRedir.aspx?ID=KAAZ7N6DRQ4K-438874667-319, KAAZ7N6DRQ4K-438874667-319</mso:_dlc_DocIdUrl>
-</mso:CustomDocumentProperties>
-</xml><![endif]-->
-</head>
+    <!--[if gte mso 9]><xml>
+    <mso:CustomDocumentProperties>
+    <mso:_dlc_DocId msdt:dt="string">KAAZ7N6DRQ4K-438874667-319</mso:_dlc_DocId>
+    <mso:_dlc_DocIdItemGuid msdt:dt="string">e2404769-f718-40cc-a535-f560d1af2096</mso:_dlc_DocIdItemGuid>
+    <mso:_dlc_DocIdUrl msdt:dt="string">https://sto365.sharepoint.com/sites/consulting/arup/_layouts/15/DocIdRedir.aspx?ID=KAAZ7N6DRQ4K-438874667-319, KAAZ7N6DRQ4K-438874667-319</mso:_dlc_DocIdUrl>
+    </mso:CustomDocumentProperties>
+    </xml><![endif]-->
+  </head>
 
   <body>
     <!-- Page container -->
@@ -62,54 +62,52 @@
       
         #parse("header.vm")
 
-
-<!-- Container mapa -->
+        <!-- Container mapa -->
         <div class="container arup-mapa-container">
-            <!-- Map -->
-            <div class="col-md-12" id="arup-map" style="padding:0;margin:0;">
-              <div id="map" style="height: 100%;"></div>
-            </div><!--/.map -->
-            
-            <!-- Tabs -->
-            <div class="arup-widget-pane arup-color-gray-dark">
-              <ul class="nav nav-tabs arup-clean-border" id="facets">
-                <li><a href="#results" data-toggle="tab">$i18n.results</a></li>
-                <li class="facet" data-field="database" data-label="$i18n.facet.database"><a href="#database" data-toggle="tab">$i18n.facet.database</a></li>
-                <li class="facet" data-field="Type_site" data-label="$i18n.facet.loc"><a href="#Type_site" data-toggle="tab">$i18n.facet.loc</a></li>
-                <li class="facet" data-field="Type_area" data-label="$i18n.facet.activity"><a href="#Type_area" data-toggle="tab">$i18n.facet.activity</a></li>
-                <li class="active"><a href="#timeline" data-toggle="tab">$i18n.timeline</a></li>
-              </ul>
-              <div class="tab-content" style="max-width: 280px;">
-                <div class="tab-pane" id="results">
-                  <ul class="list-unstyled">
-                  </ul>
-                </div>
-                <div class="tab-pane" id="database">
-                  <ul class="list-unstyled">
-                  </ul>
-                </div>
-                <div class="tab-pane" id="Type_area">
-                  <ul class="list-unstyled">
-                  </ul>
-                </div>
-                <div class="tab-pane" id="Type_site">
-                  <ul class="list-unstyled">
-                  </ul>
-                </div>
-                <!-- Timeline -->
-                #parse("timeline.vm")
-                <!--/.timeline -->
-              </div><!--/.tab-content -->
-            </div><!--/.tabs -->
+          <!-- Map -->
+          <div class="col-md-12" id="arup-map" style="padding:0;margin:0;">
+            <div id="map" style="height: 100%;"></div>
+          </div><!--/.map -->
+
+          <!-- Tabs -->
+          <div class="arup-widget-pane arup-color-gray-dark">
+            <ul class="nav nav-tabs arup-nav-tabs arup-clean-border" id="facets">
+              <li><a href="#results" data-toggle="tab">$i18n.results</a></li>
+              <li class="facet" data-field="database" data-label="$i18n.facet.database"><a href="#database" data-toggle="tab">$i18n.facet.database</a></li>
+              <li class="facet" data-field="Type_site" data-label="$i18n.facet.loc"><a href="#Type_site" data-toggle="tab">$i18n.facet.loc</a></li>
+              <li class="facet" data-field="Type_area" data-label="$i18n.facet.activity"><a href="#Type_area" data-toggle="tab">$i18n.facet.activity</a></li>
+              <li class="active"><a href="#timeline" data-toggle="tab">$i18n.timeline</a></li>
+            </ul>
+            <div class="tab-content" style="max-width: 280px;">
+              <div class="tab-pane" id="results">
+                <ul class="list-unstyled">
+                </ul>
+              </div>
+              <div class="tab-pane" id="database">
+                <ul class="list-unstyled">
+                </ul>
+              </div>
+              <div class="tab-pane" id="Type_area">
+                <ul class="list-unstyled">
+                </ul>
+              </div>
+              <div class="tab-pane" id="Type_site">
+                <ul class="list-unstyled">
+                </ul>
+              </div>
+              <!-- Timeline -->
+              #parse("timeline.vm")
+              <!--/.timeline -->
+            </div><!--/.tab-content -->
+          </div><!--/.tabs -->
 
 
-            <!-- Btn show/hide widget pane -->
-            <button class="btn arup-btn-hide-widget-pane">
-                <i class="glyphicon glyphicon-menu-right"></i>
-            </button><!--/.Btn show/hide widget pane -->
+          <!-- Btn show/hide widget pane -->
+          <button class="btn arup-btn-hide-widget-pane">
+              <i class="glyphicon glyphicon-menu-right"></i>
+          </button><!--/.Btn show/hide widget pane -->
 
         </div><!--/.container mapa -->
-
 
         #parse("footer.vm")
 

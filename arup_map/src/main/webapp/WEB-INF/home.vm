@@ -42,22 +42,23 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
   
-<!--[if gte mso 9]><xml>
-<mso:CustomDocumentProperties>
-<mso:_dlc_DocId msdt:dt="string">KAAZ7N6DRQ4K-438874667-319</mso:_dlc_DocId>
-<mso:_dlc_DocIdItemGuid msdt:dt="string">e2404769-f718-40cc-a535-f560d1af2096</mso:_dlc_DocIdItemGuid>
-<mso:_dlc_DocIdUrl msdt:dt="string">https://sto365.sharepoint.com/sites/consulting/arup/_layouts/15/DocIdRedir.aspx?ID=KAAZ7N6DRQ4K-438874667-319, KAAZ7N6DRQ4K-438874667-319</mso:_dlc_DocIdUrl>
-</mso:CustomDocumentProperties>
-</xml><![endif]-->
-</head>
+    <!--[if gte mso 9]><xml>
+    <mso:CustomDocumentProperties>
+    <mso:_dlc_DocId msdt:dt="string">KAAZ7N6DRQ4K-438874667-319</mso:_dlc_DocId>
+    <mso:_dlc_DocIdItemGuid msdt:dt="string">e2404769-f718-40cc-a535-f560d1af2096</mso:_dlc_DocIdItemGuid>
+    <mso:_dlc_DocIdUrl msdt:dt="string">https://sto365.sharepoint.com/sites/consulting/arup/_layouts/15/DocIdRedir.aspx?ID=KAAZ7N6DRQ4K-438874667-319, KAAZ7N6DRQ4K-438874667-319</mso:_dlc_DocIdUrl>
+    </mso:CustomDocumentProperties>
+    </xml><![endif]-->
+  </head>
 
   <body>
     <!-- Page container -->
     <div class="container arup-page-container arup-bg-black">
       <!-- Bg white -->
       <div class="arup-bg-white">
-      
+        
         #parse("header.vm")
+        
         <!-- Container content -->
         <div class="container arup-content-container">
 
@@ -71,7 +72,7 @@
           </div>
           <div class="col-md-4">
             <div class="arup-col-default" id="home_mapa">
-              <h2 class="arup-segoe-ui-bold arup-color-blue">$i18n.menu.map<span> (<strong>456</strong> záznamů)</span></h2>
+              <h2 class="arup-color-blue">$i18n.menu.map<span> (<strong>456</strong> záznamů)</span></h2>
               <div class="res">
               </div>
                 <button type="button" class="btn arup-clean-radius arup-color-white" onclick="arup.navigate('map');">$i18n.button.more</button>
@@ -79,7 +80,7 @@
           </div>
           <div class="col-md-4">
             <div class="arup-col-default arup-col-zdroj">
-              <h2 class="arup-segoe-ui-bold arup-color-pink">$i18n.menu.source</h2>
+              <h2 class="arup-color-pink">$i18n.menu.source</h2>
               <p>
                 Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi 
                 architecto beatae vitae dicta sunt explicabo ...
@@ -101,7 +102,7 @@
           </div>
           <div class="col-md-4">
             <div class="arup-col-default arup-col-praxe">
-              <h2 class="arup-segoe-ui-bold arup-color-orange">$i18n.menu.praxis</h2>
+              <h2 class="arup-color-orange">$i18n.menu.praxis</h2>
               <p>
                 Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi 
                 architecto beatae vitae dicta sunt explicabo ...
