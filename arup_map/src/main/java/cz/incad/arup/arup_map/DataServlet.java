@@ -171,7 +171,7 @@ public class DataServlet extends HttpServlet {
                     Options opts = Options.getInstance();
                     int success = 0;
                     int errors = 0;
-                    SolrClient sclient = SolrIndex.getServer();
+                    SolrClient sclient = SolrIndex.getServer(opts.getString("mapCore", "arup"));
                     JSONObject ret = new JSONObject();
                     JSONArray ja = new JSONArray();
                     String[] filenames = req.getParameterValues("filename");
@@ -227,7 +227,8 @@ public class DataServlet extends HttpServlet {
 
                                     boolean hasImage = false;
                                     try {
-                                        File f = new File(Options.getInstance().getJSONObject("imagesDir").getString(db) + id + ".jpg");
+                                        String imgFile = Options.getInstance().getString("dataDir") + Options.getInstance().getJSONObject("imagesDir").getString(db) + id + ".jpg";
+                                        File f = new File(imgFile);
                                         hasImage = f.exists();
                                     } catch (Exception ex) {
                                         hasImage = false;
@@ -276,7 +277,7 @@ public class DataServlet extends HttpServlet {
                     query.set("facet.heatmap", "loc_rpt");
                     query.set("facet.heatmap.distErrPct", "0.02");
                     query.set("facet.heatmap.geom", gf);
-                    JSONObject json = new JSONObject(SolrIndex.json(query));
+                    JSONObject json = new JSONObject(SolrIndex.json(query, Options.getInstance().getString("mapCore", "arup")));
 
                     out.println(json.toString());
                 }
@@ -298,7 +299,7 @@ public class DataServlet extends HttpServlet {
                     query.set("fq", fq);
                     query.setRows(ROWS);
                     //query.setSort("geodist()", SolrQuery.ORDER.asc);
-                    JSONObject json = new JSONObject(SolrIndex.json(query));
+                    JSONObject json = new JSONObject(SolrIndex.json(query, Options.getInstance().getString("mapCore", "arup")));
 
                     out.println(json.toString());
                 }
@@ -365,7 +366,7 @@ public class DataServlet extends HttpServlet {
                     }
                     query.setRows(ROWS);
                     query.addFacetField(Options.getInstance().getStrings("facets"));
-                    JSONObject json = new JSONObject(SolrIndex.json(query));
+                    JSONObject json = new JSONObject(SolrIndex.json(query, Options.getInstance().getString("mapCore", "arup")));
 
                     out.println(json.toString());
                 }
@@ -390,7 +391,7 @@ public class DataServlet extends HttpServlet {
                     }
                     query.setRows(ROWS);
 
-                    JSONObject json = new JSONObject(SolrIndex.json(query, "sources"));
+                    JSONObject json = new JSONObject(SolrIndex.json(query, Options.getInstance().getString("sourcesCore", "sources")));
 
                     out.println(json.toString());
                 }
@@ -415,7 +416,7 @@ public class DataServlet extends HttpServlet {
                     }
                     query.setRows(ROWS);
 
-                    JSONObject json = new JSONObject(SolrIndex.json(query, "practices"));
+                    JSONObject json = new JSONObject(SolrIndex.json(query, Options.getInstance().getString("practicesCore", "practices")));
 
                     out.println(json.toString());
                 }

@@ -44,6 +44,7 @@ arup.HOME = {
             this.mapResults = d;
             this.mapFound = d.response.numFound;
 
+            this.foundContainer.find("strong").text(this.numFound());
             this.mapResultsHeader.find("span>strong").text(this.mapFound);
 
             this.renderMapResults();
@@ -56,6 +57,7 @@ arup.HOME = {
             this.sourceResults = d;
             this.sourceFound = d.response.numFound;
 
+            this.foundContainer.find("strong").text(this.numFound());
             this.sourceResultsHeader.find("span>strong").text(this.sourceFound);
 
             this.renderSourceResults();
@@ -67,6 +69,7 @@ arup.HOME = {
             this.practiceResults = d;
             this.practiceFound = d.response.numFound;
 
+            this.foundContainer.find("strong").text(this.numFound());
             this.practiceResultsHeader.find("span>strong").text(this.practiceFound);
 
             this.renderPracticeResults();
@@ -77,7 +80,6 @@ arup.HOME = {
         if ($("#q").val() !== "") {
             this.welcomeContainer.hide();
             this.foundContainer.show();
-            this.foundContainer.find("strong").text(this.numFound());
             this.foundContainer.find("span.q").text($("#q").val());
             this.mapResultsHeader.find("span").show();
             this.sourceResultsHeader.find("span").show();

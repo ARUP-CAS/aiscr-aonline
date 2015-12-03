@@ -33,13 +33,13 @@ public class SolrIndex {
 
     public static final Logger LOGGER = Logger.getLogger(SolrIndex.class.getName());
     private static final String DEFAULT_HOST = "http://localhost:8983/solr";
-    private static final String DEFAULT_CORE = "arup";
     
-    public static SolrClient getServer() throws IOException {
+    
+    public static SolrClient getServer(String core) throws IOException {
         Options opts = Options.getInstance();
         HttpSolrClient server = new HttpSolrClient(String.format("%s/%s/", 
                 opts.getString("solrHost", DEFAULT_HOST), 
-                opts.getString("solrCore", DEFAULT_CORE)));
+                core));
         server.setMaxRetries(1); // defaults to 0.  > 1 not recommended.
         server.setConnectionTimeout(5000); // 5 seconds to establish TCP
         
@@ -56,33 +56,19 @@ public class SolrIndex {
         server.setAllowCompression(true);
         return server;
     }
-    public static SolrDocumentList query(SolrQuery query) throws IOException, SolrServerException {
-        SolrClient server = getServer();
-        QueryResponse rsp = server.query(query);
-        return rsp.getResults();
-    }
-
-    public static SolrDocumentList queryOneField(String q, String[] fields, String[] fq) throws IOException, SolrServerException {
-        SolrClient server = getServer();
-        SolrQuery query = new SolrQuery();
-        query.setQuery(q);
-        query.setFilterQueries(fq);
-        query.setFields(fields);
-        query.setRows(100);
+    public static SolrDocumentList query(SolrQuery query, String core) throws IOException, SolrServerException {
+        SolrClient server = getServer(core);
         QueryResponse rsp = server.query(query);
         return rsp.getResults();
     }
     
-    public static String xml(String q) throws MalformedURLException, IOException {
+    public static String xml(String q, String core) throws MalformedURLException, IOException {
         SolrQuery query = new SolrQuery(q);
         query.set("indent", true);
 
-        return xml(query);
+        return xml(query, core);
     }
     
-    private static String doQuery(SolrQuery query) throws MalformedURLException, IOException, ProtocolException {
-        return doQuery(query, Options.getInstance().getString("solrCore", DEFAULT_CORE));
-    }
     private static String doQuery(SolrQuery query, String core) throws MalformedURLException, IOException, ProtocolException {
 
         
@@ -148,26 +134,19 @@ public class SolrIndex {
         
     }
     
-    public static String csv(SolrQuery query) throws MalformedURLException, IOException {
+    public static String csv(SolrQuery query, String core) throws MalformedURLException, IOException {
         
         query.set("wt", "csv");
-        return doQuery(query);
+        return doQuery(query, core);
     }
-    public static String xml(SolrQuery query) throws MalformedURLException, IOException {
+    public static String xml(SolrQuery query, String core) throws MalformedURLException, IOException {
         
         query.set("indent", true);
         query.set("wt", "xml");
-        return doQuery(query);
+        return doQuery(query, core);
     }
     
     
-    
-    public static String json(SolrQuery query) throws MalformedURLException, IOException {
-        
-        query.set("indent", true);
-        query.set("wt", "json");
-        return doQuery(query);
-    }
     
     public static String json(SolrQuery query, String core) throws MalformedURLException, IOException {
         
@@ -178,26 +157,18 @@ public class SolrIndex {
     
     
     
-    public static String json(String urlQueryString) throws MalformedURLException, IOException {
+    public static String json(String urlQueryString, String core) throws MalformedURLException, IOException {
         
         Options opts = Options.getInstance();
         String solrURL = String.format("%s/%s/select",
                 opts.getString("solrHost", DEFAULT_HOST),
-                opts.getString("solrCore", DEFAULT_CORE));
+                core);
         URL url = new URL(solrURL + "?" + urlQueryString);
 
         // use org.apache.commons.io.IOUtils to do the http handling for you
         String xmlResponse = IOUtils.toString(url, "UTF-8");
 
         return xmlResponse;
-    }
-    
-    public static String postData(String dataStr)
-            throws Exception {
-        Options opts = Options.getInstance();
-        return postData(String.format("%s/%s/update",
-                opts.getString("solrHost", DEFAULT_HOST),
-                opts.getString("solrCore", DEFAULT_CORE)), dataStr);
     }
     
     public static String postDataToCore(String dataStr, String core)

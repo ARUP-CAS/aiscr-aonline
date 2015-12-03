@@ -43,7 +43,9 @@ public class ImageServlet extends HttpServlet {
             String db = request.getParameter("db");
             if (id != null && !id.equals("")) {
                 try{
-                    File f = new File(Options.getInstance().getJSONObject("imagesDir").getString(db) + id + ".jpg");
+                    String fname = Options.getInstance().getString("dataDir") +  
+                            Options.getInstance().getJSONObject("imagesDir").getString(db) + id + ".jpg";
+                    File f = new File(fname);
                     if (f.exists()) {
                         response.setContentType("image/jpeg");
                         BufferedImage bi = ImageIO.read(f);
