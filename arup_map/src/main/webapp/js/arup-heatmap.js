@@ -69,6 +69,13 @@ arup.MAP = {
                 var id = input.attr("id");
                 var field = input.val().split(":")[0];
                 var val = input.val().split(":")[1];
+                //remove quotes if exists
+                if(val.indexOf('"') === 0){
+                    val = val.substring(1);
+                }
+                if(val[val.length - 1] === '"'){
+                    val = val.substring(0, val.length - 1);
+                }
                 a.text(arup.MAP.localize(val));
                 li.click(function () {
                     var field = $(this).data('field');
@@ -134,10 +141,10 @@ arup.MAP = {
             var input = $('<input name="fq" type="hidden" class="filter ' + field + '" />');
             $(input).attr("id", "fq_" + index);
             $(input).data("field", field);
-            input.val(field + ":" + value);
+            input.val(field + ":" + '"' + value + '"');
             $("#searchForm").append(input);
         } else {
-            $("#searchForm>input." + field).val(field + ":" + value);
+            $("#searchForm>input." + field).val(field + ":" + '"' + value + '"');
         }
         
         
@@ -158,7 +165,7 @@ arup.MAP = {
                 var ul = $("#"+facet + ">ul");
                 ul.empty();
                 for (var i = 0; i < facetvals.length; i = i + 2) {
-                    if (facetvals[i] !== "null") {
+                    if (facetvals[i] !== "null" && parseInt(facetvals[i+1])>0) {
                         var li = $("<li/>", {class: "link"});
                         li.data("facet", facet);
                         li.data("value", facetvals[i]);

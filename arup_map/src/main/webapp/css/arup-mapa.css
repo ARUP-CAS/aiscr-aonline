@@ -82,6 +82,9 @@
   border-bottom: 1px dotted silver;
   padding: 10px 0 10px 0;
 }
+.tab-content .tab-pane ul li span{
+  cursor: pointer;
+}
 
 .tab-content #results ul li a {
   border-left: 3px solid #589CBD;
