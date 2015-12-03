@@ -81,7 +81,7 @@
   float: left;
   border: 1px solid #d4d4d4;
   border-radius: 2px;
-  padding: 15px;
+  padding: 8px;
   position: relative;
   -webkit-box-shadow: 0 1px 6px rgba(0, 0, 0, 0.175);
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.175);
@@ -101,7 +101,7 @@
 
 .timeline > li > .timeline-panel:after {
   position: absolute;
-  top: 16px;
+  top: 9px;
   right: -14px;
   display: inline-block;
   border-top: 10px solid transparent;

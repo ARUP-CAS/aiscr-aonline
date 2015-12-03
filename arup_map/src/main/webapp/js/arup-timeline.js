@@ -43,6 +43,7 @@ arup.TIMELINE = {
         this.timeset.append(li);
         
         this.liHeight = $(this.timeset.find("li")[1]).offset().top - $(this.timeset.find("li")[0]).offset().top;
+        //this.selDo.css("margin-top", this.liHeight+".px");
         
         this.timeline.css("height", this.timeset.height());
         this.timelineBottom.css("top", this.timeset.height() - this.timelineTop.height()*2);
@@ -151,7 +152,7 @@ arup.TIMELINE = {
         var idxDo = this.selDo[0].selectedIndex;
         this.labelBottom.text(this.conf.obdobi[idxDo].do);
 
-        var pos = this.liHeight * idxDo / 3 - this.liHeight;
+        var pos = this.liHeight * idxDo / 3;
 
         if(idxDo < idxOd){
             this.selOd[0].selectedIndex = idxDo;
