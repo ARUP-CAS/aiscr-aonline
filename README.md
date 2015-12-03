@@ -14,7 +14,7 @@ Configuration
 create folder ~/.arup
 conf.json in this directory merges with the default one in war.
 
-{
+
     #url of running solr
     "solrHost": "http://localhost:8983/solr",
 
@@ -55,4 +55,13 @@ conf.json in this directory merges with the default one in war.
     #List of source directories for indexing map records. 
     #db: database, file: file to index, map: json file with field names map between csv a solr 
     "indexMapSources": [{"db":"Atlas", "file":"/home/archeo/data/atlas.csv", "map":"/home/archeo/data/maps.json"}],
-}
+
+Index run from servlet.
+Indexing map records
+http://localhost:8084/arup_map/data?action=INDEX_MAP
+
+Indexing sources
+http://localhost:8084/arup_map/data?action=INDEX_SOURCES
+
+Indexing practices
+http://localhost:8084/arup_map/data?action=INDEX_PRACTICES
