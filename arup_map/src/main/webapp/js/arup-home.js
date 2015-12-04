@@ -39,7 +39,10 @@ arup.HOME = {
         this.practiceFound = 0;
         
         var params = $("#searchForm").serialize();
-        var url = "data?action=BYQUERY&fq=hasImage:true&" + params;
+        var url = "data?action=BYQUERY&" + params;
+        if ($("#q").val() === "") {
+            url += "&fq=hasImage:true";
+        }
         $.getJSON(url, _.bind(function (d) {
             this.mapResults = d;
             this.mapFound = d.response.numFound;
