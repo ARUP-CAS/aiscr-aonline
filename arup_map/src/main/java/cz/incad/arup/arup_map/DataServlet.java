@@ -6,8 +6,6 @@
 package cz.incad.arup.arup_map;
 
 import au.com.bytecode.opencsv.CSVReader;
-import cz.incad.arup.arup_map.tools.XSLTool;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -16,7 +14,6 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.nio.file.FileVisitOption;
 import java.nio.file.FileVisitResult;
-import java.nio.file.FileVisitor;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -28,7 +25,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -313,6 +309,7 @@ public class DataServlet extends HttpServlet {
                     String q = req.getParameter("q");
                     String od = req.getParameter("od");
                     String to = req.getParameter("do");
+                    boolean isHome = Boolean.parseBoolean(req.getParameter("ishome"));
                     if (q == null || "".equals(q)) {
                         q = "*:*";
                     }
@@ -326,6 +323,10 @@ public class DataServlet extends HttpServlet {
                         for (String fq : req.getParameterValues("fq")) {
                             query.addFilterQuery(fq);
                         }
+                    }
+                    
+                    if(isHome){
+                        query.add("bq", "hasImage:true^2.0");
                     }
 
                     String geom = req.getParameter("geom");
