@@ -23,8 +23,8 @@ h1, h2, h3 {
 img.pull-left {
   margin-right: 10px;
   /*alberto velikost obrazku na home */
-  width: 80px;
-  height: 60px;
+  max-width: 80px;
+  max-height: 60px;
 }
 
 /* alberto rozsliseni titulku na seznamu */

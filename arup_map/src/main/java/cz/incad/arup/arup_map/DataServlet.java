@@ -349,8 +349,6 @@ public class DataServlet extends HttpServlet {
                             }
                         }
 
-                        //query.add("fq", "loc_rpt:" + gf);
-//                                String sort = String.format("query({!bbox v='' filter=false score=distance })", latCenter, lngCenter, dist);
                         String sort = "query({!bbox v='' filter=false score=distance })";
                         query.setSort(sort, SolrQuery.ORDER.asc);
                         query.set("d", Double.toString(dist));
