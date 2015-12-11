@@ -122,6 +122,33 @@ public class DataServlet extends HttpServlet {
         return ja;
     }
 
+    private static void setHeatMap(SolrQuery query, String geom, double cols) {
+        String[] coords = geom.split(";");
+        String gf = String.format("[%s,%s TO %s,%s]",
+                coords[1], coords[0], coords[3], coords[2]);
+
+        double latCenter = (Double.parseDouble(coords[3]) + Double.parseDouble(coords[1])) * .5;
+        double lngCenter = (Double.parseDouble(coords[0]) + Double.parseDouble(coords[2])) * .5;
+        double dist = (Double.parseDouble(coords[2]) - Double.parseDouble(coords[0])) * cols;
+
+//        String d = req.getParameter("d");
+//        if (d != null && !d.equals("")) {
+//            try {
+//                dist = Math.min(dist, Double.parseDouble(d));
+//            } catch (Exception e) {
+//
+//            }
+//        }
+
+        query.set("facet.heatmap", "loc_rpt");
+        query.set("facet.heatmap.distErr", Double.toString(dist));
+        query.set("facet.heatmap.maxCells", 400000);
+        query.set("facet.heatmap.maxLevel", 7);
+
+        query.set("facet.heatmap.geom", String.format("[%s %s TO %s %s]",
+                coords[0], coords[1], coords[2], coords[3]));
+    }
+
     enum Actions {
         INDEX_PRACTICES {
             @Override
@@ -324,8 +351,8 @@ public class DataServlet extends HttpServlet {
                             query.addFilterQuery(fq);
                         }
                     }
-                    
-                    if(isHome){
+
+                    if (isHome) {
                         query.add("bq", "hasImage:true^2.0");
                     }
 
@@ -354,18 +381,23 @@ public class DataServlet extends HttpServlet {
                         query.set("d", Double.toString(dist));
                         query.set("pt", latCenter + "," + lngCenter);
                         query.set("sfield", "loc_rpt");
-                        query.setFacet(true);
-                        query.set("facet.heatmap", "loc_rpt");
-                        query.set("facet.heatmap.distErr", Double.toString(dist));
-                        query.set("facet.heatmap.maxCells", 400000);
-                        query.set("facet.heatmap.maxLevel", 7);
-
-                        query.set("facet.heatmap.geom", String.format("[%s %s TO %s %s]",
-                                coords[0], coords[1], coords[2], coords[3]));
+                        setHeatMap(query, geom, .005);
                     }
                     query.setRows(ROWS);
+                    query.setFacet(true);
                     query.addFacetField(Options.getInstance().getStrings("facets"));
                     JSONObject json = new JSONObject(SolrIndex.json(query, Options.getInstance().getString("mapCore", "arup")));
+
+                    if (json.has("error")) {
+                        String msg = json.getJSONObject("error").getString("msg");
+                        LOGGER.log(Level.WARNING, "HEATMAP ERROR: {0}", msg);
+                        if (msg.contains("Too many cells")) {
+                            //Set lower precision
+                            setHeatMap(query, geom, .025);
+                            json = new JSONObject(SolrIndex.json(query, Options.getInstance().getString("mapCore", "arup")));
+
+                        }
+                    }
 
                     out.println(json.toString());
                 }
