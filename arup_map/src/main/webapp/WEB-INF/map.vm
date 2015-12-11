@@ -74,9 +74,9 @@
             <ul class="nav nav-tabs arup-nav-tabs arup-clean-border" id="facets">
               <li><a href="#results" data-toggle="tab">$i18n.results</a></li>
               <li class="facet" data-field="database" data-label="$i18n.facet.database"><a href="#database" data-toggle="tab">$i18n.facet.database</a></li>
-              <li class="facet" data-field="Type_site" data-label="$i18n.facet.loc"><a href="#Type_site" data-toggle="tab">$i18n.facet.loc</a></li>
               <li class="facet" data-field="Type_area" data-label="$i18n.facet.activity"><a href="#Type_area" data-toggle="tab">$i18n.facet.activity</a></li>
-              <li class="active"><a href="#timeline" data-toggle="tab">$i18n.timeline</a></li>
+              <li cl<li class="facet" data-field="Type_site" data-label="$i18n.facet.loc"><a href="#Type_site" data-toggle="tab">$i18n.facet.loc</a></li>
+              ass="active"><a href="#timeline" data-toggle="tab">$i18n.timeline</a></li>
             </ul>
             <div class="tab-content" style="max-width: 280px;">
               <div class="tab-pane" id="results">
@@ -87,11 +87,11 @@
                 <ul class="list-unstyled">
                 </ul>
               </div>
-              <div class="tab-pane" id="Type_area">
+              <div class="tab-pane" id="Type_site">
                 <ul class="list-unstyled">
                 </ul>
               </div>
-              <div class="tab-pane" id="Type_site">
+              <div class="tab-pane" id="Type_area">
                 <ul class="list-unstyled">
                 </ul>
               </div>
