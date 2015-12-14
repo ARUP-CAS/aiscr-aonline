@@ -26,20 +26,33 @@ arup.TIMELINE = {
         }, this));
         return this;
     },
+    formatYear: function(year){
+        var label = year + "";
+            if(year < 0){
+                label = label.substring(1) + " BC";
+            }else  if(year===0){
+                //label += "";
+            }else{
+                label += " AD";
+            }
+            return label;
+    },
     render: function(){
         this.selOd.empty();
         this.selDo.empty();
         this.timeset.empty();
         var obdobi = this.conf.obdobi;
         for(var i=0; i<obdobi.length; i++){
-            this.selDo.append('<option>' + obdobi[i].nazev+ ' ('+obdobi[i].do+')</option>');
-            this.selOd.append('<option>' + obdobi[i].nazev+ ' ('+obdobi[i].od+')</option>');
+            
+            this.selDo.append('<option>' + obdobi[i].nazev+ ' ('+ this.formatYear(obdobi[i].do) + ')</option>');
+            
+            this.selOd.append('<option>' + obdobi[i].nazev+ ' ('+ this.formatYear(obdobi[i].od)+')</option>');
             if(i%3 === 0){
-                var li = $('<li>' + obdobi[i].od + '  <strong>-</strong></li>');
+                var li = $('<li value="' + obdobi[i].od + '">'+ this.formatYear(obdobi[i].od) +'  <strong>-</strong></li>');
                 this.timeset.append(li);
             }
         }
-        var li = $('<li>' + obdobi[obdobi.length-1].do + '  <strong>-</strong></li>');
+        var li = $('<li value="' + obdobi[obdobi.length-1].do + '">'+ this.formatYear(obdobi[obdobi.length-1].do) +'  <strong>-</strong></li>');
         this.timeset.append(li);
         
         this.liHeight = $(this.timeset.find("li")[1]).offset().top - $(this.timeset.find("li")[0]).offset().top;

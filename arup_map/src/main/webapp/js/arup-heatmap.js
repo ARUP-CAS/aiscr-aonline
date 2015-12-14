@@ -103,13 +103,11 @@ arup.MAP = {
         this.setView();
         for (var i = 0; i < docs.length; i++) {
             var li = $('<li/>');
-//            li.append('<div>'+docs[i].title+'</div>');
-//            li.append('<div>'+docs[i].database+'</div>');
-//            li.append('<div>'+docs[i].Type_area+'</div>');
             //if (docs[i].hasOwnProperty("url")) {
                 var a = $("<a/>");
-                a.attr("href", docs[i].url);
-                a.attr("target", "docdetail");
+                //a.attr("href", docs[i].url);
+                a.attr("href", "#");
+                //a.attr("target", "docdetail");
                 a.text(docs[i].title);
                 li.append(a);
             //}
@@ -118,19 +116,37 @@ arup.MAP = {
             var marker = L.marker([docs[i].lat, docs[i].lng], {docid: i});
             this.markersList[i] = marker;
             marker.on("popupopen", _.partial(function (ar) {
-                ar.map.setView(this.getLatLng())
+                //ar.map.setView(this.getLatLng());
+                ar.map.setView(ar.getVisibleCenter(this.getLatLng()));
                 this.setPopupContent(ar.popupContent(this.options.docid));
+                //ar.map.setView(ar.getVisibleCenter(this.getLatLng()));
             }, this));
             //marker.addTo(this.markers);
             
-            li.on("mouseenter", _.partial(function (ar) {
+            li.on("click", _.partial(function (ar) {
                 var docid = $(this).data("docid");
                 ar.markersList[docid].openPopup();
+                return false;
             }, this));
             var c = this.popupContent(i);
             marker.bindPopup(c).addTo(this.markers);
         }
         this.renderFacets();
+    },
+    fullScreen: function(){
+        $(".arup-bg-white").css('width', '100%');
+    },
+    getVisibleCenter: function(latlng){
+        if($("#facets_pane").is(":visible")){
+            var facetsOffset = $("#facets_pane").offset();
+            var fLeft = ($("#facets_pane").offset().left - this.mapContainer.offset().left) * .5;
+            var h = $("#facets_pane").height() * .5;
+            var vLatLng = this.map.containerPointToLatLng(L.point(fLeft,h));
+            var cLatLng = this.map.getCenter();
+            return L.latLng(latlng.lat - vLatLng.lat + cLatLng.lat, latlng.lng - vLatLng.lng + cLatLng.lng);
+        }else{
+            return latlng;
+        }
     },
     localize: function(key){
         return key;
@@ -198,14 +214,28 @@ arup.MAP = {
     },
     popupContent: function(docid){
         var doc = this.results.response.docs[docid];
-
-        var c = '<b>' + doc.title + "</b><br/>" +
+        var div = $("<div/>");
+        var b = $("<b/>");
+        if (doc.hasOwnProperty("url")) {
+            var a = $("<a/>");
+            a.attr("href", doc.url);
+            a.attr("target", "docdetail");
+            a.text(doc.title);
+            b.append(a);
+        }else{
+            b.text(doc.title);
+        }
+        div.append(b);
+        
+        var c = "<br/>" +
                 '<img class="img-popup" src="img?id='+ doc.id +'&db='+ doc.database +'" />' + '<br/>' +
                 doc.Type_site + '<br/>' +
                 doc.Type_area + '<br/>' +
                 doc.Description_1 + '<br/>' +
                 doc.Description_2 + '<br/>';
-        return c;
+        div.append(c);
+        
+        return div[0];
     },
     updatePopup: function (docid) {
         var c = this.popupContent(docid);
@@ -308,13 +338,7 @@ arup.MAP = {
 //            radius: 4,
 //            opacity: 0.8,
 //            "maxOpacity": .8,
-            gradient: {
-                0.25: "rgb(0,0,255)",
-                0.45: "rgb(0,255,255)",
-                0.65: "rgb(0,255,0)",
-                0.95: "yellow",
-                1.0: "rgb(255,0,0)"
-            }
+            gradient: this.conf.gradient
         };
 
 

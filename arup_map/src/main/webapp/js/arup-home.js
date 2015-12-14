@@ -33,11 +33,11 @@ arup.HOME = {
                 this.practiceFound;
     },
     search: function () {
-        
+
         this.mapFound = 0;
         this.sourceFound = 0;
         this.practiceFound = 0;
-        
+
         var params = $("#searchForm").serialize();
         var url = "data?action=BYQUERY&ishome=true&" + params;
 //        if ($("#q").val() === "") {
@@ -104,11 +104,13 @@ arup.HOME = {
         }
 
         for (var i = 0; i < Math.min(this.resultsNum, docs.length); i++) {
-            var img = $('<img/>', {class: "pull-left"});
-            img.attr("src", "img?db=" + docs[i].database + "&id=" + docs[i].id);
-            img.attr("alt", "");
-            img.on("click")
-            this.mapResultsContainer.append(img);
+            if (docs[i].hasImage) {
+                var img = $('<img/>', {class: "pull-left"});
+                img.attr("src", "img?db=" + docs[i].database + "&id=" + docs[i].id);
+                img.attr("alt", "");
+                img.on("click")
+                this.mapResultsContainer.append(img);
+            }
             var p = $('<p/>');
             p.append('<span class="title">' + docs[i].title + '</span>');
             p.append('<br/>');

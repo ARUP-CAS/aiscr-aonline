@@ -70,15 +70,15 @@
           </div><!--/.map -->
 
           <!-- Tabs -->
-          <div class="arup-widget-pane arup-color-gray-dark">
+          <div class="arup-widget-pane arup-color-gray-dark" id="facets_pane">
             <ul class="nav nav-tabs arup-nav-tabs arup-clean-border" id="facets">
               <li><a href="#results" data-toggle="tab">$i18n.results</a></li>
               <li class="facet" data-field="database" data-label="$i18n.facet.database"><a href="#database" data-toggle="tab">$i18n.facet.database</a></li>
               <li class="facet" data-field="Type_area" data-label="$i18n.facet.activity"><a href="#Type_area" data-toggle="tab">$i18n.facet.activity</a></li>
-              <li cl<li class="facet" data-field="Type_site" data-label="$i18n.facet.loc"><a href="#Type_site" data-toggle="tab">$i18n.facet.loc</a></li>
-              ass="active"><a href="#timeline" data-toggle="tab">$i18n.timeline</a></li>
+              <li class="facet" data-field="Type_site" data-label="$i18n.facet.loc"><a href="#Type_site" data-toggle="tab">$i18n.facet.loc</a></li>
+              <li class="active"><a href="#timeline" data-toggle="tab">$i18n.timeline</a></li>
             </ul>
-            <div class="tab-content" style="max-width: 280px;">
+            <div class="tab-content" style="width: 300px;">
               <div class="tab-pane" id="results">
                 <ul class="list-unstyled">
                 </ul>
