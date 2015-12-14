@@ -389,8 +389,14 @@ arup.MAP = {
         this.map.on('zoomend', _.bind(this.onZoomEnd, this));
         this.map.on('dragend', _.bind(this.onZoomEnd, this));
         this.map.on('resize', _.bind(this.onResize, this));
+        this.map.on('fullscreenchange', _.bind(this.onFullScreen, this));
 
 
+    },
+    onFullScreen: function(){
+        $(".arup-btn-hide-widget-pane").css('z-index', this.mapContainer.css('z-index'));
+        $("#facets_pane").css('z-index', this.mapContainer.css('z-index'));
+        
     },
     setView: function () {
         var count = this.getVisibleCount();
