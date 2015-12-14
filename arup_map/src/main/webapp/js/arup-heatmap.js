@@ -9,7 +9,7 @@ arup.MAP = {
         this.dist = 5;
         this.mapContainer = $('#map');
         this.resultsContainer = $('#results>ul');
-        
+
         $.getJSON("conf", _.bind(function (d) {
             this.conf = d;
             this.markerZoomLevel = d.markerZoomLevel;
@@ -20,13 +20,13 @@ arup.MAP = {
         }, this));
         return this;
     },
-    removeMarkers: function(){
-        for(var i = 0; i<this.markersList.length; i++){
+    removeMarkers: function () {
+        for (var i = 0; i < this.markersList.length; i++) {
             this.markers.removeLayer(this.markersList[i]);
         }
     },
     search: function () {
-        
+
         var params = $("#searchForm").serialize();
         var url = "data?action=BYQUERY&" + params +
                 "&geom=" + this.getMapsBoundsFilter() +
@@ -38,17 +38,19 @@ arup.MAP = {
             this.numFound = d.response.numFound;
             this.renderSearchResults();
             this.data = this.results.response.docs;
-            var mapdata = this.processHeatMapFacet();
-            this.mapData = {
-                max: 2,
-                data: mapdata
-            };
-            this.heatmapLayer.setData(this.mapData);
+            if (this.heatView) {
+                var mapdata = this.processHeatMapFacet();
+                this.mapData = {
+                    max: 2,
+                    data: mapdata
+                };
+                this.heatmapLayer.setData(this.mapData);
+            }
             this.overlayMaps = {
                 "heat": this.heatmapLayer,
                 "markers": this.markers
             };
-            
+
         }, this));
     },
     setUsedFilters: function () {
@@ -56,38 +58,38 @@ arup.MAP = {
         hasFilters = $("#searchForm>input.filter").length > 0 || $('#q').val() !== '';
         $("#facets li.facet").removeClass("arup-facet-active");
         $("#facets li.facet a i").remove();
-        
-        for(var i=0; i<$("#facets li.facet").length; i++){
-        
+
+        for (var i = 0; i < $("#facets li.facet").length; i++) {
+
             var field = $($("#facets li.facet")[i]).data("field");
             //var li = $("#facets li." + field);
             var li = $("#facets").find("li[data-field='" + field + "']");
             var a = li.find("a");
-                
-            if($("#searchForm>input.filter."+field).length>0){
-                var input = $("#searchForm>input.filter."+field);
+
+            if ($("#searchForm>input.filter." + field).length > 0) {
+                var input = $("#searchForm>input.filter." + field);
                 var id = input.attr("id");
                 var field = input.val().split(":")[0];
                 var val = input.val().split(":")[1];
                 //remove quotes if exists
-                if(val.indexOf('"') === 0){
+                if (val.indexOf('"') === 0) {
                     val = val.substring(1);
                 }
-                if(val[val.length - 1] === '"'){
+                if (val[val.length - 1] === '"') {
                     val = val.substring(0, val.length - 1);
                 }
                 a.text(arup.MAP.localize(val));
                 li.click(function () {
                     var field = $(this).data('field');
-                    $("#searchForm>input.filter."+field).remove();
+                    $("#searchForm>input.filter." + field).remove();
                     arup.MAP.search();
                 });
-                
+
                 li.addClass("arup-facet-active");
                 a.append(' <i class="glyphicon glyphicon-ok"></i>');
-                
-            }else{
-                
+
+            } else {
+
                 a.text($(li).data("label"));
             }
         }
@@ -99,59 +101,86 @@ arup.MAP = {
         if (this.numFound === 0) {
             return;
         }
-        
+
         this.setView();
         for (var i = 0; i < docs.length; i++) {
             var li = $('<li/>');
             //if (docs[i].hasOwnProperty("url")) {
-                var a = $("<a/>");
-                //a.attr("href", docs[i].url);
-                a.attr("href", "#");
-                //a.attr("target", "docdetail");
-                a.text(docs[i].title);
-                li.append(a);
+            var a = $("<a/>");
+            //a.attr("href", docs[i].url);
+            a.attr("href", "#");
+            //a.attr("target", "docdetail");
+            a.text(docs[i].title);
+            li.append(a);
             //}
             li.data("docid", i);
             this.resultsContainer.append(li);
-            var marker = L.marker([docs[i].lat, docs[i].lng], {docid: i});
-            this.markersList[i] = marker;
-            marker.on("popupopen", _.partial(function (ar) {
-                //ar.map.setView(this.getLatLng());
-                ar.map.setView(ar.getVisibleCenter(this.getLatLng()));
-                this.setPopupContent(ar.popupContent(this.options.docid));
-                //ar.map.setView(ar.getVisibleCenter(this.getLatLng()));
-            }, this));
-            //marker.addTo(this.markers);
-            
-            li.on("click", _.partial(function (ar) {
-                var docid = $(this).data("docid");
-                ar.markersList[docid].openPopup();
-                return false;
-            }, this));
-            var c = this.popupContent(i);
-            marker.bindPopup(c).addTo(this.markers);
+            if (!this.heatView) {
+                this.addMarker(docs[i], i);
+
+                li.on("click", _.partial(function (ar) {
+                    var docid = $(this).data("docid");
+                    ar.markersList[docid].openPopup();
+                    return false;
+                }, this));
+            }
         }
         this.renderFacets();
     },
-    fullScreen: function(){
-        $(".arup-bg-white").css('width', '100%');
+    addMarker: function (doc, idx) {
+        var marker = L.marker([doc.lat, doc.lng], {docid: idx});
+        this.markersList[idx] = marker;
+        marker.on("popupopen", _.partial(function (ar) {
+            ar.map.setView(ar.getVisibleCenter(this.getLatLng()));
+            this.setPopupContent(ar.popupContent(this.options.docid));
+        }, this));
+        //marker.addTo(this.markers);
+
+        var c = this.popupContent(idx);
+        marker.bindPopup(c).addTo(this.markers);
+
     },
-    getVisibleCenter: function(latlng){
-        if($("#facets_pane").is(":visible")){
+    onResize: function () {
+        var size = this.map.getSize();
+        this.heatmapLayer._width = size.x;
+        this.heatmapLayer._height = size.y;
+        this.heatmapLayer._el.style.width = size.x + 'px';
+        this.heatmapLayer._el.style.height = size.y + 'px';
+        this.heatmapLayer._heatmap._width = size.x;
+        this.heatmapLayer._heatmap._height = size.y;
+        this.heatmapLayer._heatmap._renderer.setDimensions(size.x, size.y);
+        this.heatmapLayer._update();
+    },
+    fullScreen: function () {
+        $(".arup-page-container").css('width', '100%');
+        $(".arup-header").hide();
+        $(".arup-navbar").hide();
+
+        $(".arup-mapa-container").css('height', '100%');
+        $(".arup-mapa-container").css('width', '100%');
+        $("#arup-map").css('height', '100%');
+        this.map.invalidateSize();
+        window.setTimeout(function () {
+            arup.MAP.map.fireEvent('resize');
+        }, 1000);
+
+    },
+    getVisibleCenter: function (latlng) {
+        if ($("#facets_pane").is(":visible")) {
             var facetsOffset = $("#facets_pane").offset();
             var fLeft = ($("#facets_pane").offset().left - this.mapContainer.offset().left) * .5;
             var h = $("#facets_pane").height() * .5;
-            var vLatLng = this.map.containerPointToLatLng(L.point(fLeft,h));
+            var vLatLng = this.map.containerPointToLatLng(L.point(fLeft, h));
             var cLatLng = this.map.getCenter();
             return L.latLng(latlng.lat - vLatLng.lat + cLatLng.lat, latlng.lng - vLatLng.lng + cLatLng.lng);
-        }else{
+        } else {
             return latlng;
         }
     },
-    localize: function(key){
+    localize: function (key) {
         return key;
     },
-    addFilter: function(field, value){
+    addFilter: function (field, value) {
         if ($("#searchForm>input." + field).length === 0) {
             var index = $("#searchForm>input[name='fq']").length + 1;
             var input = $('<input name="fq" type="hidden" class="filter ' + field + '" />');
@@ -162,47 +191,47 @@ arup.MAP = {
         } else {
             $("#searchForm>input." + field).val(field + ":" + '"' + value + '"');
         }
-        
-        
+
+
         $("#offset").val(0);
         this.search();
     },
-    renderFacets: function(){
-        var facets =  this.conf.facets;
+    renderFacets: function () {
+        var facets = this.conf.facets;
         this.setUsedFilters();
-        $.each(facets, _.bind(function(idx, facet){
-            if(!this.results.facet_counts.facet_fields.hasOwnProperty(facet)){
+        $.each(facets, _.bind(function (idx, facet) {
+            if (!this.results.facet_counts.facet_fields.hasOwnProperty(facet)) {
                 return;
             }
-                var facetvals = this.results.facet_counts.facet_fields[facet];
-                if (facetvals.length < 3)
-                    return;
-                
-                var ul = $("#"+facet + ">ul");
-                ul.empty();
-                for (var i = 0; i < facetvals.length; i = i + 2) {
-                    if (facetvals[i] !== "null" && parseInt(facetvals[i+1])>0) {
-                        var li = $("<li/>", {class: "link"});
-                        li.data("facet", facet);
-                        li.data("value", facetvals[i]);
+            var facetvals = this.results.facet_counts.facet_fields[facet];
+            if (facetvals.length < 3)
+                return;
 
-                        var label = $("<span/>");
-                        var ico = $("<i class='glyphicon glyphicon-chevron-right arup-facet-ico'></i>"); // pedro
-                        var txt = facetvals[i];
-                        if(txt.length > this.facetMaxChars){
-                            label.attr("title", txt);
-                            txt = txt.substring(0, this.facetMaxChars-1) + "...";
-                        }
-                        label.text(txt + " (" + facetvals[i + 1] + ")");
-                        label.click(function () {
-                            arup.MAP.addFilter($(this).parent().data("facet"), '' + $(this).parent().data("value") + ''); // pedro - removed "
-                        });
-                        li.append(ico); // pedro
-                        li.append(label);
-                        ul.append(li);
+            var ul = $("#" + facet + ">ul");
+            ul.empty();
+            for (var i = 0; i < facetvals.length; i = i + 2) {
+                if (facetvals[i] !== "null" && parseInt(facetvals[i + 1]) > 0) {
+                    var li = $("<li/>", {class: "link"});
+                    li.data("facet", facet);
+                    li.data("value", facetvals[i]);
+
+                    var label = $("<span/>");
+                    var ico = $("<i class='glyphicon glyphicon-chevron-right arup-facet-ico'></i>"); // pedro
+                    var txt = facetvals[i];
+                    if (txt.length > this.facetMaxChars) {
+                        label.attr("title", txt);
+                        txt = txt.substring(0, this.facetMaxChars - 1) + "...";
                     }
+                    label.text(txt + " (" + facetvals[i + 1] + ")");
+                    label.click(function () {
+                        arup.MAP.addFilter($(this).parent().data("facet"), '' + $(this).parent().data("value") + ''); // pedro - removed "
+                    });
+                    li.append(ico); // pedro
+                    li.append(label);
+                    ul.append(li);
                 }
-            }, this));
+            }
+        }, this));
     },
     onMapClick: function (e) {
 //        var url = "data?action=BYPOINT&lat=" + e.latlng.lat + "&lng=" + e.latlng.lng + "&dist=" + this.dist;
@@ -212,7 +241,7 @@ arup.MAP = {
 //            this.renderSearchResults();
 //        }, this));
     },
-    popupContent: function(docid){
+    popupContent: function (docid) {
         var doc = this.results.response.docs[docid];
         var div = $("<div/>");
         var b = $("<b/>");
@@ -222,25 +251,25 @@ arup.MAP = {
             a.attr("target", "docdetail");
             a.text(doc.title);
             b.append(a);
-        }else{
+        } else {
             b.text(doc.title);
         }
         div.append(b);
-        
+
         var c = "<br/>" +
-                '<img class="img-popup" src="img?id='+ doc.id +'&db='+ doc.database +'" />' + '<br/>' +
+                '<img class="img-popup" src="img?id=' + doc.id + '&db=' + doc.database + '" />' + '<br/>' +
                 doc.Type_site + '<br/>' +
                 doc.Type_area + '<br/>' +
                 doc.Description_1 + '<br/>' +
                 doc.Description_2 + '<br/>';
         div.append(c);
-        
+
         return div[0];
     },
     updatePopup: function (docid) {
         var c = this.popupContent(docid);
         var latlng = {lat: doc.lat, lng: doc.lng};
-        
+
         this.popup
                 .setLatLng(latlng)
                 .setContent(c)
@@ -251,15 +280,15 @@ arup.MAP = {
         return b._southWest.lng + ';' + b._southWest.lat + ';' +
                 b._northEast.lng + ';' + b._northEast.lat;
     },
-    getVisibleCount: function(){
-        
+    getVisibleCount: function () {
+
         var facet = this.results.facet_counts.facet_heatmaps.loc_rpt;
         var counts_ints2D = facet[15];
         var count = 0;
-        if(counts_ints2D !== null){
-     
+        if (counts_ints2D !== null) {
+
             for (var i = 0; i < counts_ints2D.length; i++) {
-                
+
                 if (counts_ints2D[i] !== null && counts_ints2D[i] !== "null") {
                     var row = counts_ints2D[i];
                     for (var j = 0; j < row.length; j++) {
@@ -283,9 +312,9 @@ arup.MAP = {
         var distX = (maxX - minX) / columns;
         var distY = (maxY - minY) / rows;
         var counts_ints2D = facet[15];
-        console.log(gridLevel, rows, columns);
-        if(counts_ints2D !== null){
-     
+        //console.log(gridLevel, rows, columns);
+        if (counts_ints2D !== null) {
+
             for (var i = 0; i < counts_ints2D.length; i++) {
                 if (counts_ints2D[i] !== null && counts_ints2D[i] !== "null") {
                     var row = counts_ints2D[i];
@@ -306,9 +335,6 @@ arup.MAP = {
             }
         }
         return mapdata;
-    },
-    setMarkers: function () {
-
     },
     prepareMap: function () {
         var baseLayer = L.tileLayer(
@@ -347,39 +373,42 @@ arup.MAP = {
         this.map = new L.Map('map', {
             center: new L.LatLng(49.803, 15.496),
             zoom: 8,
+            fullscreenControl: true,
             //layers: [baseLayer, this.heatmapLayer]
             layers: [baseLayer]
         });
 
 
         this.markers = new L.featureGroup();
-            
+
         this.map.addLayer(this.heatmapLayer);
-            
+
         this.popup = L.popup();
 
         this.map.on('click', _.bind(this.onMapClick, this));
         this.map.on('zoomend', _.bind(this.onZoomEnd, this));
         this.map.on('dragend', _.bind(this.onZoomEnd, this));
+        this.map.on('resize', _.bind(this.onResize, this));
+
 
     },
-    setView: function(){
+    setView: function () {
         var count = this.getVisibleCount();
-        var isHeat = this.map.getZoom()<this.markerZoomLevel && 
+        this.heatView = this.map.getZoom() < this.markerZoomLevel &&
                 this.numFound > this.conf.displayRows &&
                 count > this.conf.displayRows;
-        if(isHeat){
-            if(this.map.hasLayer(this.markers)){
+        if (this.heatView) {
+            if (this.map.hasLayer(this.markers)) {
                 this.map.removeLayer(this.markers);
             }
-            if(!this.map.hasLayer(this.heatmapLayer)){
+            if (!this.map.hasLayer(this.heatmapLayer)) {
                 this.map.addLayer(this.heatmapLayer);
             }
-        }else{
-            if(!this.map.hasLayer(this.markers)){
+        } else {
+            if (!this.map.hasLayer(this.markers)) {
                 this.map.addLayer(this.markers);
             }
-            if(this.map.hasLayer(this.heatmapLayer)){
+            if (this.map.hasLayer(this.heatmapLayer)) {
                 this.map.removeLayer(this.heatmapLayer);
             }
         }
