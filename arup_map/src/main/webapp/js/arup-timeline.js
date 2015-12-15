@@ -80,45 +80,108 @@ arup.TIMELINE = {
         this.timelineTop.draggable({ 
             axis: "y", 
             containment: "#timelineConstraintTop",
-            drag: function(){arup.TIMELINE.draggingTop();},
-            stop: function(){arup.TIMELINE.dragEndTop();}
+            drag: function(e){arup.TIMELINE.draggingTop(e);},
+            stop: function(e){arup.TIMELINE.dragEndTop(e);}
         });
+        
+        
+        
+        this.inputOd.on("change", _.bind(function(){
+            if(this.validateInput()){
+                var valOd = parseInt(this.inputOd.val());
+                var valDo = parseInt(this.inputDo.val());
+                if(valDo < valOd){
+                    this.inputDo.val(valOd);
+                }
+                this.inputToObdobi();
+                this.setOdPos();
+                this.setDoPos();
+                this.setConstraints();
+                this.search();
+            }
+        }, this));
+
+        this.inputDo.on("change", _.bind(function(){
+            if(this.validateInput()){
+                var valOd = parseInt(this.inputOd.val());
+                var valDo = parseInt(this.inputDo.val());
+                if(valDo < valOd){
+                    this.inputOd.val(valDo);
+                }
+                this.inputToObdobi();
+                this.setOdPos();
+                this.setDoPos();
+                this.setConstraints();
+                this.search();
+            }
+        }, this));
 
         this.selOd.on("change", _.bind(function(){
             this.setOdPos();
+            this.setOdInput();
             this.setConstraints();
             this.search();
         }, this));
         
         this.selDo.on("change", _.bind(function(){
             this.setDoPos();
+            this.setDoInput();
             this.setConstraints();
             this.search();
         }, this));
     },
-    draggingTop: function(){
+    draggingTop: function(e){
         
         this.posToObdobi();
         var idxOd = this.selOd[0].selectedIndex;
         this.inputOd.val(this.conf.obdobi[idxOd].od);
+        e.stopPropagation();
     },
-    draggingBottom: function(){
+    draggingBottom: function(e){
         
         this.posToObdobi();
         var idxDo = this.selDo[0].selectedIndex;
         this.inputDo.val(this.conf.obdobi[idxDo].do);
+        return false;
     },
     dragEndTop: function(){
         this.posToObdobi();
         this.setOdPos();
+        this.setOdInput();
         this.setConstraints();
         this.search();
     },
     dragEndBottom: function(){
         this.posToObdobi();
         this.setDoPos();
+        this.setDoInput();
         this.setConstraints();
         this.search();
+    },
+    validateInput: function(){
+        return true;
+    },
+    inputToObdobi: function(){
+        var valOd = parseInt(this.inputOd.val());
+        var obdobi = this.conf.obdobi;
+        var idxOd = obdobi.length - 1;
+        for(var i=0; i<obdobi.length; i++){
+            if(valOd < obdobi[i].od){
+                idxOd = i - 1;
+                break;
+            }
+        }
+        this.selOd[0].selectedIndex = Math.max(0, idxOd);
+        
+        var valDo = parseInt(this.inputDo.val());
+        var idxDo = obdobi.length - 1;
+        for(var i=0; i<obdobi.length; i++){
+            if(valDo <= obdobi[i].do){
+                idxDo = i;
+                break;
+            }
+        }
+        this.selDo[0].selectedIndex = Math.min(obdobi.length - 1, idxDo);
     },
     posToObdobi: function(){
         var pos = this.timelineTop.position().top;
@@ -146,17 +209,23 @@ arup.TIMELINE = {
             top: this.timelineTop.offset().top + this.timelineTop.height()
         });
     },
+    setOdInput:function(){
+        var idxOd = this.selOd[0].selectedIndex;
+        this.inputOd.val(this.conf.obdobi[idxOd].od);
+    },
+    setDoInput:function(){
+        var idxDo = this.selDo[0].selectedIndex;
+        this.inputDo.val(this.conf.obdobi[idxDo].do);
+    },
     setOdPos: function(){
         var idxOd = this.selOd[0].selectedIndex;
         var idxDo = this.selDo[0].selectedIndex;
-        this.inputOd.val(this.conf.obdobi[idxOd].od);
 
         var pos = this.liHeight * idxOd / 3;
         this.timelineTop.css("top", pos);
 
         if(idxOd > idxDo){
             this.selDo[0].selectedIndex = idxOd;
-            this.inputDo.val(this.conf.obdobi[idxOd].do);
             this.timelineBottom.css("top", pos);
         }else{
             //var pos2 = this.liHeight * idxDo / 3;
@@ -166,13 +235,13 @@ arup.TIMELINE = {
     setDoPos: function(){
         var idxOd = this.selOd[0].selectedIndex;
         var idxDo = this.selDo[0].selectedIndex;
-        this.inputDo.val(this.conf.obdobi[idxDo].do);
+        //this.inputDo.val(this.conf.obdobi[idxDo].do);
 
         var pos = this.liHeight * idxDo / 3;
 
         if(idxDo < idxOd){
             this.selOd[0].selectedIndex = idxDo;
-            this.inputOd.val(this.conf.obdobi[idxDo].od);
+            //this.inputOd.val(this.conf.obdobi[idxDo].od);
             this.timelineTop.css("top", pos);
         }
 
@@ -180,8 +249,8 @@ arup.TIMELINE = {
     },
     search: function(){
         
-            $("#od").val(this.conf.obdobi[this.selOd[0].selectedIndex].od);
-            $("#do").val(this.conf.obdobi[this.selDo[0].selectedIndex].do);
+            $("#od").val(this.inputOd.val());
+            $("#do").val(this.inputDo.val());
             arup.current.search();
     },
     fillSelects: function(){

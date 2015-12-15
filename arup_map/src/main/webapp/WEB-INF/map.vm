@@ -35,8 +35,8 @@
     <script src="js/heatmap.js"></script>
     <script src="js/leaflet-heatmap.js"></script>
 
-<script src='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v0.0.2/Leaflet.fullscreen.min.js'></script>
-<link href='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v0.0.2/leaflet.fullscreen.css' rel='stylesheet' />
+<script src='js/Leaflet.fullscreen.js'></script>
+<link href='css/leaflet.fullscreen.css' rel='stylesheet' />
 
 
     <script src="js/arup.js"></script>
@@ -115,7 +115,7 @@
 
 
           <!-- Btn show/hide widget pane -->
-          <button class="btn arup-btn-hide-widget-pane">
+          <button class="btn arup-btn-hide-widget-pane" id="facets_btn">
               <i class="glyphicon glyphicon-menu-right"></i>
           </button><!--/.Btn show/hide widget pane -->
 

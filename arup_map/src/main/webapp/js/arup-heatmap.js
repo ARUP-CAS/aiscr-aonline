@@ -347,9 +347,6 @@ arup.MAP = {
             lngField: 'lng',
             // which field name in your data represents the data value - default "value"
             valueField: 'count',
-//            radius: 4,
-//            opacity: 0.8,
-//            "maxOpacity": .8,
             gradient: this.conf.gradient
         };
 
@@ -377,25 +374,18 @@ arup.MAP = {
         this.map.on('resize', _.bind(this.onResize, this));
         this.map.on('fullscreenchange', _.bind(this.onFullScreen, this));
 
-
+        //$('#facets_pane').insertAfter('.leaflet-control-container');
     },
-    onFullScreen: function(){
-        $(".arup-btn-hide-widget-pane").css('z-index', this.mapContainer.css('z-index'));
+    onFullScreen: function () {
+        $("#facets_btn").css('z-index', this.mapContainer.css('z-index'));
         $("#facets_pane").css('z-index', this.mapContainer.css('z-index'));
-        
-//        $(".arup-page-container").css('width', '100%');
-//        $(".arup-header").hide();
-//        $(".arup-navbar").hide();
-//
-//        $(".arup-mapa-container").css('height', '100%');
-//        $(".arup-mapa-container").css('width', '100%');
-//        $("#arup-map").css('height', '100%');
-        
-//        this.map.invalidateSize();
-//        
-//        window.setTimeout(function () {
-//            arup.MAP.map.fireEvent('resize');
-//        }, 100);
+        if (this.map.isFullscreen()) {
+            $("#facets_btn").css('position', 'fixed');
+            $("#facets_pane").css('position', 'fixed');
+        } else {
+            $("#facets_btn").css('position', 'absolute');
+            $("#facets_pane").css('position', 'absolute');
+        }
 
         this.search();
     },
