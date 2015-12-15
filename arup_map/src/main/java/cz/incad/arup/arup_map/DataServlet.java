@@ -421,6 +421,8 @@ public class DataServlet extends HttpServlet {
                         }
                     }
                     query.setRows(ROWS);
+                    query.addSort("order", SolrQuery.ORDER.asc);
+                    query.addSort("score", SolrQuery.ORDER.desc);
 
                     JSONObject json = new JSONObject(SolrIndex.json(query, Options.getInstance().getString("sourcesCore", "sources")));
 

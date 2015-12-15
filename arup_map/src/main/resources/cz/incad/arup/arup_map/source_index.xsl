@@ -9,6 +9,7 @@
             <xsl:for-each select="source">
                 <doc>
                     <field name="id"><xsl:value-of select="$filename"/></field>
+                    <field name="order"><xsl:value-of select="@order"/></field>
                     <field name="title"><xsl:value-of select="./infrastructure[@name='general']/metadata[@name='název']" /></field>
                     <field name="description"><xsl:value-of select="./infrastructure[@name='general']/description"/></field>
                     
