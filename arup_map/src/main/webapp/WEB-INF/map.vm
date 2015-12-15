@@ -64,9 +64,9 @@
 
   <body>
     <!-- Page container -->
-    <div class="container arup-page-container arup-bg-black">
-      <!-- Bg white -->
-      <div class="arup-bg-white" style="height: 100%;">
+    <div class="container arup-page-container">
+      <!-- Wrapper -->
+      <div class="arup-wrapper arup-bg-heatmap">
       
         #parse("header.vm")
 
@@ -87,7 +87,10 @@
               <li class="active"><a href="#timeline" data-toggle="tab">
                         $i18n.timeline
                 </a>
-                <input type="text" id="tlOd" />-<input type="text"  id="tlDo" />
+                Od: <input type="text" id="tlOd" /><br/>
+                Do: <input type="text"  id="tlDo" />
+
+
                 </li>
             </ul>
             <div class="tab-content" style="width: 300px;">
@@ -121,9 +124,13 @@
 
         </div><!--/.container mapa -->
 
-        #parse("footer.vm")
+        <!-- Pusher for sticky footer -->
+        <div class="arup-push"></div><!--/.pusher -->
 
-      </div><!--/.bg white -->
+      </div><!--/.wrapper -->
+      
+      #parse("footer.vm")
+
     </div><!--/.page container -->
 
 
