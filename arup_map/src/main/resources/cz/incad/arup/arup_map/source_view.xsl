@@ -21,7 +21,7 @@
               </div>
               <button class="btn arup-clean-radius" >
                   <xsl:attribute name="onclick">toggleItem('item-<xsl:value-of select="$sourceID" />')</xsl:attribute>
-                  <i class="glyphicon glyphicon-menu-up"></i>
+                  <i class="glyphicon glyphicon-menu-down"></i>
               </button>
             </div>
             <div class="arup-zdroje-tabs" >

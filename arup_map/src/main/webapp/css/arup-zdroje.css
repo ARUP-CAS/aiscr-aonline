@@ -20,6 +20,11 @@
   color: #595959;
 }
 
+/*** Defualt hidden ***/
+.arup-zdroje-tabs{
+    display: none;
+}
+
 .arup-zdroje-desc .btn {
   position: absolute;
   top: 0;
