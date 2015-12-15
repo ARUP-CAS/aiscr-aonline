@@ -35,8 +35,8 @@
     <script src="js/heatmap.js"></script>
     <script src="js/leaflet-heatmap.js"></script>
 
-<script src='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v0.0.2/Leaflet.fullscreen.min.js'></script>
-<link href='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v0.0.2/leaflet.fullscreen.css' rel='stylesheet' />
+    <script src='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v0.0.2/Leaflet.fullscreen.min.js'></script>
+    <link href='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v0.0.2/leaflet.fullscreen.css' rel='stylesheet' />
 
 
     <script src="js/arup.js"></script>
@@ -64,9 +64,9 @@
 
   <body>
     <!-- Page container -->
-    <div class="container arup-page-container arup-bg-black">
-      <!-- Bg white -->
-      <div class="arup-bg-white" style="height: 100%;">
+    <div class="container arup-page-container">
+      <!-- Wrapper -->
+      <div class="arup-wrapper arup-bg-heatmap">
       
         #parse("header.vm")
 
@@ -121,9 +121,13 @@
 
         </div><!--/.container mapa -->
 
-        #parse("footer.vm")
+        <!-- Pusher for sticky footer -->
+        <div class="arup-push"></div><!--/.pusher -->
 
-      </div><!--/.bg white -->
+      </div><!--/.wrapper -->
+      
+      #parse("footer.vm")
+
     </div><!--/.page container -->
 
 

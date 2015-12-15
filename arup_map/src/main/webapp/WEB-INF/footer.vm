@@ -3,19 +3,16 @@
   <div class="container">
     <div class="col-md-6 arup-color-gray-dark">
       <p class="arup-color-gray">
-        © 2015 Archeologie Online. All Rights Reserved.
+        © 2015 Archeologický ústav AV ČR, Praha, v.v.i. All Rights Reserved.
       </p>
       <p>
-        <a href="#" title="Terms, privacy and cookie policy">Terms, privacy and cookie policy</a>
-      </p>
-      <p>
-        <a href="#" title="Email us">E-mail us</a> | <a href="#" title="Kontakt">Kontakt</a>
+        <a href="about.vm" title="Kontakt">Kontakt</a> | Created by <a href="http://www.incad.cz" title="Incad" target="_blank">INCAD</a> <a href="http://www.searchtechnologies.com/cz/" title="Search Technologies" target="_blank">a search technologies company</a>
       </p>
     </div>
     <div class="col-md-6 text-right">
-      <a href="" title=""><img src="img/logo-arup.png" alt="" /></a>
-      <a href="" title=""><img src="img/logo-avcr.png" alt="" /></a>
-      <a href="" title=""><img src="img/logo-av21.png" alt="" /></a>
+      <a href="http://www.arup.cas.cz/" title="ARCHEOLOGICKÝ ÚSTAV AV ČR, Praha, v. v. i." target="_blank"><img src="img/logo-arup.png" alt="ARCHEOLOGICKÝ ÚSTAV AV ČR, Praha, v. v. i." /></a>
+      <a href="http://arub.avcr.cz/" title="ARCHEOLOGICKÝ ÚSTAV AV ČR, Brno, v. v. i." target="_blank"><img src="img/logo-avcr.png" alt="ARCHEOLOGICKÝ ÚSTAV AV ČR, Brno, v. v. i." /></a>
+      <a href="http://av21.avcr.cz/" title="Akademie věd ČR" target="_blank"><img src="img/logo-av21.png" alt="Akademie věd ČR" /></a>
     </div>
   </div>
 </footer><!--/.footer -->

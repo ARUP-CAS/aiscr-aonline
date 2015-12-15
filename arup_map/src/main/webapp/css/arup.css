@@ -1,4 +1,19 @@
 /*** CSS by Incad ***/
+
+/*** For sticky footer ***/
+html, body, .arup-page-container {
+  height: 100%;
+}
+
+.arup-wrapper {
+  min-height: 100%;
+}
+
+.arup-push {
+  height: 120px;
+}
+/*** end ***/
+
 body {
   background-color: #EFEFEF;
 }
@@ -133,6 +148,10 @@ img.pull-left {
   background-color: #ffffff !important;
 }
 
+.arup-bg-heatmap {
+  background: url('../img/bg-content.jpg') repeat-y;
+}
+
 .arup-bg-black {
   background-color: #232323;
 }
@@ -148,7 +167,7 @@ img.pull-left {
 .arup-page-container {
   padding-left: 0;
   padding-right: 0;
-  height: 100vh;
+/*  height: 100vh;*/
   box-shadow: 0 0 5px silver;
 }
 
@@ -226,7 +245,7 @@ img.pull-left {
 /*** Content ***/
 .arup-content-container {
   padding:30px 15px;
-  background: url('../img/bg-content.jpg');
+/*  background: url('../img/bg-content.jpg');*/
 }
 
 .arup-col-default {
@@ -279,8 +298,12 @@ img.pull-left {
 
 /*** Footer ***/
 .arup-footer {
+  position: relative;
+  margin-top: -120px; /* negative value of footer height */
+  height: 120px;
+  clear:both;
   padding-top: 30px;
-  padding-bottom: 30px;
+/*  padding-bottom: 30px;*/
   font-size: 13px;
   background-color: #232323;
 }

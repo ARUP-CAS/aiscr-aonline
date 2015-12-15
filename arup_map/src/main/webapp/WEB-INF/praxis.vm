@@ -39,20 +39,20 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
   
-<!--[if gte mso 9]><xml>
-<mso:CustomDocumentProperties>
-<mso:_dlc_DocId msdt:dt="string">KAAZ7N6DRQ4K-438874667-368</mso:_dlc_DocId>
-<mso:_dlc_DocIdItemGuid msdt:dt="string">7286d2fc-9344-47b2-aedf-0aaa396ecba2</mso:_dlc_DocIdItemGuid>
-<mso:_dlc_DocIdUrl msdt:dt="string">https://sto365.sharepoint.com/sites/consulting/arup/_layouts/15/DocIdRedir.aspx?ID=KAAZ7N6DRQ4K-438874667-368, KAAZ7N6DRQ4K-438874667-368</mso:_dlc_DocIdUrl>
-</mso:CustomDocumentProperties>
-</xml><![endif]-->
+    <!--[if gte mso 9]><xml>
+    <mso:CustomDocumentProperties>
+    <mso:_dlc_DocId msdt:dt="string">KAAZ7N6DRQ4K-438874667-368</mso:_dlc_DocId>
+    <mso:_dlc_DocIdItemGuid msdt:dt="string">7286d2fc-9344-47b2-aedf-0aaa396ecba2</mso:_dlc_DocIdItemGuid>
+    <mso:_dlc_DocIdUrl msdt:dt="string">https://sto365.sharepoint.com/sites/consulting/arup/_layouts/15/DocIdRedir.aspx?ID=KAAZ7N6DRQ4K-438874667-368, KAAZ7N6DRQ4K-438874667-368</mso:_dlc_DocIdUrl>
+    </mso:CustomDocumentProperties>
+    </xml><![endif]-->
 </head>
 
   <body>
     <!-- Page container -->
-    <div class="container arup-page-container arup-bg-black">
-      <!-- Bg white -->
-      <div class="arup-bg-white">
+    <div class="container arup-page-container">
+      <!-- Wrapper -->
+      <div class="arup-wrapper arup-bg-heatmap">
       
         #parse("header.vm")
 
@@ -60,11 +60,13 @@
         <div class="container arup-content-container" id="results">
         </div><!--/.container content -->
 
-        <!-- Footer -->
-        #parse("footer.vm")
-        <!--/.footer -->
+        <!-- Pusher for sticky footer -->
+        <div class="arup-push"></div><!--/.pusher -->
 
-      </div><!--/.bg white -->
+      </div><!--/.wrapper -->
+
+      #parse("footer.vm")
+      
     </div><!--/.page container -->
 
 

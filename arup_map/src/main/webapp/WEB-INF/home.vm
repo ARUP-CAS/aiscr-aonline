@@ -50,9 +50,9 @@
 
   <body>
     <!-- Page container -->
-    <div class="container arup-page-container arup-bg-black">
-      <!-- Bg white -->
-      <div class="arup-bg-white">
+    <div class="container arup-page-container">
+      <!-- Wrapper -->
+      <div class="arup-wrapper arup-bg-heatmap">
         
         #parse("header.vm")
         
@@ -93,9 +93,13 @@
           </div>
         </div><!--/.container content -->
 
-        #parse("footer.vm")
+        <!-- Pusher for sticky footer -->
+        <div class="arup-push"></div><!--/.pusher -->
 
-      </div><!--/.bg white -->
+      </div><!--/.wrapper -->
+
+      #parse("footer.vm")
+      
     </div><!--/.page container -->
 
 
