@@ -28,7 +28,7 @@ img.pull-left {
 }
 
 /* alberto rozsliseni titulku na seznamu */
-#home_mapa span.title{
+.res span.title{
     font-weight: bold;
 }
 
