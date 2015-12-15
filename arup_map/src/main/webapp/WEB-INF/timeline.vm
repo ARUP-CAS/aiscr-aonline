@@ -18,19 +18,11 @@
   <ul class="timeline arup-clean-pd">
     <li class="timeline-inverted timeline-top">
       <div class="timeline-badge"><i class="glyphicon glyphicon-menu-down"></i></div>
-      <div class="timeline-panel">
-        <div class="timeline-body label-top">
-          <p><strong>10 000</strong></p>
-        </div>
-      </div>
+      
     </li>
     <li class="timeline-inverted timeline-bottom">
       <div class="timeline-badge"><i class="glyphicon glyphicon-menu-up"></i></div>
-      <div class="timeline-panel">
-        <div class="timeline-body label-bottom">
-          <p><strong>20 000</strong></p>
-        </div>
-      </div>
+      
     </li>
     <span class="clearfix"> </span>
   </ul><span class="clearfix"> </span>

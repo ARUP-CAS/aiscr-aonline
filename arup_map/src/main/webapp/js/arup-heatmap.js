@@ -151,20 +151,6 @@ arup.MAP = {
         this.heatmapLayer._heatmap._renderer.setDimensions(size.x, size.y);
         this.heatmapLayer._update();
     },
-    fullScreen: function () {
-        $(".arup-page-container").css('width', '100%');
-        $(".arup-header").hide();
-        $(".arup-navbar").hide();
-
-        $(".arup-mapa-container").css('height', '100%');
-        $(".arup-mapa-container").css('width', '100%');
-        $("#arup-map").css('height', '100%');
-        this.map.invalidateSize();
-        window.setTimeout(function () {
-            arup.MAP.map.fireEvent('resize');
-        }, 1000);
-
-    },
     getVisibleCenter: function (latlng) {
         if ($("#facets_pane").is(":visible")) {
             var facetsOffset = $("#facets_pane").offset();
@@ -397,6 +383,21 @@ arup.MAP = {
         $(".arup-btn-hide-widget-pane").css('z-index', this.mapContainer.css('z-index'));
         $("#facets_pane").css('z-index', this.mapContainer.css('z-index'));
         
+//        $(".arup-page-container").css('width', '100%');
+//        $(".arup-header").hide();
+//        $(".arup-navbar").hide();
+//
+//        $(".arup-mapa-container").css('height', '100%');
+//        $(".arup-mapa-container").css('width', '100%');
+//        $("#arup-map").css('height', '100%');
+        
+//        this.map.invalidateSize();
+//        
+//        window.setTimeout(function () {
+//            arup.MAP.map.fireEvent('resize');
+//        }, 100);
+
+        this.search();
     },
     setView: function () {
         var count = this.getVisibleCount();
@@ -404,6 +405,7 @@ arup.MAP = {
                 this.numFound > this.conf.displayRows &&
                 count > this.conf.displayRows;
         if (this.heatView) {
+            $(".arup-nav-tabs li.results").hide();
             if (this.map.hasLayer(this.markers)) {
                 this.map.removeLayer(this.markers);
             }
@@ -411,6 +413,7 @@ arup.MAP = {
                 this.map.addLayer(this.heatmapLayer);
             }
         } else {
+            $(".arup-nav-tabs li.results").show();
             if (!this.map.hasLayer(this.markers)) {
                 this.map.addLayer(this.markers);
             }

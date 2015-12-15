@@ -57,6 +57,17 @@
   background-color: #EFEFEF;
 }
 
+.nav-tabs li input {
+  margin: 0 3px;
+  width: calc(50% - 10px);
+  text-align: right;
+  padding: 2px;
+}
+
+.nav-tabs li.active {
+  background-color: #fff;
+}
+
 
 /*** Tab content ***/
 .tab-content {

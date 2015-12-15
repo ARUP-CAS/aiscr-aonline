@@ -80,11 +80,15 @@
           <!-- Tabs -->
           <div class="arup-widget-pane arup-color-gray-dark" id="facets_pane">
             <ul class="nav nav-tabs arup-nav-tabs arup-clean-border" id="facets">
-              <li><a href="#results" data-toggle="tab">$i18n.results</a></li>
+              <li class="results"><a href="#results" data-toggle="tab">$i18n.results</a></li>
               <li class="facet" data-field="database" data-label="$i18n.facet.database"><a href="#database" data-toggle="tab">$i18n.facet.database</a></li>
               <li class="facet" data-field="Type_area" data-label="$i18n.facet.activity"><a href="#Type_area" data-toggle="tab">$i18n.facet.activity</a></li>
               <li class="facet" data-field="Type_site" data-label="$i18n.facet.loc"><a href="#Type_site" data-toggle="tab">$i18n.facet.loc</a></li>
-              <li class="active"><a href="#timeline" data-toggle="tab">$i18n.timeline</a></li>
+              <li class="active"><a href="#timeline" data-toggle="tab">
+                        $i18n.timeline
+                </a>
+                <input type="text" id="tlOd" />-<input type="text"  id="tlDo" />
+                </li>
             </ul>
             <div class="tab-content" style="width: 300px;">
               <div class="tab-pane" id="results">
