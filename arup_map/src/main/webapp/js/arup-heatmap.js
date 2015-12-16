@@ -1,5 +1,5 @@
 
-/* global _, L */
+/* global _, L, arup */
 
 
 
@@ -379,6 +379,7 @@ arup.MAP = {
     onFullScreen: function () {
         $("#facets_btn").css('z-index', this.mapContainer.css('z-index'));
         $("#facets_pane").css('z-index', this.mapContainer.css('z-index'));
+        $("#q").css('z-index', this.mapContainer.css('z-index'));
         if (this.map.isFullscreen()) {
             $("#facets_btn").css('position', 'fixed');
             $("#facets_pane").css('position', 'fixed');
