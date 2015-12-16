@@ -13,7 +13,7 @@
                           <p>
                           <xsl:for-each select="author">
                             <a href="" title="" class="arup-color-gray-pastel-dark">
-                                <i class="glyphicon glyphicon-save-file"></i> <xsl:value-of select="." />
+                                <i class="glyphicon glyphicon-user"></i>&#160;<xsl:value-of select="." />
                             </a>&#160;&#160;
                             <span class="arup-color-gray">|</span>&#160;
                         </xsl:for-each>

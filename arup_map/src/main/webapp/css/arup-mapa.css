@@ -105,9 +105,26 @@
 
 
 /*** Active facet / tab ***/
+li.facet a:first-letter {
+  text-transform: capitalize;
+}
+
 .arup-facet-active > a {
   color: #37a2d4 !important;
   font-weight: bold;
+
+}
+
+.arup-facet-form-timeline {
+  padding: 0 15px 0 15px; 
+}
+
+.arup-facet-form-timeline .form-control {
+  width: 85px;
+}
+
+.arup-facet-form-timeline .form-group {
+  margin-bottom: 15px;
 }
 
 /*** Facet ico ***/
@@ -125,7 +142,7 @@
 .arup-btn-hide-widget-pane {
   position: absolute;
   padding: 10px 5px;
-  bottom: 200px;
+  bottom: 40%;
   right: 0;
   background-color: #ffffff;
   border-top-right-radius: 0;

@@ -105,11 +105,14 @@ arup.HOME = {
 
         for (var i = 0; i < Math.min(this.resultsNum, docs.length); i++) {
             if (docs[i].hasImage) {
-                var img = $('<img/>', {class: "pull-left"});
+                var div = $('<div/>', {class: "img-crop pull-left"}); // pedro
+                var img = $('<img/>');
                 img.attr("src", "img?db=" + docs[i].database + "&id=" + docs[i].id);
                 img.attr("alt", "");
-                img.on("click")
-                this.mapResultsContainer.append(img);
+                img.on("click");
+                img.css("height", "53px"); // pedro
+                div.append(img); // pedro
+                this.mapResultsContainer.append(div); // pedro
             }
             var p = $('<p/>');
             p.append('<span class="title">' + docs[i].title + '</span>');

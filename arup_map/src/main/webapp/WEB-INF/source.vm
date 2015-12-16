@@ -80,9 +80,9 @@
     
     <!-- Custom js -->
     <script type="text/javascript">
-      function toggleItem(divId) {
-        $("#"+divId).toggle();
-        $("i").toggleClass("glyphicon-menu-down glyphicon-menu-up");
+      function toggleItem(itemId, icoId) {
+        $("#"+itemId).toggle();
+        $("#"+icoId).toggleClass("glyphicon-plus glyphicon-minus");
       }
 
       window.onload = function() {

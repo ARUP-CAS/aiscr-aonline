@@ -20,8 +20,10 @@
                 <xsl:value-of select="./infrastructure[@name='general']/description" />
               </div>
               <button class="btn arup-clean-radius" >
-                  <xsl:attribute name="onclick">toggleItem('item-<xsl:value-of select="$sourceID" />')</xsl:attribute>
-                  <i class="glyphicon glyphicon-menu-down"></i>
+                  <xsl:attribute name="onclick">toggleItem('item-<xsl:value-of select="$sourceID" />','ico-<xsl:value-of select="$sourceID" />')</xsl:attribute>
+                  <i class="glyphicon glyphicon-plus">
+                      <xsl:attribute name="id">ico-<xsl:value-of select="$sourceID" /></xsl:attribute>
+                  </i>
               </button>
             </div>
             <div class="arup-zdroje-tabs" >
