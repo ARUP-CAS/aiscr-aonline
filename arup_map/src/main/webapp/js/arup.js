@@ -31,6 +31,12 @@ var arup = {
     },
     localize: function(key){
         return key;
+    },
+    setLanguage: function(lang){
+        
+        $("#language").val(lang);
+        window.location.href = window.location.pathname + "?" + $("#searchForm").serialize();
+        
     }
 
 };

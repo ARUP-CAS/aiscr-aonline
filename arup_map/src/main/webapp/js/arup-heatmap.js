@@ -252,15 +252,6 @@ arup.MAP = {
 
         return div[0];
     },
-    updatePopup: function (docid) {
-        var c = this.popupContent(docid);
-        var latlng = {lat: doc.lat, lng: doc.lng};
-
-        this.popup
-                .setLatLng(latlng)
-                .setContent(c)
-                .openOn(this.map);
-    },
     getMapsBoundsFilter: function () {
         var b = this.map.getBounds();
         return b._southWest.lng + ';' + b._southWest.lat + ';' +
