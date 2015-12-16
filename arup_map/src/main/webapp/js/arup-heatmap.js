@@ -86,7 +86,7 @@ arup.MAP = {
                 });
 
                 li.addClass("arup-facet-active");
-                a.append(' <i class="glyphicon glyphicon-ok"></i>');
+                //a.append(' <i class="glyphicon glyphicon-ok"></i>');
 
             } else {
 

@@ -1,8 +1,10 @@
         <!-- Header -->
         <div class="arup-header arup-bg-white">
           <div class="container">
-            <!--<h1 class="arup-segoe-ui-light arup-color-gray arup-logo"><a href="#">ARCHEOLOGIE <span class="arup-segoe-ui-bold arup-color-gray-pastel">ONLINE</span></a></h1>-->
-            <h1 class="arup-logo"><a href="home.vm"><span>ARCHEOLOGIE ONLINE</span></a></h1>
+            <h1 class="arup-logo pull-left"><a href="home.vm"><span>ARCHEOLOGIE ONLINE</span></a></h1>
+            <div class="arup-lang pull-right arup-color-silver">
+              <a href="" class="arup-lang-active">cs</a> | <a href="" class="">en</a>
+            </div>
           </div>
         </div><!--/.header -->
 

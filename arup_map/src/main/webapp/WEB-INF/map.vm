@@ -84,14 +84,19 @@
               <li class="facet" data-field="database" data-label="$i18n.facet.database"><a href="#database" data-toggle="tab">$i18n.facet.database</a></li>
               <li class="facet" data-field="Type_area" data-label="$i18n.facet.activity"><a href="#Type_area" data-toggle="tab">$i18n.facet.activity</a></li>
               <li class="facet" data-field="Type_site" data-label="$i18n.facet.loc"><a href="#Type_site" data-toggle="tab">$i18n.facet.loc</a></li>
-              <li class="active"><a href="#timeline" data-toggle="tab">
-                        $i18n.timeline
+              <li class="active">
+                <a href="#timeline" data-toggle="tab">
+                    $i18n.timeline
                 </a>
-                Od: <input type="text" id="tlOd" /><br/>
-                Do: <input type="text"  id="tlDo" />
-
-
-                </li>
+                <form class="form-inline arup-facet-form-timeline arup-color-gray">
+                    <div class="form-group">
+                        <label>Od:</label> <input type="text" id="tlOd" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label>Do:</label> <input type="text"  id="tlDo" class="form-control" />
+                    </div>
+                </form>
+              </li>
             </ul>
             <div class="tab-content" style="width: 300px;">
               <div class="tab-pane" id="results">

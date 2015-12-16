@@ -21,7 +21,7 @@
 }
 
 /*** Defualt hidden ***/
-.arup-zdroje-tabs{
+.arup-zdroje-tabs {
     display: none;
 }
 
@@ -30,8 +30,9 @@
   top: 0;
   right: 0;
   color: #fff;
-  padding: 0 5px 0 5px;
+  padding: 0 6px 4px 6px;
   background-color: #595959;
+  font-size: 10px;
 }
 
 .arup-zdroje-desc img {
