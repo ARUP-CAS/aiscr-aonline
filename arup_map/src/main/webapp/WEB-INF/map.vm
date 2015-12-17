@@ -79,6 +79,15 @@
 
           <!-- Tabs -->
           <div class="arup-widget-pane arup-color-gray-dark" id="facets_pane">
+
+<div style="display:none; position: fixed; left: 60px; top: 10px; width: 450px;" class="input-group leaflet-control-fullscreen leaflet-bar leaflet-control" id="fullBox">
+    <input id="qFull" name="qFull" type="text" class="form-control arup-clean-radius arup-clean-box-shadow arup-border-white"
+        placeholder="$i18n.query.placeholder" value="$!params.q" >
+    <span class="input-group-btn">
+      <button onclick="arup.MAP.searchFull()" type="button" class="btn btn-default arup-clean-radius arup-border-white"><span class="glyphicon glyphicon-search"> </span></button>
+    </span>
+  </div>
+
             <ul class="nav nav-tabs arup-nav-tabs arup-clean-border" id="facets">
               <li class="results"><a href="#results" data-toggle="tab">$i18n.results</a></li>
               <li class="facet" data-field="database" data-label="$i18n.facet.database"><a href="#database" data-toggle="tab">$i18n.facet.database</a></li>

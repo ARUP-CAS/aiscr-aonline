@@ -364,8 +364,14 @@ arup.MAP = {
         this.map.on('dragend', _.bind(this.onZoomEnd, this));
         this.map.on('resize', _.bind(this.onResize, this));
         this.map.on('fullscreenchange', _.bind(this.onFullScreen, this));
-
+        
+        $("#qFull").on("change", _.bind(this.searchFull, this));
+        
         //$('#facets_pane').insertAfter('.leaflet-control-container');
+    },
+    searchFull: function(){
+        $("#q").val($("#qFull").val());
+        this.search();
     },
     onFullScreen: function () {
         $("#facets_btn").css('z-index', this.mapContainer.css('z-index'));
@@ -373,9 +379,12 @@ arup.MAP = {
         if (this.map.isFullscreen()) {
             $("#facets_btn").css('position', 'fixed');
             $("#facets_pane").css('position', 'fixed');
+            $("#qFull").val($("#q").val());
+            $("#fullBox").show();
         } else {
             $("#facets_btn").css('position', 'absolute');
             $("#facets_pane").css('position', 'absolute');
+            $("#fullBox").hide();
         }
 
         this.search();
