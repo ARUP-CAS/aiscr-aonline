@@ -56,6 +56,24 @@ conf.json in this directory merges with the default one in war.
     #db: database, file: file to index, map: json file with field names map between csv a solr 
     "indexMapSources": [{"db":"Atlas", "file":"/home/archeo/data/atlas.csv", "map":"/home/archeo/data/maps.json"}],
 
+    #The radius each datapoint will have (if not specified on the datapoint itself) 
+    "heatmapRadius": 0.05,
+
+    #The maximal opacity the highest value in the heatmap will have. (will be overridden if opacity set)
+    "heatmapMaxOpacity": 0.5,
+
+    #The minimum opacity the lowest value in the heatmap will have (will be overridden if opacity set)
+    "heatmapMinOpacity": 0.1,
+
+    An object that represents the gradient (syntax: number string [0,1] : color string)
+    "heatmapGradient":{
+                "0.25": "rgb(0,0,255)",
+                "0.45": "rgb(0,255,255)",
+                "0.65": "rgb(0,255,0)",
+                "0.95": "rgb(255,255,0)",
+                "1.0": "rgb(255,128,0)"
+            },
+
 Index run from servlet.
 Indexing map records
 http://localhost:8084/arup_map/data?action=INDEX_MAP

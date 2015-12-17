@@ -11,7 +11,10 @@
     "facets": ["database", "Type_area", "Type_site"],
     "facetMaxChars" : 80,
     "indexMapSources": [{"db":"Atlas", "file":"/home/archeo/data/mapa", "map":"/home/archeo/data/mapa"}],
-    "gradient":{
+    "heatmapRadius": 0.05,
+    "heatmapMaxOpacity": 0.5,
+    "heatmapMinOpacity": 0.1,
+    "heatmapGradient":{
                 "0.25": "rgb(0,0,255)",
                 "0.45": "rgb(0,255,255)",
                 "0.65": "rgb(0,255,0)",
