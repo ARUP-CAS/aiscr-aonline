@@ -323,9 +323,9 @@ arup.MAP = {
 
         var cfg = {
             // radius should be small ONLY if scaleRadius is true (or small radius is intended)
-            "radius": .05,
-            "maxOpacity": .5,
-            "minOpacity": .05,
+            "radius": this.conf.heatmapRadius,
+            "maxOpacity": this.conf.heatmapMaxOpacity,
+            "minOpacity": this.conf.heatmapMinOpacity,
             // scales the radius based on map zoom
             "scaleRadius": true,
             // if set to false the heatmap uses the global maximum for colorization
@@ -338,7 +338,7 @@ arup.MAP = {
             lngField: 'lng',
             // which field name in your data represents the data value - default "value"
             valueField: 'count',
-            gradient: this.conf.gradient
+            gradient: this.conf.heatmapGradient
         };
 
 
@@ -364,19 +364,27 @@ arup.MAP = {
         this.map.on('dragend', _.bind(this.onZoomEnd, this));
         this.map.on('resize', _.bind(this.onResize, this));
         this.map.on('fullscreenchange', _.bind(this.onFullScreen, this));
-
+        
+        $("#qFull").on("change", _.bind(this.searchFull, this));
+        
         //$('#facets_pane').insertAfter('.leaflet-control-container');
+    },
+    searchFull: function(){
+        $("#q").val($("#qFull").val());
+        this.search();
     },
     onFullScreen: function () {
         $("#facets_btn").css('z-index', this.mapContainer.css('z-index'));
         $("#facets_pane").css('z-index', this.mapContainer.css('z-index'));
-        $("#q").css('z-index', this.mapContainer.css('z-index'));
         if (this.map.isFullscreen()) {
             $("#facets_btn").css('position', 'fixed');
             $("#facets_pane").css('position', 'fixed');
+            $("#qFull").val($("#q").val());
+            $("#fullBox").show();
         } else {
             $("#facets_btn").css('position', 'absolute');
             $("#facets_pane").css('position', 'absolute');
+            $("#fullBox").hide();
         }
 
         this.search();
