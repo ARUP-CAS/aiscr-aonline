@@ -120,6 +120,12 @@ li.facet a:first-letter {
 }
 
 .arup-facet-form-timeline .form-control {
+  width: 70px;
+}
+.arup-facet-form-timeline .form-control-en {
+  width: 70px;
+}
+.arup-facet-form-timeline .form-control-cs {
   width: 85px;
 }
 

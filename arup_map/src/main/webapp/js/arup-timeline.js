@@ -1,5 +1,5 @@
 
-/* global _, L */
+/* global _, L, arup */
 
 
 arup.TIMELINE = {
