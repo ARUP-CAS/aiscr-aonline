@@ -1,0 +1,3 @@
+Tyto internetové stránky umožňují přístup k základním datům o jednotlivých archeobotanických výzkumech v České republice (autor botanického určení, archeologická  
+            datace, typ lokality, počet analyzovaných semen/plodů, počet nalezených rostlinných taxonů). Aby byla zaručena ochrana dat jednotlivých autorů, jsou pro vyhledávání  
+            podle taxonů (čeleď/rod/druh) dostupná pouze publikovaná data.  

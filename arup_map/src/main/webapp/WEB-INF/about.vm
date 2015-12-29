@@ -59,9 +59,7 @@
         <!-- Container content -->
         <div class="container arup-content-container">
           <div class="col-md-12 arup-mg-bottom-30 arup-color-gray-pastel-dark">
-            <br /><br /><br /><br /><br /><br /><br />
-            This is a page of owebu ...
-            <br /><br /><br /><br /><br /><br /><br />
+            $texts.get('about.txt')
           </div>
         </div><!--/.container content -->
         

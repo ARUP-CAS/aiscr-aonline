@@ -63,9 +63,7 @@
             Na dotaz '<span class="q">vykopavky</span>' bylo nalezeno celkem <strong>1 833</strong> záznamů.
           </div>
           <div class="col-md-12 arup-mg-bottom-30 arup-color-gray-pastel-dark" id="home_text">
-            Tyto internetové stránky umožňují přístup k základním datům o jednotlivých archeobotanických výzkumech v České republice (autor botanického určení, archeologická  
-            datace, typ lokality, počet analyzovaných semen/plodů, počet nalezených rostlinných taxonů). Aby byla zaručena ochrana dat jednotlivých autorů, jsou pro vyhledávání  
-            podle taxonů (čeleď/rod/druh) dostupná pouze publikovaná data.  
+            $texts.get('home.txt')
           </div>
           <div class="col-md-4">
             <div class="arup-col-default" id="home_mapa">

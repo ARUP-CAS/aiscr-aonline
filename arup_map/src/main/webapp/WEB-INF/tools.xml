@@ -13,7 +13,7 @@
         
         <tool key="i18n" class="cz.incad.arup.arup_map.tools.LanguageTool" bundles="bundle" />
         <tool key="xslt" class="cz.incad.arup.arup_map.tools.XSLTool" />
-        
+        <tool key="texts" class="cz.incad.arup.arup_map.tools.TextsTool" />
      
     </toolbox>
     <toolbox scope="session">
