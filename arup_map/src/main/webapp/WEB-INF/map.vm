@@ -99,10 +99,10 @@
                 </a>
                 <form class="form-inline arup-facet-form-timeline arup-color-gray">
                     <div class="form-group">
-                        <label>Od:</label> <input type="text" id="tlOd" class="form-control" />
+                        <label>$i18n.timeline.Od:</label> <input type="text" id="tlOd" class="form-control-$i18n.language" />
                     </div>
                     <div class="form-group">
-                        <label>Do:</label> <input type="text"  id="tlDo" class="form-control" />
+                        <label>$i18n.timeline.Do:</label> <input type="text"  id="tlDo" class="form-control-$i18n.language" />
                     </div>
                 </form>
               </li>
