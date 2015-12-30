@@ -43,21 +43,19 @@
 {"nazev" : "časná d. laténská","od":-450,"do":-370},
 {"nazev" : "střední d. laténská","od":-370,"do":-170},
 {"nazev" : "mladší/pozdní d. laténská","od":-170,"do":0},
-{"nazev" : "starší d. římská","od":0,"do":150},
-{"nazev" : "mladší doba římská","od":150,"do":400},
-{"nazev" : "d. stěhování národů","od":400,"do":550},
-{"nazev" : "raný středověk 1","od":550,"do":650},
-{"nazev" : "raný středověk 2","od":650,"do":800},
-{"nazev" : "raný středověk 3","od":800,"do":950},
-{"nazev" : "raný středověk 4","od":950,"do":1200},
-{"nazev" : "vrcholný středověk","od":1200,"do":1300},
-{"nazev" : "pozdní středověk","od":1300,"do":1500},
-{"nazev" : "novověk 1","od":1500,"do":1650},
-{"nazev" : "novověk 2","od":1650,"do":1800},
-{"nazev" : "industrial 1","od":1800,"do":1900},
-{"nazev" : "industrial 2","od":1900,"do":2000}
+{"nazev" : "starší d. římská","od":1,"do":150},
+{"nazev" : "mladší doba římská","od":151,"do":400},
+{"nazev" : "d. stěhování národů","od":401,"do":550},
+{"nazev" : "raný středověk 1","od":551,"do":650},
+{"nazev" : "raný středověk 2","od":651,"do":800},
+{"nazev" : "raný středověk 3","od":801,"do":950},
+{"nazev" : "raný středověk 4","od":951,"do":1200},
+{"nazev" : "vrcholný středověk","od":1201,"do":1300},
+{"nazev" : "pozdní středověk","od":1301,"do":1500},
+{"nazev" : "novověk 1","od":1501,"do":1650},
+{"nazev" : "novověk 2","od":1651,"do":1800},
+{"nazev" : "industrial 1","od":1801,"do":1900},
+{"nazev" : "industrial 2","od":1901,"do":2000}
 ]
-    
-
 
 }
