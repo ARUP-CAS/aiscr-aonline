@@ -7,12 +7,15 @@
 arup.HOME = {
     init: function () {
         this.mapResultsContainer = $('#home_mapa>div.res');
+        this.mapResDoc = $('#home_mapa>div.res>div.resDoc').clone();
         this.mapResultsHeader = $('#home_mapa>h2');
 
         this.sourceResultsContainer = $('#home_zdroj>div.res');
+        this.sourceResDoc = $('#home_zdroj>div.res>div.resDoc').clone();
         this.sourceResultsHeader = $('#home_zdroj>h2');
 
         this.practiceResultsContainer = $('#home_praxe>div.res');
+        this.practiceResDoc = $('#home_praxe>div.res>div.resDoc').clone();
         this.practiceResultsHeader = $('#home_praxe>h2');
 
         this.welcomeContainer = $('#home_text');
@@ -40,9 +43,6 @@ arup.HOME = {
 
         var params = $("#searchForm").serialize();
         var url = "data?action=BYQUERY&ishome=true&" + params;
-//        if ($("#q").val() === "") {
-//            url += "&fq=hasImage:true";
-//        }
         $.getJSON(url, _.bind(function (d) {
             this.mapResults = d;
             this.mapFound = d.response.numFound;
@@ -104,25 +104,17 @@ arup.HOME = {
         }
 
         for (var i = 0; i < Math.min(this.resultsNum, docs.length); i++) {
+            var resDoc = this.mapResDoc.clone();
             if (docs[i].hasImage) {
-                var div = $('<div/>', {class: "img-crop pull-left"}); // pedro
-                var img = $('<img/>');
+                var img = resDoc.find("img");
                 img.attr("src", "img?db=" + docs[i].database + "&id=" + docs[i].id);
-                img.attr("alt", "");
-                img.on("click");
-                img.css("height", "53px"); // pedro
-                div.append(img); // pedro
-                this.mapResultsContainer.append(div); // pedro
+            }else{
+                resDoc.find("div.img").remove();
             }
-            var p = $('<p/>');
-            p.append('<span class="title">' + docs[i].title + '</span>');
-            p.append('<br/>');
-            p.append(docs[i].Description_1);
-            p.append('<br/>');
-            p.append(docs[i].Description_2);
-            p.append('<span class="clearfix"> </span>');
-
-            this.mapResultsContainer.append(p);
+            resDoc.find("span.title").text(docs[i].title);
+            resDoc.find("span.desc_1").text(docs[i].Description_1);
+            resDoc.find("span.desc_2").text(docs[i].Description_2);
+            this.mapResultsContainer.append(resDoc);
         }
     },
     renderSourceResults: function () {
@@ -133,13 +125,11 @@ arup.HOME = {
         }
 
         for (var i = 0; i < Math.min(this.resultsNum, docs.length); i++) {
-            var p = $('<p/>');
-            p.append('<span class="title">' + docs[i].title + '</span>');
-            p.append('<br/>');
-            p.append(docs[i].description);
-            p.append('<span class="clearfix"> </span>');
-
-            this.sourceResultsContainer.append(p);
+            var resDoc = this.sourceResDoc.clone();
+            resDoc.find("span.title").text(docs[i].title);
+            resDoc.find("span.desc").text(docs[i].description);
+            this.sourceResultsContainer.append(resDoc);
+            
         }
     },
     renderPracticeResults: function () {
@@ -150,13 +140,10 @@ arup.HOME = {
         }
 
         for (var i = 0; i < Math.min(this.resultsNum, docs.length); i++) {
-            var p = $('<p/>');
-            p.append('<span class="title">' + docs[i].title + '</span>');
-            p.append('<br/>');
-            p.append(docs[i].description);
-            p.append('<span class="clearfix"> </span>');
-
-            this.practiceResultsContainer.append(p);
+            var resDoc = this.sourceResDoc.clone();
+            resDoc.find("span.title").text(docs[i].title);
+            resDoc.find("span.desc").text(docs[i].description);
+            this.practiceResultsContainer.append(resDoc);
         }
     }
 

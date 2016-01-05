@@ -69,6 +69,14 @@
             <div class="arup-col-default" id="home_mapa">
               <h2 class="arup-color-blue" onclick="arup.navigate('map');">$i18n.menu.map<span> (<strong>456</strong> záznamů)</span></h2>
               <div class="res">
+                <div class="resDoc">
+                    <div class="img img-crop pull-left"><img src="img/empty.gif" alt="" style="height: 53px;"></div>
+                    <p><span class="title"></span><br/>
+                    <span class="desc_1"></span><br/>
+                    <span class="desc_2"></span>
+                    <span class="clearfix"> </span>
+                    </p>
+                </div>
               </div>
                 <button type="button" class="btn arup-clean-radius arup-color-white" onclick="arup.navigate('map');">$i18n.button.more</button>
             </div>
@@ -77,6 +85,12 @@
             <div class="arup-col-default arup-col-zdroj" id="home_zdroj">
               <h2 class="arup-color-pink"onclick="arup.navigate('source');">$i18n.menu.source<span> (<strong>456</strong> záznamů)</span></h2>
               <div class="res">
+                <div class="resDoc">
+                    <p><span class="title"></span><br/>
+                    <span class="desc"></span>
+                    <span class="clearfix"> </span>
+                    </p>
+                </div>
               </div>
               <button type="button" class="btn arup-clean-radius arup-color-white" onclick="arup.navigate('source');">$i18n.button.more</button>
             </div>
@@ -85,6 +99,12 @@
             <div class="arup-col-default arup-col-praxe" id="home_praxe">
               <h2 class="arup-color-orange" onclick="arup.navigate('praxis');">$i18n.menu.praxis<span> (<strong>456</strong> záznamů)</span></h2>
               <div class="res">
+                <div class="resDoc">
+                    <p><span class="title"></span><br/>
+                    <span class="desc"></span>
+                    <span class="clearfix"> </span>
+                    </p>
+                </div>
               </div>
               <button type="button" class="btn arup-clean-radius arup-color-white" onclick="arup.navigate('praxis');">$i18n.button.more</button>
             </div>
