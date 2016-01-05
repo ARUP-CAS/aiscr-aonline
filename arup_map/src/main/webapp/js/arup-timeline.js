@@ -226,10 +226,8 @@ arup.TIMELINE = {
 
         if(idxOd > idxDo){
             this.selDo[0].selectedIndex = idxOd;
+            this.setDoInput();
             this.timelineBottom.css("top", pos);
-        }else{
-            //var pos2 = this.liHeight * idxDo / 3;
-            //this.timelineBottom.css("top", pos2);
         }
     },
     setDoPos: function(){
@@ -241,7 +239,7 @@ arup.TIMELINE = {
 
         if(idxDo < idxOd){
             this.selOd[0].selectedIndex = idxDo;
-            //this.inputOd.val(this.conf.obdobi[idxDo].od);
+            this.setOdInput();
             this.timelineTop.css("top", pos);
         }
 
