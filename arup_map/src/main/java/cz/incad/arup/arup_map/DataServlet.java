@@ -92,23 +92,27 @@ public class DataServlet extends HttpServlet {
     private static JSONArray indexDir(final Path dir, final String xsl, final String core) throws IOException {
         final JSONArray ja = new JSONArray();
         final TransformerFactory tfactory = TransformerFactory.newInstance();
-        Files.walkFileTree(dir, EnumSet.of(FileVisitOption.FOLLOW_LINKS), Integer.MAX_VALUE,
+        Files.walkFileTree(dir, EnumSet.of(FileVisitOption.FOLLOW_LINKS), 1,
                 new SimpleFileVisitor<Path>() {
 
             @Override
             public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
 
                 try {
-                    StreamSource xsltSource = new StreamSource(DataServlet.class.getResourceAsStream("/cz/incad/arup/arup_map/" + xsl));
-                    StreamSource xmlSource = new StreamSource(file.toFile());
-                    Transformer transformer = tfactory.newTransformer(xsltSource);
-                    StreamResult destStream = new StreamResult(new StringWriter());
+                    if(file.toFile().isFile()){
+                        
+                        LOGGER.log(Level.INFO, "Indexing file {0}", file);
+                        StreamSource xsltSource = new StreamSource(DataServlet.class.getResourceAsStream("/cz/incad/arup/arup_map/" + xsl));
+                        StreamSource xmlSource = new StreamSource(file.toFile());
+                        Transformer transformer = tfactory.newTransformer(xsltSource);
+                        StreamResult destStream = new StreamResult(new StringWriter());
 
-                    transformer.setParameter("filename", file.toString());
-                    transformer.transform(xmlSource, destStream);
-                    StringWriter sw = (StringWriter) destStream.getWriter();
+                        transformer.setParameter("filename", file.toString());
+                        transformer.transform(xmlSource, destStream);
+                        StringWriter sw = (StringWriter) destStream.getWriter();
 
-                    SolrIndex.postDataToCore(sw.toString(), core);
+                        SolrIndex.postDataToCore(sw.toString(), core);
+                    }
 
                     return FileVisitResult.CONTINUE;
                 } catch (Exception e) {

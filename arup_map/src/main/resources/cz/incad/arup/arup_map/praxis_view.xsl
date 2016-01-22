@@ -15,19 +15,23 @@
                             <a href="" title="" class="arup-color-gray-pastel-dark">
                                 <i class="glyphicon glyphicon-user"></i>&#160;<xsl:value-of select="." />
                             </a>&#160;&#160;
-                            <span class="arup-color-gray">|</span>&#160;
+                            <xsl:if test="position() != last()">
+                                <span class="arup-color-gray">|</span>&#160;
+                            </xsl:if>
                         </xsl:for-each>
                           </p>
                           <p>
-                              <xsl:value-of select="./description" disable-output-escaping="yes" />
+                              <xsl:copy-of select="./description" disable-output-escaping="yes" />
                           </p>
                           <p>
                               <xsl:for-each select="attachement">
                                   <a target="download" title="" class="arup-color-gray-pastel-dark">
-                                      <xsl:variable name="href"><xsl:value-of select="." /></xsl:variable>
-                                      <i class="glyphicon glyphicon-save-file"></i> Dokument ke stazeni
+                                      <xsl:attribute name="href">attach?name=<xsl:value-of select="." />&amp;type=<xsl:value-of select="@type" />&amp;dir=practices/</xsl:attribute>
+                                      <i class="glyphicon glyphicon-save-file"></i><xsl:value-of select="." />
                                   </a>&#160;&#160;
-                                  <span class="arup-color-gray">|</span>&#160;
+                                    <xsl:if test="position() != last()">
+                                        <span class="arup-color-gray">|</span>&#160;
+                                    </xsl:if>
                               </xsl:for-each>
                           </p>
                         </div>

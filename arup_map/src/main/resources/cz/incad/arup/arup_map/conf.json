@@ -3,6 +3,9 @@
     "mapCore": "arup",
     "sourcesCore": "sources",
     "practicesCore": "practices",
+    "dataDir":"~/data/",
+    "logosDir":"logos/",
+
     "solrDefaultRows" : 200,
     "displayRows" : 200,
     "markerZoomLevel" : 13,

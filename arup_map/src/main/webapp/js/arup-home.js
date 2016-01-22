@@ -1,9 +1,6 @@
 
 /* global _, L */
 
-
-
-
 arup.HOME = {
     init: function () {
         this.mapResultsContainer = $('#home_mapa>div.res');

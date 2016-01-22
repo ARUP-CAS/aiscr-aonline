@@ -71,7 +71,7 @@
               <div class="res">
                 <div class="resDoc">
                     <div class="img img-crop pull-left"><img src="img/empty.gif" alt="" style="height: 53px;"></div>
-                    <p><span class="title"></span><br/>
+                    <p><span class="title">$i18n.loading...</span><br/>
                     <span class="desc_1"></span><br/>
                     <span class="desc_2"></span>
                     <span class="clearfix"> </span>
@@ -86,7 +86,7 @@
               <h2 class="arup-color-pink"onclick="arup.navigate('source');">$i18n.menu.source<span> (<strong></strong> záznamů)</span></h2>
               <div class="res">
                 <div class="resDoc">
-                    <p><span class="title"></span><br/>
+                    <p><span class="title">$i18n.loading...</span><br/>
                     <span class="desc"></span>
                     <span class="clearfix"> </span>
                     </p>
@@ -100,7 +100,7 @@
               <h2 class="arup-color-orange" onclick="arup.navigate('praxis');">$i18n.menu.praxis<span> (<strong></strong> záznamů)</span></h2>
               <div class="res">
                 <div class="resDoc">
-                    <p><span class="title"></span><br/>
+                    <p><span class="title">$i18n.loading...</span><br/>
                     <span class="desc"></span>
                     <span class="clearfix"> </span>
                     </p>

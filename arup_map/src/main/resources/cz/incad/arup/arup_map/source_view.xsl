@@ -12,7 +12,7 @@
               <div class="media-left">
                 <a href="#">
                   <img alt="" >
-                    <xsl:attribute name="src">img/<xsl:value-of select="./infrastructure[@name='general']/metadata[@name='Logo']" /></xsl:attribute>
+                    <xsl:attribute name="src">logo?id=<xsl:value-of select="./@logo" /></xsl:attribute>
                   </img>
                 </a>
               </div>
