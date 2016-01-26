@@ -9,19 +9,19 @@
                 <xsl:for-each select="practice">
                     <li>
                         <div class="arup-praxe-item-container">
-                          <h2 class="arup-color-gray-pastel-dark"><a href=""><xsl:value-of select="./title" /></a></h2>
+                          <h2 class="arup-color-gray-pastel-dark"><span><xsl:value-of select="./title" /></span></h2>
                           <p>
                           <xsl:for-each select="author">
-                            <a href="" title="" class="arup-color-gray-pastel-dark">
+                            <span class="arup-color-gray-pastel-dark">
                                 <i class="glyphicon glyphicon-user"></i>&#160;<xsl:value-of select="." />
-                            </a>&#160;&#160;
+                            </span>&#160;&#160;
                             <xsl:if test="position() != last()">
                                 <span class="arup-color-gray">|</span>&#160;
                             </xsl:if>
                         </xsl:for-each>
                           </p>
                           <p>
-                              <xsl:copy-of select="./description" disable-output-escaping="yes" />
+                              <xsl:copy-of select="./description"  />
                           </p>
                           <p>
                               <xsl:for-each select="attachement">

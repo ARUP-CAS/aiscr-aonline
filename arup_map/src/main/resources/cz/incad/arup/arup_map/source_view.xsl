@@ -81,11 +81,25 @@
                       <xsl:variable name="pos" select="position()" />
                       <tr>
                         <th><xsl:value-of select="@name" /></th>
-                        <td><xsl:value-of select="." /></td>
+                        <td><xsl:copy-of select="." /></td>
                       </tr>
                     </xsl:for-each>
               </tbody></table>
-              </xsl:if>
+            </xsl:if>
+            
+            <xsl:if test="./attachement">  
+                <p>
+                    <xsl:for-each select="./attachement">
+                        <a target="download" title="" class="arup-color-gray-pastel-dark">
+                            <xsl:attribute name="href">attach?name=<xsl:value-of select="." />&amp;type=<xsl:value-of select="@type" />&amp;dir=sources/</xsl:attribute>
+                            <i class="glyphicon glyphicon-save-file"></i><xsl:value-of select="." />
+                        </a>&#160;&#160;
+                          <xsl:if test="position() != last()">
+                              <span class="arup-color-gray">|</span>&#160;
+                          </xsl:if>
+                    </xsl:for-each>
+                </p>
+            </xsl:if>
                 </div>
     </xsl:template> 
 </xsl:stylesheet>

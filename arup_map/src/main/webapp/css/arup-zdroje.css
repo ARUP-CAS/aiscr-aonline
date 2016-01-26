@@ -108,3 +108,8 @@
   padding: 15px;
   background-color: #EFEFEF;
 }
+
+
+th {
+  width: 280px;
+}

@@ -159,6 +159,8 @@ public class DataServlet extends HttpServlet {
             void doPerform(HttpServletRequest req, HttpServletResponse resp) throws Exception {
                 resp.setContentType("application/json;charset=UTF-8");
                 try (PrintWriter out = resp.getWriter()) {
+                    SolrIndex.postDataToCore("<delete><query>*:*</query></delete>", "practices");
+                    SolrIndex.postDataToCore("<commit/>", "practices");
                     final JSONObject ret = new JSONObject();
                     Options opts = Options.getInstance();
                     Path dir = Paths.get(opts.getString("dataDir") + opts.getString("practicesDir"));
@@ -177,6 +179,9 @@ public class DataServlet extends HttpServlet {
             void doPerform(HttpServletRequest req, HttpServletResponse resp) throws Exception {
                 resp.setContentType("application/json;charset=UTF-8");
                 try (PrintWriter out = resp.getWriter()) {
+                    
+                    SolrIndex.postDataToCore("<delete><query>*:*</query></delete>", "sources");
+                    SolrIndex.postDataToCore("<commit/>", "sources");
                     final JSONObject ret = new JSONObject();
                     Options opts = Options.getInstance();
                     Path dir = Paths.get(opts.getString("dataDir") + opts.getString("sourcesDir"));
@@ -439,6 +444,7 @@ public class DataServlet extends HttpServlet {
             void doPerform(HttpServletRequest req, HttpServletResponse resp) throws Exception {
                 resp.setContentType("application/json;charset=UTF-8");
                 try (PrintWriter out = resp.getWriter()) {
+                    
                     String q = req.getParameter("q");
                     if (q == null || "".equals(q)) {
                         q = "*:*";
@@ -452,6 +458,7 @@ public class DataServlet extends HttpServlet {
                         }
                     }
                     query.setRows(ROWS);
+                    query.setSort("title", SolrQuery.ORDER.asc);
 
                     JSONObject json = new JSONObject(SolrIndex.json(query, Options.getInstance().getString("practicesCore", "practices")));
 
