@@ -201,9 +201,14 @@ public class DataServlet extends HttpServlet {
                 resp.setContentType("application/json;charset=UTF-8");
                 try (PrintWriter out = resp.getWriter()) {
                     Options opts = Options.getInstance();
+                    String core = opts.getString("mapCore", "arup");
+                    
+                    SolrIndex.postDataToCore("<delete><query>*:*</query></delete>", core);
+                    SolrIndex.postDataToCore("<commit/>", core);
+                    
                     int success = 0;
                     int errors = 0;
-                    SolrClient sclient = SolrIndex.getServer(opts.getString("mapCore", "arup"));
+                    SolrClient sclient = SolrIndex.getServer(core);
                     JSONObject ret = new JSONObject();
                     JSONArray ja = new JSONArray();
                     String[] filenames = req.getParameterValues("filename");
@@ -283,6 +288,7 @@ public class DataServlet extends HttpServlet {
                             }
                         }
                         sclient.commit();
+                        sclient.optimize();
                         ret.put("docs indexed", success);
                         ret.put("errors", errors);
                         ret.put("errors msgs", ja);
@@ -458,7 +464,7 @@ public class DataServlet extends HttpServlet {
                         }
                     }
                     query.setRows(ROWS);
-                    query.setSort("title", SolrQuery.ORDER.asc);
+                    query.setSort("title_sort", SolrQuery.ORDER.asc);
 
                     JSONObject json = new JSONObject(SolrIndex.json(query, Options.getInstance().getString("practicesCore", "practices")));
 

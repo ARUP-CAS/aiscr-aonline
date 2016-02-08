@@ -73,6 +73,7 @@
    <field name="id" type="string" indexed="true" stored="true" required="true" multiValued="false"  /> 
    
    <field name="title" type="text_general_cs" indexed="true" stored="true" />
+   <field name="title_sort" type="string" indexed="true" stored="false" />
    <field name="date" type="date" indexed="true" stored="true" />
    <field name="description" type="text_general_cs" indexed="true" stored="true" />
    <field name="author" type="text_general_cs" indexed="true" stored="true" multiValued="true" />
@@ -93,6 +94,7 @@
         or to add multiple fields to the same field for easier/faster searching.  -->
 
 
+   <copyField source="title" dest="title_sort"/>
    <copyField source="*" dest="text"/>
   <!--
    <copyField source="body" dest="text"/>

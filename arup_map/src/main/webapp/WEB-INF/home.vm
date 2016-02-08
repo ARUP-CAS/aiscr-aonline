@@ -59,8 +59,8 @@
         <!-- Container content -->
         <div class="container arup-content-container">
 
-          <div class="col-md-12 arup-mg-bottom-30" id="home_found">
-            Na dotaz '<span class="q">vykopavky</span>' bylo nalezeno celkem <strong>1 833</strong> záznamů.
+          <div class="col-md-12 arup-mg-bottom-30" id="home_found" style="display: none;">
+            Na dotaz '<span class="q"></span>' bylo nalezeno celkem <strong></strong> záznamů.
           </div>
           <div class="col-md-12 arup-mg-bottom-30 arup-color-gray-pastel-dark" id="home_text">
             $texts.get('home.txt')

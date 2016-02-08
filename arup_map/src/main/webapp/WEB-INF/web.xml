@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+<web-app metadata-complete="true" version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     <servlet>
         <servlet-name>velocity</servlet-name>
         <!--servlet-class>
@@ -36,18 +36,47 @@
         <servlet-name>DataServlet</servlet-name>
         <servlet-class>cz.incad.arup.arup_map.DataServlet</servlet-class>
     </servlet>
+    <servlet-mapping>
+        <servlet-name>DataServlet</servlet-name>
+        <url-pattern>/data</url-pattern>
+    </servlet-mapping>
+    
     <servlet>
         <servlet-name>ConfigurationServlet</servlet-name>
         <servlet-class>cz.incad.arup.arup_map.ConfigurationServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>DataServlet</servlet-name>
-        <url-pattern>/data</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>ConfigurationServlet</servlet-name>
         <url-pattern>/conf</url-pattern>
     </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>ImageServlet</servlet-name>
+        <servlet-class>cz.incad.arup.arup_map.ImageServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ImageServlet</servlet-name>
+        <url-pattern>/img</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>LogoServlet</servlet-name>
+        <servlet-class>cz.incad.arup.arup_map.LogiServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LogoServlet</servlet-name>
+        <url-pattern>/logo</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>AttachServlet</servlet-name>
+        <servlet-class>cz.incad.arup.arup_map.LogiServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AttachServlet</servlet-name>
+        <url-pattern>/attach</url-pattern>
+    </servlet-mapping>
+    
     <session-config>
         <session-timeout>
             30
