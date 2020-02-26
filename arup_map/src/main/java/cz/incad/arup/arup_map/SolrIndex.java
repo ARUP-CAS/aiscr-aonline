@@ -23,6 +23,7 @@ import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.client.solrj.util.ClientUtils;
 import org.apache.solr.common.SolrDocumentList;
+import org.json.JSONObject;
 
 /**
  *
@@ -110,10 +111,15 @@ public class SolrIndex {
         }
 
         InputStream es = urlc.getErrorStream();
+        String msg = "";
         if (es != null) {
             try {
                 errorStream = IOUtils.toString(es);
-                LOGGER.log(Level.WARNING, "Mame ERROR {0}", errorStream);
+                JSONObject error = new JSONObject(errorStream);
+                if (error.has("error")) {
+                  msg = error.getJSONObject("error").getString("msg");
+                }
+                LOGGER.log(Level.WARNING, "Mame ERROR {0}", msg);
             } catch (IOException e) {
                 LOGGER.log(Level.WARNING, "IOException while reading response");
                 throw new IOException(e);
