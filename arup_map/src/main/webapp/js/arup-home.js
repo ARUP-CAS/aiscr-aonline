@@ -99,8 +99,8 @@ arup.HOME = {
         if (this.numFound === 0) {
             return;
         }
-
-        for (var i = 0; i < Math.min(this.resultsNum, docs.length); i++) {
+        for (var j = 0; j < Math.min(this.resultsNum, docs.length); j++) {
+          var i = Math.round(Math.random() * Math.min(docs.length, 100));
             var resDoc = this.mapResDoc.clone();
             if (docs[i].hasImage) {
                 var img = resDoc.find("img");
@@ -120,7 +120,7 @@ arup.HOME = {
         if (this.sourceFound === 0) {
             return;
         }
-
+        docs = _.shuffle(docs);
         for (var i = 0; i < Math.min(this.resultsNum, docs.length); i++) {
             var resDoc = this.sourceResDoc.clone();
             resDoc.find("span.title").text(docs[i].title);
