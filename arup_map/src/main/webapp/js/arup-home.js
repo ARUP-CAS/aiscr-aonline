@@ -135,7 +135,7 @@ arup.HOME = {
         if (this.practiceFound === 0) {
             return;
         }
-
+        docs = _.shuffle(docs);
         for (var i = 0; i < Math.min(this.resultsNum, docs.length); i++) {
             var resDoc = this.sourceResDoc.clone();
             resDoc.find("span.title").text(docs[i].title);
