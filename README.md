@@ -1,6 +1,6 @@
-# README #
+# Archeologie online #
 
-Institute of Archaeology Prague
+Institute of Archaeology of the CAS, Prague
 
 ### Content ###
 
