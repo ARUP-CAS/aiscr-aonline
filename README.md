@@ -1,5 +1,7 @@
 # Archeologie online #
 
+[![DOI](https://zenodo.org/badge/112324331.svg)](https://zenodo.org/badge/latestdoi/112324331)
+
 Institute of Archaeology of the CAS, Prague
 
 ### Content ###
