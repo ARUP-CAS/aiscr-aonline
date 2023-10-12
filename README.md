@@ -1,6 +1,6 @@
 # Archeologie online #
 
-[![DOI](https://zenodo.org/badge/112324331.svg)](https://zenodo.org/badge/latestdoi/112324331)
+[![DOI](https://zenodo.org/badge/112324331.svg)](https://zenodo.org/badge/latestdoi/112324331) [![SWH](https://archive.softwareheritage.org/badge/origin/https://github.com/ARUP-CAS/aiscr-aonline/)](https://archive.softwareheritage.org/browse/origin/?origin_url=https://github.com/ARUP-CAS/aiscr-aonline)
 
 Institute of Archaeology of the CAS, Prague
 
